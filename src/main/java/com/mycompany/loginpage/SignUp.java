@@ -110,7 +110,7 @@ public class SignUp extends JFrame implements ActionListener{
         add(signUpButton);
 
         messageLabel = new JLabel();
-        messageLabel.setBounds(240, 530, 300, 25);
+        messageLabel.setBounds(260, 530, 300, 25);
         add(messageLabel);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
