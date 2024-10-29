@@ -16,9 +16,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class adminPage extends JFrame implements ActionListener{
 
     
-    private JPanel panelLogo, panelHeader, panelUsers, panelADD, panelDelete, panelProfile, transactJPanel, homeJPanel,panelAddLayout,panelTransaction; 
-    private JLabel lblHeader, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails;
-    private JButton btnHome, btnAdd, btnDel, btnTransact, btnUsers,  btnProfile,btnImage,btnAddImage,btnChangePassword,btnSignOut;
+    private JPanel panelLogo, panelHeader, panelUsers, panelADD, panelDelete, panelProfile, transactJPanel, homeJPanel,panelAddLayout,panelTransaction,panelUsersPanel; 
+    private JLabel lblHeader, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails,lblUsers;
+    private JButton btnHome, btnAdd, btnDel, btnTransact, btnUsers,  btnProfile,btnImage,btnAddImage,btnChangePassword,btnSignOut,btnUserSearch;
     private JTabbedPane jtab;
     private JTable tableEstate, tableUser,tableTransactions;
     private JScrollPane estates;
@@ -187,56 +187,70 @@ public class adminPage extends JFrame implements ActionListener{
 
         //homeJPanel.add(tableEstate);
         
-        JScrollPane sp = new JScrollPane(tableEstate);
-        sp.setPreferredSize(new Dimension(1200, 560));
-        homeJPanel.add(sp);
-        
-//        esta
-//        panelADD.add(sp)
-//        
+        JScrollPane scrollPaneEstate = new JScrollPane(tableEstate);
+        scrollPaneEstate.setPreferredSize(new Dimension(1200, 560));
+        homeJPanel.add(scrollPaneEstate);
+           
         
         panelADD= new JPanel();
         panelADD.setBounds(0,0,1200,560);
         panelADD.setBackground(Color.green);
         jtab.add(panelAddLayout);
         
+        
+        // user table
         panelUsers= new JPanel();
         panelUsers.setBounds(0,0,1200,560);
-        panelUsers.setBackground(Color.red);
+        panelUsers.setLayout(null);
         jtab.add(panelUsers);      
         
-//        String[][] data2 = {{"hi", "hello", "blehhh", "poop"},{"hi", "hello", "blehhh", "poop"}};
-//        String[] tablecolumn2 = {"Name", "Location", "Price", "Status"};
-//        tableUser = new JTable(data2, tablecolumn2);
-//        tableUser.setBounds(0, 0, 1200, 560);
-//        tableUser.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-//        tableUser.getColumnModel().getColumn(0).setPreferredWidth(250);
-//        tableUser.getColumnModel().getColumn(1).setPreferredWidth(250);
-//        tableUser.getColumnModel().getColumn(2).setPreferredWidth(250);
-//        tableUser.getColumnModel().getColumn(3).setPreferredWidth(250);
-//        tableUser.setRowHeight(30);
+        panelUsersPanel = new JPanel();
+        panelUsersPanel.setBounds(0, 0, 800, 560);
+        panelUsers.add(panelUsersPanel);
+        
+        
         String[][] data2 = {{"Abdul", "hello", "blehhh", "poop"},{"hi", "hello", "blehhh", "poop"}};
         String[] tablecolumn2 = {"Name", "Location", "Price", "Status"};
         tableUser = new JTable(data2, tablecolumn2);
-        tableUser.setBounds(0, 0,1200,560);
+        tableUser.setBounds(0, 0,800,560);
         tableUser.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        tableUser.getColumnModel().getColumn(0).setPreferredWidth(300);
-        tableUser.getColumnModel().getColumn(1).setPreferredWidth(300);
-        tableUser.getColumnModel().getColumn(2).setPreferredWidth(300);
-        tableUser.getColumnModel().getColumn(3).setPreferredWidth(300);
+        tableUser.getColumnModel().getColumn(0).setPreferredWidth(200);
+        tableUser.getColumnModel().getColumn(1).setPreferredWidth(200);
+        tableUser.getColumnModel().getColumn(2).setPreferredWidth(200);
+        tableUser.getColumnModel().getColumn(3).setPreferredWidth(200);
         tableUser.setRowHeight(30);
 
-        panelUsers.add(tableUser);
+        panelUsersPanel.add(tableUser);
         
         JScrollPane sp2 = new JScrollPane(tableUser);
-        sp2.setPreferredSize(new Dimension(1200, 560));
-        panelUsers.add(sp2);
-       
+        sp2.setPreferredSize(new Dimension(800, 560));
+        panelUsersPanel.add(sp2);
         
+        // search button to find users
+       
+        lblUsers = new JLabel("Users");
+        lblUsers.setBounds(950, 40, 200, 30);
+        lblUsers.setFont(new Font("Arial", Font.BOLD, 30));
+        panelUsers.add(lblUsers);
+        
+        JTextField txtUserSearch = new JTextField();
+        txtUserSearch.setBounds(890, 80, 200, 30);
+        panelUsers.add(txtUserSearch);
+        
+        JButton btnUserSearch = new JButton("Search");
+        btnUserSearch.setBounds(890, 120, 100, 30);
+        panelUsers.add(btnUserSearch);
+        
+        JButton btnClearUserSearch = new JButton("Clear");
+        btnClearUserSearch.setBounds(990, 120, 100, 30);
+        panelUsers.add(btnClearUserSearch);
+        
+        
+        // transaction page
         transactJPanel= new JPanel();
         transactJPanel.setBounds(0,0,1200,560);
         transactJPanel.setLayout(null);
-      //  transactJPanel.setBackground(Color.pink);
+      
         jtab.add(transactJPanel);
         
         panelTransaction = new JPanel();
@@ -255,12 +269,7 @@ public class adminPage extends JFrame implements ActionListener{
         tableTransactions.setRowHeight(30);
         
         panelTransaction.add(tableTransactions);
-        
-//        JButton btnMarketAnalysis = new JButton("Generate Market Analysis");
-//        btnMarketAnalysis.setBounds(10, 80, 200, 30);
-//        transactJPanel.add(btnMarketAnalysis);
-        
-        
+
         
         JScrollPane scrollPaneTransaction = new JScrollPane(tableTransactions);
         scrollPaneTransaction.setPreferredSize(new Dimension(800, 560));
