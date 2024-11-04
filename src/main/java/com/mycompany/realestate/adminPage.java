@@ -177,6 +177,7 @@ public class adminPage extends JFrame implements ActionListener{
         String[][] data = {{"Abdul", "hello", "blehhh", "poop"},{"hi", "hello", "blehhh", "poop"}};
         String[] tablecolumn = {"Name", "Location", "Price", "Status"};
         tableEstate = new JTable(data, tablecolumn);
+        tableEstate.setDefaultEditor(Object.class,null);
         tableEstate.setBounds(0, 0,1200,560);
         tableEstate.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tableEstate.getColumnModel().getColumn(0).setPreferredWidth(300);
@@ -212,6 +213,7 @@ public class adminPage extends JFrame implements ActionListener{
         String[][] data2 = {{"Abdul", "hello", "blehhh", "poop"},{"hi", "hello", "blehhh", "poop"}};
         String[] tablecolumn2 = {"Name", "Location", "Price", "Status"};
         tableUser = new JTable(data2, tablecolumn2);
+        tableUser.setDefaultEditor(Object.class,null);
         tableUser.setBounds(0, 0,800,560);
         tableUser.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tableUser.getColumnModel().getColumn(0).setPreferredWidth(200);
@@ -260,6 +262,7 @@ public class adminPage extends JFrame implements ActionListener{
         String[][] transactions = {{"123", "property123", "ClientID", "10/28/2024"}};
         String[] transcationsColumns = {"Transaction ID", "Property ID", "Client ID", "Date"};
         tableTransactions = new JTable(transactions, transcationsColumns);
+        tableTransactions.setDefaultEditor(Object.class, null);
         tableTransactions.setBounds(0, 0,800,560);
         tableTransactions.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tableTransactions.getColumnModel().getColumn(0).setPreferredWidth(200);
@@ -289,7 +292,7 @@ public class adminPage extends JFrame implements ActionListener{
         panelProfile.setLayout(null);
         jtab.add(panelProfile);
         
-        lblAdminDetails = new JLabel("Admin and Friends");
+        lblAdminDetails = new JLabel("Admin Profile");
         lblAdminDetails.setBounds(450,160, 500, 30);
         lblAdminDetails.setFont(new Font("Arial", Font.BOLD, 30));
         panelProfile.add(lblAdminDetails);
@@ -306,13 +309,12 @@ public class adminPage extends JFrame implements ActionListener{
         
         btnHome.addActionListener(this);
         btnAdd.addActionListener(this);
-    //    btnAdd.addActionListener(this);
         btnUsers.addActionListener(this);
         btnTransact.addActionListener(this);
         btnProfile.addActionListener(this);
         btnImage.addActionListener(this);
         btnAddImage.addActionListener(this);
-     
+        btnSignOut.addActionListener(this);
         setVisible(true);
         
     }
@@ -346,10 +348,22 @@ public class adminPage extends JFrame implements ActionListener{
                     ImageIcon image = new ImageIcon(newImg);
                     lblImage.setIcon(image);
                }
-          } else if (e.getSource() == btnAddImage) {
+        } else if (e.getSource() == btnAddImage) {
 
             lblImage.setIcon(null);
 
+        } else if(e.getSource() == btnSignOut) {
+            int response = JOptionPane.showConfirmDialog(this, "You are signing out\nClick ok to proceed","Sign out",JOptionPane.OK_CANCEL_OPTION);
+            if(response == JOptionPane.OK_OPTION) {
+                // pupunta sa home page
+                  dispose();
+                  welcomePage frame = new welcomePage();
+                  frame.setVisible(true);
+            } 
+        } else if(e.getSource() == btnChangePassword) {
+            dispose();
+            changePassword frame = new changePassword();
+            frame.setVisible(true);
         }
        
     }
