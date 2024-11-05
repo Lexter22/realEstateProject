@@ -73,6 +73,20 @@ private JButton btnBack, btnContinue;
             purchasePage purchase = new purchasePage();
             purchase.setVisible(true);
             dispose(); 
+            
+        } else if (e.getSource() == btnContinue){
+            String pass = passWord.getText();
+            String retypePassword = new String(retypePass.getPassword());
+            
+            if (pass.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Password cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
+            }else if (retypePassword.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Password is required. Please re-type your password", "Error", JOptionPane.ERROR_MESSAGE);
+            }else if (!pass.equals(retypePassword)){
+                 JOptionPane.showMessageDialog(this, "Password does not match", "Error", JOptionPane.ERROR_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(this, "Purchase Successful!\n\nClick OK to continue ", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
+            }
         }
         
     }
