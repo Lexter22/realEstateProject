@@ -14,7 +14,7 @@ import javax.swing.*;
  * @author jcasu
  */
 public class purchasePage extends JFrame implements ActionListener{
-    private JLabel hdrTitle, hdrPurchasingForm, hdrId, hdrName, hdrDate;
+    private JLabel hdrTitle, hdrPurchasingForm, hdrId, hdrLocation, hdrDate;
     private JButton btnBack, btnContinue;
     private JPanel  logoPanel;
         
@@ -47,9 +47,9 @@ public class purchasePage extends JFrame implements ActionListener{
         hdrId.setBounds(30, 260, 70, 40);
         add(hdrId);
         
-        hdrName = new JLabel("Name:");
-        hdrName.setBounds(30, 320, 70, 40);
-        add(hdrName);
+        hdrLocation = new JLabel("Location:");
+        hdrLocation.setBounds(30, 320, 70, 40);
+        add(hdrLocation);
         
         hdrDate = new JLabel("Date:");
         hdrDate.setBounds(30, 390, 70, 40);
@@ -75,6 +75,9 @@ public class purchasePage extends JFrame implements ActionListener{
             confirmPayment payment = new confirmPayment();
             payment.setVisible(true);
             dispose();
-        } 
+        } else if(e.getSource()==btnBack){
+            new moreInfo();
+            dispose();
+        }
     }
 }
