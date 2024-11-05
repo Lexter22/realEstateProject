@@ -17,9 +17,9 @@ import java.awt.event.ActionListener;
  */
 public class SignUp extends JFrame implements ActionListener{
     private JTextField txtName, txtUsername, txtContact;
-    private JPasswordField passwordField, retypePasswordField;
-    private JButton signUpButton, backButton;
-    private JLabel lblMessage, lblQuahogSpringField, lblRealEstates, lblCrtAccount, lblName, lblUsername, lblContact, lblPassword, lblretypePass;
+    private JPasswordField pwPassword, pwRetypePassword;
+    private JButton btnSignup, btnBack;
+    private JLabel lblMessage, lblQuahogSpringField, lblRealEstates, lblCrtAccount, lblName, lblUsername, lblContact, lblPassword, lblRetypePass;
 
     public SignUp() {
         setTitle("Sign Up");
@@ -86,29 +86,29 @@ public class SignUp extends JFrame implements ActionListener{
         lblPassword.setFont(new Font("Arial", Font.PLAIN, 15));
         add(lblPassword);
 
-        passwordField = new JPasswordField();
-        passwordField.setBounds(120, 425, 240, 20);
-        add(passwordField);
+        pwPassword = new JPasswordField();
+        pwPassword.setBounds(120, 425, 240, 20);
+        add(pwPassword);
 
-        lblretypePass = new JLabel("Retype Password:");
-        lblretypePass.setBounds(20, 450, 360, 30);
-        lblretypePass.setHorizontalAlignment(JLabel.LEFT);
-        lblretypePass.setFont(new Font("Arial", Font.PLAIN, 12));
-        add(lblretypePass);
+        lblRetypePass = new JLabel("Retype Password:");
+        lblRetypePass.setBounds(20, 450, 360, 30);
+        lblRetypePass.setHorizontalAlignment(JLabel.LEFT);
+        lblRetypePass.setFont(new Font("Arial", Font.PLAIN, 12));
+        add(lblRetypePass);
 
-        retypePasswordField = new JPasswordField();
-        retypePasswordField.setBounds(120, 455, 240, 20);
-        add(retypePasswordField);
+        pwRetypePassword = new JPasswordField();
+        pwRetypePassword.setBounds(120, 455, 240, 20);
+        add(pwRetypePassword);
 
-        signUpButton = new JButton("Back");
-        signUpButton.setBounds(175, 505, 80, 25);
-        signUpButton.addActionListener(this);
-        add(signUpButton);
+        btnBack = new JButton("Back");
+        btnBack.setBounds(175, 505, 80, 25);
+        btnBack.addActionListener(this);
+        add(btnBack);
         
-        signUpButton = new JButton("Sign Up");
-        signUpButton.setBounds(275, 505, 80, 25);
-        signUpButton.addActionListener(this);
-        add(signUpButton);
+        btnSignup = new JButton("Sign Up");
+        btnSignup.setBounds(275, 505, 80, 25);
+        btnSignup.addActionListener(this);
+        add(btnSignup);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -117,11 +117,11 @@ public class SignUp extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String password = passwordField.getText();
+        String password = pwPassword.getText();
         String name = txtName.getText();
         String username = txtUsername.getText();
         String contact = txtContact.getText();
-        String retypePassword = new String(retypePasswordField.getPassword());
+        String retypePassword = new String(pwRetypePassword.getPassword());
         if (!name.isEmpty() && !username.isEmpty() && !contact.isEmpty() && !password.isEmpty() && !retypePassword.isEmpty()) {
   
          if (!password.equals(retypePassword)) {
