@@ -10,11 +10,6 @@ package com.mycompany.realestate;
  */
 public class changePasswordMain {
     public static void main(String[] args) {
-          try {
-                    changePassword frame = new changePassword();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            new changePassword();
     }
 }
