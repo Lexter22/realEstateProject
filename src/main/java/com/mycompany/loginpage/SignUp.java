@@ -6,6 +6,7 @@ package com.mycompany.loginpage;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,33 +16,33 @@ import java.awt.event.ActionListener;
  * @author Lenovo Ideapad
  */
 public class SignUp extends JFrame implements ActionListener{
-    private JTextField nameField, usernameField, contactField;
+    private JTextField txtName, txtUsername, txtContact;
     private JPasswordField passwordField, retypePasswordField;
     private JButton signUpButton, backButton;
-    private JLabel messageLabel;
+    private JLabel lblMessage, lblQuahogSpringField, lblRealEstates, lblCrtAccount, lblName, lblUsername, lblContact, lblPassword, lblretypePass;
 
     public SignUp() {
         setTitle("Sign Up");
         setSize(400, 600);
         setLayout(null); 
         
-        JLabel lblQuahogSpringField1 = new JLabel("Quahog Springfield");
-        lblQuahogSpringField1.setBounds(20, 35, 360, 40);
-        lblQuahogSpringField1.setHorizontalAlignment(JLabel.CENTER);
-        lblQuahogSpringField1.setFont(new Font("Arial", Font.PLAIN, 35));
-        add(lblQuahogSpringField1);
+        lblQuahogSpringField = new JLabel("Quahog Springfield");
+        lblQuahogSpringField.setBounds(20, 35, 360, 40);
+        lblQuahogSpringField.setHorizontalAlignment(JLabel.CENTER);
+        lblQuahogSpringField.setFont(new Font("Arial", Font.PLAIN, 35));
+        add(lblQuahogSpringField);
         
-        JLabel lblQuahogSpringField2 = new JLabel("Real Estates");
-        lblQuahogSpringField2.setBounds(20, 75, 360, 30);
-        lblQuahogSpringField2.setHorizontalAlignment(JLabel.CENTER);
-        lblQuahogSpringField2.setFont(new Font("Arial", Font.PLAIN, 20));
-        add(lblQuahogSpringField2);
+        lblRealEstates = new JLabel("Real Estates");
+        lblRealEstates.setBounds(20, 75, 360, 30);
+        lblRealEstates.setHorizontalAlignment(JLabel.CENTER);
+        lblRealEstates.setFont(new Font("Arial", Font.PLAIN, 20));
+        add(lblRealEstates);
         
-        JLabel lblQuahogSpringField3 = new JLabel("Create Account");
-        lblQuahogSpringField3.setBounds(20, 270, 360, 30);
-        lblQuahogSpringField3.setHorizontalAlignment(JLabel.CENTER);
-        lblQuahogSpringField3.setFont(new Font("Arial", Font.PLAIN, 30));
-        add(lblQuahogSpringField3);
+        lblCrtAccount = new JLabel("Create Account");
+        lblCrtAccount.setBounds(20, 270, 360, 30);
+        lblCrtAccount.setHorizontalAlignment(JLabel.CENTER);
+        lblCrtAccount.setFont(new Font("Arial", Font.PLAIN, 30));
+        add(lblCrtAccount);
         
         JPanel jpLogo = new JPanel();
         jpLogo.setBounds(150,140,100,100);
@@ -49,51 +50,51 @@ public class SignUp extends JFrame implements ActionListener{
         add(jpLogo);
         
         
-        JLabel nameLabel = new JLabel("Name:");
-        nameLabel.setBounds(20, 330, 360, 30);
-        nameLabel.setHorizontalAlignment(JLabel.LEFT);
-        nameLabel.setFont(new Font("Arial", Font.PLAIN, 15));
-        add(nameLabel);
+        lblName = new JLabel("Name:");
+        lblName.setBounds(20, 330, 360, 30);
+        lblName.setHorizontalAlignment(JLabel.LEFT);
+        lblName.setFont(new Font("Arial", Font.PLAIN, 15));
+        add(lblName);
 
-        nameField = new JTextField();
-        nameField.setBounds(120, 335, 240, 20);
-        add(nameField);
+        txtName = new JTextField();
+        txtName.setBounds(120, 335, 240, 20);
+        add(txtName);
 
-        JLabel usernameLabel = new JLabel("Username:");
-        usernameLabel.setBounds(20, 360, 100, 30);
-        usernameLabel.setHorizontalAlignment(JLabel.LEFT);
-        usernameLabel.setFont(new Font("Arial", Font.PLAIN, 15));
-        add(usernameLabel);
+        lblUsername = new JLabel("Username:");
+        lblUsername.setBounds(20, 360, 100, 30);
+        lblUsername.setHorizontalAlignment(JLabel.LEFT);
+        lblUsername.setFont(new Font("Arial", Font.PLAIN, 15));
+        add(lblUsername);
 
-        usernameField = new JTextField();
-        usernameField.setBounds(120, 365, 240, 20);
-        add(usernameField);
+        txtUsername = new JTextField();
+        txtUsername.setBounds(120, 365, 240, 20);
+        add(txtUsername);
         
-        JLabel contactLabel = new JLabel("Contact:");
-        contactLabel.setBounds(20, 390, 100, 30);
-        contactLabel.setHorizontalAlignment(JLabel.LEFT);
-        contactLabel.setFont(new Font("Arial", Font.PLAIN, 15));
-        add(contactLabel);
+        lblContact = new JLabel("Contact:");
+        lblContact.setBounds(20, 390, 100, 30);
+        lblContact.setHorizontalAlignment(JLabel.LEFT);
+        lblContact.setFont(new Font("Arial", Font.PLAIN, 15));
+        add(lblContact);
         
-        contactField = new JTextField();
-        contactField.setBounds(120, 395, 240, 20);
-        add(contactField);
+        txtContact = new JTextField();
+        txtContact.setBounds(120, 395, 240, 20);
+        add(txtContact);
 
-        JLabel passwordLabel = new JLabel("Password:");
-        passwordLabel.setBounds(20, 420, 360, 30);
-        passwordLabel.setHorizontalAlignment(JLabel.LEFT);
-        passwordLabel.setFont(new Font("Arial", Font.PLAIN, 15));
-        add(passwordLabel);
+        lblPassword = new JLabel("Password:");
+        lblPassword.setBounds(20, 420, 360, 30);
+        lblPassword.setHorizontalAlignment(JLabel.LEFT);
+        lblPassword.setFont(new Font("Arial", Font.PLAIN, 15));
+        add(lblPassword);
 
         passwordField = new JPasswordField();
         passwordField.setBounds(120, 425, 240, 20);
         add(passwordField);
 
-        JLabel retypeLabel = new JLabel("Retype Password:");
-        retypeLabel.setBounds(20, 450, 360, 30);
-        retypeLabel.setHorizontalAlignment(JLabel.LEFT);
-        retypeLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        add(retypeLabel);
+        lblretypePass = new JLabel("Retype Password:");
+        lblretypePass.setBounds(20, 450, 360, 30);
+        lblretypePass.setHorizontalAlignment(JLabel.LEFT);
+        lblretypePass.setFont(new Font("Arial", Font.PLAIN, 12));
+        add(lblretypePass);
 
         retypePasswordField = new JPasswordField();
         retypePasswordField.setBounds(120, 455, 240, 20);
@@ -109,10 +110,6 @@ public class SignUp extends JFrame implements ActionListener{
         signUpButton.addActionListener(this);
         add(signUpButton);
 
-        messageLabel = new JLabel();
-        messageLabel.setBounds(260, 530, 300, 25);
-        add(messageLabel);
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -120,15 +117,26 @@ public class SignUp extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String password = new String(passwordField.getPassword());
+        String password = passwordField.getText();
+        String name = txtName.getText();
+        String username = txtUsername.getText();
+        String contact = txtContact.getText();
         String retypePassword = new String(retypePasswordField.getPassword());
-
-        if (!password.equals(retypePassword)) {
-            messageLabel.setText("Passwords do not match!");
+        if (!name.isEmpty() && !username.isEmpty() && !contact.isEmpty() && !password.isEmpty() && !retypePassword.isEmpty()) {
+  
+         if (!password.equals(retypePassword)) {
+         JOptionPane.showMessageDialog(this, "Password do not match!","Error",JOptionPane.ERROR_MESSAGE);
             
-        } else {
-            messageLabel.setText(" Sign up successful!");
+        }else {
+               Icon checkIcon = new ImageIcon("C:\\Users\\Lenovo Ideapad\\Downloads\\check.png");
+         JOptionPane.showMessageDialog(this, "Sign up successful","Success",JOptionPane.INFORMATION_MESSAGE,checkIcon);   
+         new welcomePage();
         }
+         
+        }else{
+         JOptionPane.showMessageDialog(this, "Can't Sign Up please complete all details!","Error",JOptionPane.ERROR_MESSAGE);
+        }
+
     }
     
 }
