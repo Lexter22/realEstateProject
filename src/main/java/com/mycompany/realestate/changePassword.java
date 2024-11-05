@@ -65,7 +65,7 @@ public class changePassword extends JFrame implements  ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         // aayusin koi pa dito para macheck sa sql kung tama yung input
-        //    String enterPassword;
+        String enterPassword;
         String enterNewPassword = txtTypeNewPassword.getText();
               try {
                  Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/realestate",  "root", "admin123");
