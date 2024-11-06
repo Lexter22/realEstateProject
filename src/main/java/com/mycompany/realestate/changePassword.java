@@ -27,7 +27,7 @@ import javax.swing.JTextField;
 public class changePassword extends JFrame implements  ActionListener{
     private JLabel hdrChangePassword,lblEnterPassword,lblNewPassword;
     private JTextField txtTypePassword,txtTypeNewPassword;
-    private JButton btnChangePassword;
+    private JButton btnChangePassword,btnBack;
     public changePassword()  {
         setSize(600,400);
         setLayout(null);
@@ -59,13 +59,20 @@ public class changePassword extends JFrame implements  ActionListener{
         btnChangePassword.setBounds(250, 200, 150, 30);
         add(btnChangePassword);
         
+        btnBack = new JButton("Back");
+        btnBack.setBounds(10, 10, 80, 30);
+        add(btnBack);
+        
         btnChangePassword.addActionListener(this);
+        btnBack.addActionListener(this);
+        
         setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // aayusin koi pa dito para macheck sa sql kung tama yung input
+        if(e.getSource()==btnChangePassword) {
         String enterPassword;
         String enterNewPassword = txtTypeNewPassword.getText();
               try {
@@ -80,6 +87,10 @@ public class changePassword extends JFrame implements  ActionListener{
               } catch (SQLException ex) {
                             Logger.getLogger(changePassword.class.getName()).log(Level.SEVERE, null, ex);
               }
+        } else {
+            new adminPage();
+            dispose();
+        }
     }
     
 }
