@@ -292,8 +292,8 @@ public class adminPage extends JFrame implements ActionListener{
         panelProfile.setLayout(null);
         jtab.add(panelProfile);
         
-        lblAdminDetails = new JLabel("Admin Profile");
-        lblAdminDetails.setBounds(450,160, 500, 30);
+        lblAdminDetails = new JLabel("Admin");
+        lblAdminDetails.setBounds(530,160, 500, 30);
         lblAdminDetails.setFont(new Font("Arial", Font.BOLD, 30));
         panelProfile.add(lblAdminDetails);
         
@@ -315,6 +315,7 @@ public class adminPage extends JFrame implements ActionListener{
         btnImage.addActionListener(this);
         btnAddImage.addActionListener(this);
         btnSignOut.addActionListener(this);
+        btnChangePassword.addActionListener(this);
         setVisible(true);
         
     }
@@ -361,9 +362,10 @@ public class adminPage extends JFrame implements ActionListener{
                   frame.setVisible(true);
             } 
         } else if(e.getSource() == btnChangePassword) {
-            dispose();
-            changePassword frame = new changePassword();
-            frame.setVisible(true);
+           
+             new changePassword();
+              dispose();
+            
         }
        
     }
