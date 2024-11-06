@@ -133,7 +133,7 @@ public class adminPage extends JFrame implements ActionListener{
         btnDel.setFont(new Font("Arial", Font.BOLD, 15));
         add(btnDel);
         
-        btnUsers=new JButton("USERS");
+        btnUsers=new JButton("CLIENTS");
         btnUsers.setBounds(775,60,100,25);
         btnUsers.setBorder(null);
         btnUsers.setFocusable(false);
