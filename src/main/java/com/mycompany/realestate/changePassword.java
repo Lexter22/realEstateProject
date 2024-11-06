@@ -32,6 +32,7 @@ public class changePassword extends JFrame implements  ActionListener{
         setSize(600,400);
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         
         hdrChangePassword = new JLabel("Change Password");
         hdrChangePassword.setBounds(210, 50, 200, 30);
