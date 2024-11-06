@@ -230,8 +230,8 @@ public class adminPage extends JFrame implements ActionListener{
         
         // search button to find users
        
-        lblUsers = new JLabel("Users");
-        lblUsers.setBounds(950, 40, 200, 30);
+        lblUsers = new JLabel("Clients");
+        lblUsers.setBounds(940, 40, 200, 30);
         lblUsers.setFont(new Font("Arial", Font.BOLD, 30));
         panelUsers.add(lblUsers);
         
@@ -363,7 +363,7 @@ public class adminPage extends JFrame implements ActionListener{
             } 
         } else if(e.getSource() == btnChangePassword) {
            
-             new changePassword();
+              new changePassword();
               dispose();
             
         }
