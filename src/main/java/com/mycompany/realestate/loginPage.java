@@ -16,8 +16,7 @@ public class loginPage extends JFrame{
     private JPanel pnlLogin;
     private JTextField txtUsername,txtPassword;
     private JButton btnLogin,btnBack;
-    private ImageIcon finalAvatarIcon, mainBg, finalMainBgIC;
-    private Image bgImg, adjustedBgIC, mainBgImg, adjustedMainBgIC;
+    private ImageIcon finalAvatarIcon, finalMainBgIC;
     private Color cGreen = (Color.decode("#28A745"));
     private Color cGray = (Color.decode("#E0E0E0"));
     private Color cBlue = (Color.decode("#004A8C")); 
@@ -30,9 +29,7 @@ public class loginPage extends JFrame{
         setLocationRelativeTo(null);
         
         ImageIcon mainBg = new ImageIcon("C:\\Users\\AACI Admin\\Pictures\\ClientUI\\mainBg.png");
-        mainBgImg = mainBg.getImage();
-        adjustedMainBgIC = mainBgImg.getScaledInstance(400, 600, Image.SCALE_SMOOTH);
-        finalMainBgIC = new ImageIcon(adjustedMainBgIC);
+        finalMainBgIC = new ImageIcon(mainBg.getImage().getScaledInstance(400, 600, Image.SCALE_SMOOTH));
         
         hdrLogin = new JLabel("Login");
         hdrLogin.setBounds(0, 50, 400, 30);
@@ -86,7 +83,13 @@ public class loginPage extends JFrame{
         btnLogin.setBackground(cGreen);
         btnLogin.setBounds(110, 120, 110, 30);
         pnlLogin.add(btnLogin);
-        setVisible(true);
+        
+        JLabel lblsignup = new JLabel("I don't have an account");
+        lblsignup.setBounds(0,150,250,30);
+        lblsignup.setForeground(Color.white);
+        lblsignup.setHorizontalAlignment(SwingConstants.CENTER);
+        lblsignup.setFont(new Font("Arial",Font.CENTER_BASELINE,12));
+        pnlLogin.add(lblsignup);
         
         btnBack = new JButton("Back");
         btnBack.setBounds(10, 10, 80, 30);
@@ -100,6 +103,8 @@ public class loginPage extends JFrame{
         JLabel lblBg = new JLabel(finalMainBgIC);
         lblBg.setBounds(0,0,400,600);
         lblmainBg.add(lblBg);   
+        
+        setVisible(true);
         
     }
      public static void main (String[] args){
