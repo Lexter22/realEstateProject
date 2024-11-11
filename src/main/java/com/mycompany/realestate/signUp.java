@@ -9,8 +9,7 @@ public class signUp extends JFrame {
     private JButton btnBack;
     private JTextField txtName, txtUsername, txtContact, txtEmail;
     private JPasswordField jpfPassword, jpfRetypePass;
-    private ImageIcon greenBg,finalbgIc, mainBg, finalMainBgIC;
-    private Image bgImg, adjustedBgIC, mainBgImg, adjustedMainBgIC;
+    private ImageIcon mainBg, finalMainBgIC;
     private Color cGreen = (Color.decode("#28A745"));
     private Color cGray = (Color.decode("#E0E0E0"));
     private Color cBlue = (Color.decode("#004A8C"));
@@ -24,9 +23,7 @@ public class signUp extends JFrame {
         setLocationRelativeTo(null);
         
         ImageIcon mainBg = new ImageIcon("C:\\Users\\AACI Admin\\Pictures\\ClientUI\\mainBg.png");
-        mainBgImg = mainBg.getImage();
-        adjustedMainBgIC = mainBgImg.getScaledInstance(400, 600, Image.SCALE_SMOOTH);
-        finalMainBgIC = new ImageIcon(adjustedMainBgIC);
+        finalMainBgIC = new ImageIcon(mainBg.getImage().getScaledInstance(400, 600, Image.SCALE_SMOOTH));
 
         hdrSignUp = new JLabel("Sign Up");
         hdrSignUp.setBounds(140, 50, 150, 30);
@@ -119,11 +116,11 @@ public class signUp extends JFrame {
         btnSignUp.setBackground(cGreen);
         pnlSignUp.add(btnSignUp);
         
-        JLabel lbllogin = new JLabel("Already have an account?");
+        JLabel lbllogin = new JLabel("I have an account");
         lbllogin.setBounds(10,395,220,30);
         lbllogin.setForeground(Color.white);
         lbllogin.setHorizontalAlignment(SwingConstants.CENTER);
-        lbllogin.setFont(new Font("Arial",Font.CENTER_BASELINE,13));
+        lbllogin.setFont(new Font("Arial",Font.CENTER_BASELINE,12));
         pnlSignUp.add(lbllogin);
 
         JLabel bg = new JLabel();
