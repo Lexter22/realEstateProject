@@ -1,31 +1,35 @@
 package com.mycompany.realestate;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Image;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.io.*;
 import javax.swing.*;
-import java.util.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+
 
 
 
 public class adminPage extends JFrame implements ActionListener{
 
     
-    private JPanel panelLogo, panelHeader, panelUsers, panelADD, panelDelete, panelProfile, transactJPanel, homeJPanel,panelAddLayout,panelTransaction,panelUsersPanel; 
-    private JLabel lblHeader, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails,lblUsers;
+    private JPanel panelLogo, panelHeader, panelUsers, panelADD, panelDelete, panelProfile, transactJPanel, homeJPanel,panelAddLayout,panelHome,panelTransaction,panelUsersPanel; 
+    private JLabel lblHeader, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails,lblUsers, previewImg;
     private JButton btnHome, btnAdd, btnDel, btnTransact, btnUsers,  btnProfile,btnImage,btnAddImage,btnChangePassword,btnSignOut,btnUserSearch;
     private JTabbedPane jtab;
     private JTable tableEstate, tableUser,tableTransactions;
     private JScrollPane estates;
     private JTextField txtPropertyName,txtLocation,txtPrice;
     private JTextArea txaDescription;
-  //  private JFileChooser jfcImage;
+    private ImageIcon accountIc, homeIc, finalAccountIc, finalHomeIc, clientIc, finalClientIc, transIc, finalTransIc;
+    private DefaultTableModel tableEstateModel, tableUserModel, tableTransactionModel;
     private JFileChooser jfcImage = new JFileChooser();
+    private Color cGreen = (Color.decode("#28A745"));
+    private Color cBlue = (Color.decode("#004A8C")); 
+        
+        
     public adminPage() {
         
         setSize(1200, 700);
@@ -38,41 +42,36 @@ public class adminPage extends JFrame implements ActionListener{
         panelLogo.setBackground(Color.green);
         add(panelLogo);
         
-        
-        
         lblHeader=new JLabel("QUAHOG SPRINGFIELDS");
-        lblHeader.setBounds(120,10,300,50);
+        lblHeader.setBounds(120,10,350,50);
+        lblHeader.setForeground(Color.white);
         lblHeader.setFont(new Font("Arial", Font.BOLD, 25));
         add(lblHeader);
         
         lblRealEstates=new JLabel("REAL ESTATES");
         lblRealEstates.setBounds(120,40,300,50);
+        lblRealEstates.setForeground(Color.WHITE);
         lblRealEstates.setFont(new Font("Arial", Font.BOLD, 15));
         add(lblRealEstates);
         
+        accountIc = new ImageIcon("C:\\Users\\AACI Admin\\Pictures\\ClientUI\\infoIcon.png");
+        finalAccountIc = new ImageIcon(accountIc.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+
+        homeIc = new ImageIcon("C:\\Users\\AACI Admin\\Pictures\\ClientUI\\homeIcon.png");
+        finalHomeIc = new ImageIcon(homeIc.getImage().getScaledInstance(30,30, Image.SCALE_SMOOTH));
         
-        
-        btnHome=new JButton("HOME");
-        btnHome.setBounds(400,60,100,25);
+        btnHome=new JButton();
+        btnHome.setBounds(1150,60,30,30);
         btnHome.setBorder(null);
-        btnHome.setBackground(Color.CYAN);
-        btnHome.setFocusable(false);
+        btnHome.setBackground(cBlue);
+        btnHome.setIcon(finalAccountIc);
         btnHome.setFont(new Font("Arial", Font.BOLD, 15));
         add(btnHome);
-        
-        
-        btnAdd=new JButton("ADD");
-        btnAdd.setBounds(525,60,100,25);
-        btnAdd.setBorder(null);
-        btnAdd.setBackground(Color.CYAN);
-        btnAdd.setFocusable(false);
-        btnAdd.setFont(new Font("Arial", Font.BOLD, 15));
-        add(btnAdd);
         
         panelAddLayout = new JPanel();
         panelAddLayout.setLayout(null);
         panelAddLayout.setBounds(0, 0, 1200, 560);
-        btnAdd.add(panelAddLayout);
+        add(panelAddLayout);
 
         lblPropertyName = new JLabel("PROPERTY NAME : ");
         lblPropertyName.setBounds(50, 50, 250, 30);
@@ -120,48 +119,38 @@ public class adminPage extends JFrame implements ActionListener{
         btnImage = new JButton("Choose an Image");
         btnImage.setBounds(650, 450, 200, 50);
         panelAddLayout.add(btnImage);
-
+        
         btnAddImage = new JButton("Add");
         btnAddImage.setBounds(950, 450, 200, 50);
         panelAddLayout.add(btnAddImage);
-
-        btnDel=new JButton("DELETE");
-        btnDel.setBounds(650,60,100,25);
-        btnDel.setBorder(null);
-        btnDel.setBackground(Color.CYAN);
-        btnDel.setFocusable(false);
-        btnDel.setFont(new Font("Arial", Font.BOLD, 15));
-        add(btnDel);
         
-        btnUsers=new JButton("CLIENTS");
-        btnUsers.setBounds(775,60,100,25);
+        clientIc = new ImageIcon("C:\\Users\\AACI Admin\\Pictures\\ClientUI\\accountIcon.png");
+        finalClientIc = new ImageIcon(clientIc.getImage().getScaledInstance(30,30, Image.SCALE_SMOOTH));
+        
+        btnUsers=new JButton();
+        btnUsers.setBounds(1100, 60, 30, 30);
         btnUsers.setBorder(null);
         btnUsers.setFocusable(false);
-        btnUsers.setBackground(Color.CYAN);
-        btnUsers.setFocusable(false);
+        btnUsers.setBackground(cBlue);
+        btnUsers.setIcon(finalClientIc);
         btnUsers.setFont(new Font("Arial", Font.BOLD, 15));
         add(btnUsers);
         
-        btnTransact=new JButton("TRANSACTIONS");
-        btnTransact.setBounds(900,60,130,25);
+        transIc = new ImageIcon("C:\\Users\\AACI Admin\\Pictures\\ClientUI\\transIcon.png");
+        finalTransIc = new ImageIcon(transIc.getImage().getScaledInstance(30,30, Image.SCALE_SMOOTH));
+        
+        btnTransact=new JButton();
+        btnTransact.setBounds(1050, 60, 30, 30);
         btnTransact.setBorder(null);
         btnTransact.setFocusable(false);
-        btnTransact.setBackground(Color.CYAN);
-        btnTransact.setFocusable(false);
+        btnTransact.setBackground(cBlue);
+        btnTransact.setIcon(finalTransIc);
         btnTransact.setFont(new Font("Arial", Font.BOLD, 15));
         add(btnTransact);
         
-        btnProfile=new JButton("PROFILE");
-        btnProfile.setBounds(1055,60,130,25);
-        btnProfile.setBorder(null);
-        btnProfile.setFocusable(false);
-        btnProfile.setBackground(Color.CYAN);
-        btnProfile.setFont(new Font("Arial", Font.BOLD, 15));
-        add(btnProfile);
-        
         panelHeader=new JPanel();
         panelHeader.setBounds(0,0,1200,100);
-        panelHeader.setBackground(Color.CYAN);
+        panelHeader.setBackground(cBlue);
         add(panelHeader);
         
         jtab = new JTabbedPane();
@@ -172,34 +161,79 @@ public class adminPage extends JFrame implements ActionListener{
         
         homeJPanel= new JPanel();
         homeJPanel.setBounds(0,0,1200,560);
+        homeJPanel.setLayout(null);
         jtab.add(homeJPanel);
         
-        String[][] data = {{"Abdul", "hello", "blehhh", "poop"},{"hi", "hello", "blehhh", "poop"}};
-        String[] tablecolumn = {"Name", "Location", "Price", "Status"};
-        tableEstate = new JTable(data, tablecolumn);
-        tableEstate.setDefaultEditor(Object.class,null);
-        tableEstate.setBounds(0, 0,1200,560);
-        tableEstate.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        tableEstate.getColumnModel().getColumn(0).setPreferredWidth(300);
-        tableEstate.getColumnModel().getColumn(1).setPreferredWidth(300);
-        tableEstate.getColumnModel().getColumn(2).setPreferredWidth(300);
-        tableEstate.getColumnModel().getColumn(3).setPreferredWidth(300);
-        tableEstate.setRowHeight(30);
+        panelHome = new JPanel();
+        panelHome.setBounds(0, 0, 800, 560);
+        homeJPanel.add(panelHome);
 
-        //homeJPanel.add(tableEstate);
         
+        Object[][] data = {{}};
+        String[] tablecolumn = {"Property Name", "Location", "Price", "Status"};
+        
+        tableEstateModel = new DefaultTableModel(data, tablecolumn);
+        tableEstate = new JTable(tableEstateModel);
+        tableEstate.setDefaultEditor(Object.class, null);
+        tableEstate.setRowHeight(30);
+        tableEstate.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tableEstate.setBounds(0,0,800,560);
+
         JScrollPane scrollPaneEstate = new JScrollPane(tableEstate);
-        scrollPaneEstate.setPreferredSize(new Dimension(1200, 560));
-        homeJPanel.add(scrollPaneEstate);
+        scrollPaneEstate.setPreferredSize(new Dimension(800, 560));
+        panelHome.add(scrollPaneEstate);
            
+        JLabel lblpreviewImg = new JLabel("Preview Image");
+        lblpreviewImg.setBounds(820, 20, 360, 30);
+        lblpreviewImg.setHorizontalAlignment(SwingConstants.CENTER);
+        homeJPanel.add(lblpreviewImg);
         
+        previewImg = new JLabel();
+        previewImg.setBounds(820, 60, 350, 280);
+        previewImg.setBorder(BorderFactory.createLineBorder(Color.black));
+        homeJPanel.add(previewImg);
+        
+        JButton btnDetails=new JButton("DETAILS");
+        btnDetails.setBounds(820,350,100,25);
+        btnDetails.setForeground(Color.WHITE);
+        btnDetails.setBorder(null);
+        btnDetails.setBackground(cGreen);
+        btnDetails.setFocusable(false);
+        btnDetails.setFont(new Font("Arial", Font.BOLD, 15));
+        homeJPanel.add(btnDetails);
+        
+        JButton btnUpdate =new JButton("UPDATE");
+        btnUpdate.setBounds(950,350,100,25);
+        btnUpdate.setForeground(Color.WHITE);
+        btnUpdate.setBorder(null);
+        btnUpdate.setBackground(cGreen);
+        btnUpdate.setFocusable(false);
+        btnUpdate.setFont(new Font("Arial", Font.BOLD, 15));
+        homeJPanel.add(btnUpdate);
+        
+        btnDel=new JButton("DELETE");
+        btnDel.setBounds(1070,350,100,25);
+        btnDel.setBorder(null);
+        btnDel.setForeground(Color.white);
+        btnDel.setBackground(cGreen);
+        btnDel.setFocusable(false);
+        btnDel.setFont(new Font("Arial", Font.BOLD, 15));
+        homeJPanel.add(btnDel);
+        
+        btnAdd=new JButton("ADD A NEW ITEM");
+        btnAdd.setBounds(820, 385, 350, 30);
+        btnAdd.setBorder(null);
+        btnAdd.setForeground(Color.WHITE);
+        btnAdd.setBackground(cGreen);
+        btnAdd.setFocusable(false);
+        btnAdd.setFont(new Font("Arial", Font.BOLD, 15));
+        homeJPanel.add(btnAdd);
+
         panelADD= new JPanel();
         panelADD.setBounds(0,0,1200,560);
         panelADD.setBackground(Color.green);
         jtab.add(panelAddLayout);
         
-        
-        // user table
         panelUsers= new JPanel();
         panelUsers.setBounds(0,0,1200,560);
         panelUsers.setLayout(null);
@@ -209,27 +243,22 @@ public class adminPage extends JFrame implements ActionListener{
         panelUsersPanel.setBounds(0, 0, 800, 560);
         panelUsers.add(panelUsersPanel);
         
+        //Temporary Data
         
-        String[][] data2 = {{"Abdul", "hello", "blehhh", "poop"},{"hi", "hello", "blehhh", "poop"}};
-        String[] tablecolumn2 = {"Name", "Location", "Price", "Status"};
-        tableUser = new JTable(data2, tablecolumn2);
-        tableUser.setDefaultEditor(Object.class,null);
-        tableUser.setBounds(0, 0,800,560);
-        tableUser.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        tableUser.getColumnModel().getColumn(0).setPreferredWidth(200);
-        tableUser.getColumnModel().getColumn(1).setPreferredWidth(200);
-        tableUser.getColumnModel().getColumn(2).setPreferredWidth(200);
-        tableUser.getColumnModel().getColumn(3).setPreferredWidth(200);
+        String[][] data2 = {{"1", "Lex", "Reyes", "Lexterqtqt", "91234567890", "lexterqtqt@gmail.com"},
+                            {"2", "Abdul", "Disomimba", "Abdulmalik22", "91235621", "malik@gmail.com"}};
+        String[] tablecolumn2 = {"ID", "First Name", "Last Name", "Username", "Contact No.", "Email"};
+        
+        tableUserModel = new DefaultTableModel(data2, tablecolumn2);
+        tableUser = new JTable(tableUserModel);
+        tableUser.setDefaultEditor(Object.class, null);
         tableUser.setRowHeight(30);
-
-        panelUsersPanel.add(tableUser);
+        tableUser.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
         JScrollPane sp2 = new JScrollPane(tableUser);
         sp2.setPreferredSize(new Dimension(800, 560));
         panelUsersPanel.add(sp2);
-        
-        // search button to find users
-       
+
         lblUsers = new JLabel("Clients");
         lblUsers.setBounds(940, 40, 200, 30);
         lblUsers.setFont(new Font("Arial", Font.BOLD, 30));
@@ -247,8 +276,6 @@ public class adminPage extends JFrame implements ActionListener{
         btnClearUserSearch.setBounds(990, 120, 100, 30);
         panelUsers.add(btnClearUserSearch);
         
-        
-        // transaction page
         transactJPanel= new JPanel();
         transactJPanel.setBounds(0,0,1200,560);
         transactJPanel.setLayout(null);
@@ -260,20 +287,16 @@ public class adminPage extends JFrame implements ActionListener{
         transactJPanel.add(panelTransaction);
         
         String[][] transactions = {{"123", "property123", "ClientID", "10/28/2024"}};
-        String[] transcationsColumns = {"Transaction ID", "Property ID", "Client ID", "Date"};
-        tableTransactions = new JTable(transactions, transcationsColumns);
+        String[] transactionsColumns = {"Transaction ID", "Property ID", "Client ID", "Date"};
+        tableTransactionModel = new DefaultTableModel(transactions, transactionsColumns);
+        tableTransactions = new JTable(tableTransactionModel);
         tableTransactions.setDefaultEditor(Object.class, null);
-        tableTransactions.setBounds(0, 0,800,560);
-        tableTransactions.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        tableTransactions.getColumnModel().getColumn(0).setPreferredWidth(200);
-        tableTransactions.getColumnModel().getColumn(1).setPreferredWidth(200);
-        tableTransactions.getColumnModel().getColumn(2).setPreferredWidth(200);
-        tableTransactions.getColumnModel().getColumn(3).setPreferredWidth(200);
         tableTransactions.setRowHeight(30);
+        tableTransactions.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tableTransactions.setBounds(0,0,800,560);
         
         panelTransaction.add(tableTransactions);
 
-        
         JScrollPane scrollPaneTransaction = new JScrollPane(tableTransactions);
         scrollPaneTransaction.setPreferredSize(new Dimension(800, 560));
         panelTransaction.add(scrollPaneTransaction);
@@ -311,13 +334,11 @@ public class adminPage extends JFrame implements ActionListener{
         btnAdd.addActionListener(this);
         btnUsers.addActionListener(this);
         btnTransact.addActionListener(this);
-        btnProfile.addActionListener(this);
         btnImage.addActionListener(this);
         btnAddImage.addActionListener(this);
         btnSignOut.addActionListener(this);
         btnChangePassword.addActionListener(this);
         setVisible(true);
-        
     }
 
     @Override
@@ -325,49 +346,67 @@ public class adminPage extends JFrame implements ActionListener{
         
         
         if(e.getSource()==btnHome){
-            jtab.setSelectedIndex(0);
+            int currentIndex = jtab.getSelectedIndex();
+            if (currentIndex == 0) {
+              jtab.setSelectedIndex(4);
+              btnHome.setIcon(finalHomeIc);
+            } else  {
+              btnHome.setIcon(finalAccountIc);
+                jtab.setSelectedIndex(0);
+              }
         }else if(e.getSource()==btnAdd){
+            btnHome.setIcon(finalHomeIc);
             jtab.setSelectedIndex(1);
         }else if(e.getSource()==btnUsers){
+            btnHome.setIcon(finalHomeIc);
             jtab.setSelectedIndex(2);
         }else if(e.getSource()==btnTransact){
+            btnHome.setIcon(finalHomeIc);
             jtab.setSelectedIndex(3);
-        }else if(e.getSource()==btnProfile){
-            jtab.setSelectedIndex(4);
         }else if (e.getSource() == btnImage) {
-                jfcImage.setCurrentDirectory(new File("user.dir"));
-                FileNameExtensionFilter fneFilter = new FileNameExtensionFilter("Images", "jpg", "png");
-                jfcImage.addChoosableFileFilter(fneFilter);
-                int res = jfcImage.showOpenDialog(null);
-
-              if (res == JFileChooser.APPROVE_OPTION) {
-                    File fSelect = jfcImage.getSelectedFile();
-                    String fDirectory = fSelect.getAbsolutePath();
-                    ImageIcon path = new ImageIcon(fDirectory);
-                    Image img = path.getImage();
-                    Image newImg = img.getScaledInstance(500, 300, Image.SCALE_SMOOTH);
-                    ImageIcon image = new ImageIcon(newImg);
-                    lblImage.setIcon(image);
-               }
-        } else if (e.getSource() == btnAddImage) {
-
-            lblImage.setIcon(null);
-
-        } else if(e.getSource() == btnSignOut) {
-            int response = JOptionPane.showConfirmDialog(this, "You are signing out\nClick ok to proceed","Sign out",JOptionPane.OK_CANCEL_OPTION);
-            if(response == JOptionPane.OK_OPTION) {
-                // pupunta sa home page
-                  dispose();
-                  welcomePage frame = new welcomePage();
-                  frame.setVisible(true);
-            } 
-        } else if(e.getSource() == btnChangePassword) {
-           
-              new changePassword();
-              dispose();
             
+            jfcImage.setCurrentDirectory(new File("user.dir"));
+            
+            FileNameExtensionFilter fneFilter = new FileNameExtensionFilter("*.images", "jpg", "png");
+            jfcImage.addChoosableFileFilter(fneFilter);
+            
+            int res = jfcImage.showOpenDialog(null);
+        
+                if (res == JFileChooser.APPROVE_OPTION) {
+                    File fSelect = jfcImage.getSelectedFile();
+                    String imagePath = fSelect.getAbsolutePath();
+
+                    ImageIcon path = new ImageIcon(imagePath);
+                    ImageIcon imageIcon = new ImageIcon(path.getImage().getScaledInstance(500, 300, Image.SCALE_SMOOTH));
+
+                    lblImage.setIcon(imageIcon);
+                }
+        }else if (e.getSource() == btnAddImage) {
+            
+        }else if(e.getSource() == btnSignOut) {
+            
+            int response = JOptionPane.showConfirmDialog(this, "You are signing out\nClick ok to proceed","Sign out",JOptionPane.OK_CANCEL_OPTION);
+            
+            if(response == JOptionPane.OK_OPTION) {
+        
+                //Temporary
+                
+                JOptionPane.showMessageDialog(null, "Signed Out");
+                dispose();
+//               new welcomePage();
+            } 
+        }else if(e.getSource() == btnChangePassword) {
+            
+               new changePassword();
+               dispose();
+            
+          
         }
        
+    }
+    
+    public static void main(String[] args) {
+       new adminPage();
     }
    
 }
