@@ -35,7 +35,7 @@ public class welcomePage extends JFrame implements  ActionListener{
         lblWelcome.setFont(new Font("Arial", Font.PLAIN, 25));
         add(lblWelcome);
         
-        lblRealEstate = new JLabel("Quahog Springfield Real Estate");
+        lblRealEstate = new JLabel("Richfield Real Estate");
         lblRealEstate.setBounds(0,100,400,50);
         lblRealEstate.setHorizontalAlignment(JLabel.CENTER);
         lblRealEstate.setFont(new Font("Arial", Font.PLAIN, 25));
@@ -46,7 +46,7 @@ public class welcomePage extends JFrame implements  ActionListener{
         jpLogo.setBackground(Color.red);
         add(jpLogo);
         
-        lblTagLine1 = new JLabel("From Springfield to Spooner Street");
+        lblTagLine1 = new JLabel("Greener as ever, Trees everywhere");
         lblTagLine1.setBounds(0,380,400,20);
         lblTagLine1.setHorizontalAlignment(JLabel.CENTER);
         lblTagLine1.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -78,7 +78,7 @@ public class welcomePage extends JFrame implements  ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==btnLogin){
-         //   new loginPage();
+         //  new loginPage();
             dispose();
             
         } else if(e.getSource() == btnSignUp) {
