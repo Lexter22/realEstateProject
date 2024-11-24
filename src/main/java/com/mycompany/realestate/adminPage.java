@@ -392,6 +392,7 @@ public class adminPage extends JFrame implements ActionListener{
                 //Temporary
                 
                 JOptionPane.showMessageDialog(null, "Signed Out");
+                new welcomePage();
                 dispose();
 //               new welcomePage();
             } 
