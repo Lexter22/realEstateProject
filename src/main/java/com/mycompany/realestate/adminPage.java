@@ -388,24 +388,19 @@ public class adminPage extends JFrame implements ActionListener{
             int response = JOptionPane.showConfirmDialog(this, "You are signing out\nClick ok to proceed","Sign out",JOptionPane.OK_CANCEL_OPTION);
             
             if(response == JOptionPane.OK_OPTION) {
-        
-                //Temporary
-                
+       
                 JOptionPane.showMessageDialog(null, "Signed Out");
                 dispose();
-//               new welcomePage();
+              new welcomePage();
             } 
         }else if(e.getSource() == btnChangePassword) {
             
-                 //Temporary
+                new changePassword();
+                dispose();
             
-            JOptionPane.showInputDialog(null, "Enter new admin password");
+            
         }
        
-    }
-    
-    public static void main(String[] args) {
-       new adminPage();
     }
    
 }
