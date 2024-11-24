@@ -42,7 +42,7 @@ public class adminPage extends JFrame implements ActionListener{
         panelLogo.setBackground(Color.green);
         add(panelLogo);
         
-        lblHeader=new JLabel("QUAHOG SPRINGFIELDS");
+        lblHeader=new JLabel("Richfield");
         lblHeader.setBounds(120,10,350,50);
         lblHeader.setForeground(Color.white);
         lblHeader.setFont(new Font("Arial", Font.BOLD, 25));
@@ -248,7 +248,7 @@ public class adminPage extends JFrame implements ActionListener{
         String[][] data2 = {{"1", "Lex", "Reyes", "Lexterqtqt", "91234567890", "lexterqtqt@gmail.com"},
                             {"2", "Abdul", "Disomimba", "Abdulmalik22", "91235621", "malik@gmail.com"}};
         String[] tablecolumn2 = {"ID", "First Name", "Last Name", "Username", "Contact No.", "Email"};
-        
+        // sa database mang gagaling
         tableUserModel = new DefaultTableModel(data2, tablecolumn2);
         tableUser = new JTable(tableUserModel);
         tableUser.setDefaultEditor(Object.class, null);
@@ -286,6 +286,7 @@ public class adminPage extends JFrame implements ActionListener{
         panelTransaction.setBounds(0, 0, 800, 560);
         transactJPanel.add(panelTransaction);
         
+        // sa database ito kukunin
         String[][] transactions = {{"123", "property123", "ClientID", "10/28/2024"}};
         String[] transactionsColumns = {"Transaction ID", "Property ID", "Client ID", "Date"};
         tableTransactionModel = new DefaultTableModel(transactions, transactionsColumns);
