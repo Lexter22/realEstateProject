@@ -392,16 +392,14 @@ public class adminPage extends JFrame implements ActionListener{
                 //Temporary
                 
                 JOptionPane.showMessageDialog(null, "Signed Out");
-                new welcomePage();
                 dispose();
 //               new welcomePage();
             } 
         }else if(e.getSource() == btnChangePassword) {
             
-               new changePassword();
-               dispose();
+                 //Temporary
             
-          
+            JOptionPane.showInputDialog(null, "Enter new admin password");
         }
        
     }

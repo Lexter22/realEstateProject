@@ -88,7 +88,7 @@ public class changePassword extends JFrame implements  ActionListener{
                             Logger.getLogger(changePassword.class.getName()).log(Level.SEVERE, null, ex);
               }
         } else {
-            new adminPage();
+         //   new adminPage();
             dispose();
         }
     }

@@ -10,6 +10,6 @@ package com.mycompany.realestate;
  */
 public class adminPageMain {
     public static void main(String[] args) {
-        new adminPage();
+       // new adminPage();
     }
 }
