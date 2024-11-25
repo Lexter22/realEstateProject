@@ -80,10 +80,12 @@ public class welcomePage extends JFrame implements  ActionListener{
         if(e.getSource()==btnLogin){
          //  new loginPage();
             dispose();
+            // dito papasok sql
             
         } else if(e.getSource() == btnSignUp) {
 //            new signUp();
 //            dispose();
+//            dito rin papasok sql
         }
     }
  
