@@ -80,7 +80,7 @@ private JPanel pnPic;
                
         setVisible(true);
 
-    }
+    
 //    public void detailsMethod(String name,String propertyID,String location,String price,String note){
 //        lblNameId.setText("Name: "+name);
 //        lblLocation.setText("Location: "+location);         ito yung method para magamit natin para maulit

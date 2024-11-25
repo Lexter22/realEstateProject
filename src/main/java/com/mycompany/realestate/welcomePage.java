@@ -83,7 +83,7 @@ public class welcomePage extends JFrame implements  ActionListener{
            
             
         } else if(e.getSource() == btnSignUp) {
-            new signUp();
+            new SignUp();
             dispose();
         }
     }

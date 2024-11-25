@@ -123,7 +123,7 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
         @Override
     public void mouseClicked(MouseEvent e) {
      if(e.getSource()==lblsignup){
-         new signUp();
+         new SignUp();
          dispose();
      }
     }
@@ -174,6 +174,10 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
         
         
 }
+
+    private void signUp() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
 
      
