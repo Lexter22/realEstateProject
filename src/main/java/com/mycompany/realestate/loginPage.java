@@ -1,10 +1,7 @@
 package com.mycompany.realestate;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Image;
 import javax.swing.ImageIcon;
-import com.mycompany.realestate.loginPage;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -13,10 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.JPasswordField;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 
