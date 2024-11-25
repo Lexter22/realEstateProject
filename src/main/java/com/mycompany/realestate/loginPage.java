@@ -4,14 +4,23 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import com.mycompany.realestate.loginPage;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.JPasswordField;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
-public class loginPage extends JFrame{
+
+public class loginPage extends JFrame implements ActionListener{
     private JLabel hdrLogin,lblUserName,lblPassword,lblProfile;
     private JPanel pnlLogin;
     private JTextField txtUsername,txtPassword;
@@ -107,7 +116,22 @@ public class loginPage extends JFrame{
         setVisible(true);
         
     }
-     public static void main (String[] args){
-        new loginPage();
-    }
+    
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
+        
+        if(e.getSource()==btnBack){
+            
+//            welcomePage frame = new welcomePage();
+//            frame.setVisible(true);
+//            dispose();
+            
+        }
+        
+        
 }
+     
+}
+      
