@@ -9,6 +9,8 @@ package com.mycompany.realestate;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,7 +21,7 @@ import javax.swing.JTextArea;
  *
  * @author johnl
  */
-public class transactInfo extends JFrame {
+public class transactInfo extends JFrame implements ActionListener {
     
 private JLabel lblNameId, lblID, lblPrice, lblLocation;
 private JTextArea txaInfo;
@@ -70,14 +72,18 @@ private JPanel pnPic;
         add(pnPic);
                
         setVisible(true);
+        btnBack.addActionListener(this);
     }
-//    public void detailsMethod(String name,String propertyID,String location,String price,String note){
-//        lblNameId.setText("Name: "+name);
-//        lblLocation.setText("Location: "+location);         ito yung method para magamit natin para maulit
-//        lblID.setText("Property ID: "+propertyID);
-//        lblPrice.setText("Price: "+price);
-//        txaInfo.add(this);
-//    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource()==btnBack){
+            new ClientInterface();
+            dispose();
+        }
+    }
+    }
+
    
    
-}
+
