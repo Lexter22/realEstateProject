@@ -16,7 +16,7 @@ public class adminPage extends JFrame implements ActionListener{
 
     
     private JPanel panelLogo, panelHeader, panelUsers, panelADD, panelDelete, panelProfile, transactJPanel, homeJPanel,panelAddLayout,panelHome,panelTransaction,panelUsersPanel; 
-    private JLabel lblRichfield, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails,lblUsers, previewImg;
+    private JLabel lblRichField, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails,lblUsers, previewImg;
     private JButton btnHome, btnAdd, btnDel, btnTransact, btnUsers,  btnProfile,btnImage,btnAddImage,btnChangePassword,btnSignOut,btnUserSearch;
     private JTabbedPane jtab;
     private JTable tableEstate, tableUser,tableTransactions;
@@ -42,11 +42,11 @@ public class adminPage extends JFrame implements ActionListener{
         panelLogo.setBackground(Color.green);
         add(panelLogo);
         
-        lblRichfield=new JLabel("RICHFIELD");
-        lblRichfield.setBounds(120,10,350,50);
-        lblRichfield.setForeground(Color.WHITE);
-        lblRichfield.setFont(new Font("Arial", Font.BOLD, 25));
-        add(lblRichfield);
+        lblRichField=new JLabel("RICHFIELD");
+        lblRichField.setBounds(120,10,350,50);
+        lblRichField.setForeground(Color.WHITE);
+        lblRichField.setFont(new Font("Arial", Font.BOLD, 25));
+        add(lblRichField);
         
         lblRealEstates=new JLabel("REAL ESTATES");
         lblRealEstates.setBounds(120,40,300,50);
