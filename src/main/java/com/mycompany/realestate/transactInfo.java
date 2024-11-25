@@ -9,10 +9,8 @@ package com.mycompany.realestate;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.HeadlessException;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,14 +21,13 @@ import javax.swing.JTextArea;
  *
  * @author johnl
  */
-public class moreInfo extends JFrame implements ActionListener{
-
+public class transactInfo extends JFrame implements ActionListener {
     
 private JLabel lblNameId, lblID, lblPrice, lblLocation;
 private JTextArea txaInfo;
-private JButton btnBack, btnBuy;
+private JButton btnBack;
 private JPanel pnPic;
-    public moreInfo(){
+    public transactInfo(){
         
         setTitle("Details");
         setSize(800,700);
@@ -66,12 +63,8 @@ private JPanel pnPic;
         add(txaInfo);
         
         btnBack = new JButton("Back");
-        btnBack.setBounds(550, 610, 75, 30);
+        btnBack.setBounds(650, 610, 75, 30);
         add(btnBack);
-        
-        btnBuy = new JButton("Buy");
-        btnBuy.setBounds(650, 610, 75, 30);
-        add(btnBuy);
         
         pnPic = new JPanel();
         pnPic.setBounds(400, 50, 330, 230);
@@ -79,30 +72,18 @@ private JPanel pnPic;
         add(pnPic);
                
         setVisible(true);
-
-    }
-//    public void detailsMethod(String name,String propertyID,String location,String price,String note){
-//        lblNameId.setText("Name: "+name);
-//        lblLocation.setText("Location: "+location);         ito yung method para magamit natin para maulit
-//        lblID.setText("Property ID: "+propertyID);
-//        lblPrice.setText("Price: "+price);
-//        txaInfo.add(this);
-//    }
-
-        
         btnBack.addActionListener(this);
-        btnBuy.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()== btnBuy){
-            new purchasePage();
-            dispose();
-        }else if(e.getSource()==btnBack){
+        if(e.getSource()==btnBack){
             new ClientInterface();
             dispose();
         }
     }
+    }
+
    
-}
+   
+
