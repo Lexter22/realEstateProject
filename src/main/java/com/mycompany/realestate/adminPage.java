@@ -16,7 +16,7 @@ public class adminPage extends JFrame implements ActionListener{
 
     
     private JPanel panelLogo, panelHeader, panelUsers, panelADD, panelDelete, panelProfile, transactJPanel, homeJPanel,panelAddLayout,panelHome,panelTransaction,panelUsersPanel; 
-    private JLabel lblHeader, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails,lblUsers, previewImg;
+    private JLabel lblRichfield, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails,lblUsers, previewImg;
     private JButton btnHome, btnAdd, btnDel, btnTransact, btnUsers,  btnProfile,btnImage,btnAddImage,btnChangePassword,btnSignOut,btnUserSearch;
     private JTabbedPane jtab;
     private JTable tableEstate, tableUser,tableTransactions;
@@ -34,7 +34,7 @@ public class adminPage extends JFrame implements ActionListener{
         
         setSize(1200, 700);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         
         panelLogo=new JPanel();
@@ -42,11 +42,11 @@ public class adminPage extends JFrame implements ActionListener{
         panelLogo.setBackground(Color.green);
         add(panelLogo);
         
-        lblHeader=new JLabel("Richfield");
-        lblHeader.setBounds(120,10,350,50);
-        lblHeader.setForeground(Color.white);
-        lblHeader.setFont(new Font("Arial", Font.BOLD, 25));
-        add(lblHeader);
+        lblRichfield=new JLabel("RICHFIELD");
+        lblRichfield.setBounds(120,10,350,50);
+        lblRichfield.setForeground(Color.WHITE);
+        lblRichfield.setFont(new Font("Arial", Font.BOLD, 25));
+        add(lblRichfield);
         
         lblRealEstates=new JLabel("REAL ESTATES");
         lblRealEstates.setBounds(120,40,300,50);
@@ -54,10 +54,10 @@ public class adminPage extends JFrame implements ActionListener{
         lblRealEstates.setFont(new Font("Arial", Font.BOLD, 15));
         add(lblRealEstates);
         
-        accountIc = new ImageIcon("C:\\Users\\AACI Admin\\Pictures\\ClientUI\\infoIcon.png");
+        accountIc = new ImageIcon("C:\\Group 10\\realEstateProject\\realEstate\\src\\main\\java\\com\\mycompany\\realestate\\images\\infoIcon.png");
         finalAccountIc = new ImageIcon(accountIc.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 
-        homeIc = new ImageIcon("C:\\Users\\AACI Admin\\Pictures\\ClientUI\\homeIcon.png");
+        homeIc = new ImageIcon("C:\\Group 10\\realEstateProject\\realEstate\\src\\main\\java\\com\\mycompany\\realestate\\images\\homeIcon.png");
         finalHomeIc = new ImageIcon(homeIc.getImage().getScaledInstance(30,30, Image.SCALE_SMOOTH));
         
         btnHome=new JButton();
@@ -124,7 +124,7 @@ public class adminPage extends JFrame implements ActionListener{
         btnAddImage.setBounds(950, 450, 200, 50);
         panelAddLayout.add(btnAddImage);
         
-        clientIc = new ImageIcon("C:\\Users\\AACI Admin\\Pictures\\ClientUI\\accountIcon.png");
+        clientIc = new ImageIcon("C:\\Group 10\\realEstateProject\\realEstate\\src\\main\\java\\com\\mycompany\\realestate\\images\\accountIcon.png");
         finalClientIc = new ImageIcon(clientIc.getImage().getScaledInstance(30,30, Image.SCALE_SMOOTH));
         
         btnUsers=new JButton();
@@ -136,7 +136,7 @@ public class adminPage extends JFrame implements ActionListener{
         btnUsers.setFont(new Font("Arial", Font.BOLD, 15));
         add(btnUsers);
         
-        transIc = new ImageIcon("C:\\Users\\AACI Admin\\Pictures\\ClientUI\\transIcon.png");
+        transIc = new ImageIcon("C:\\Group 10\\realEstateProject\\realEstate\\src\\main\\java\\com\\mycompany\\realestate\\images\\transIcon.png");
         finalTransIc = new ImageIcon(transIc.getImage().getScaledInstance(30,30, Image.SCALE_SMOOTH));
         
         btnTransact=new JButton();
@@ -391,8 +391,8 @@ public class adminPage extends JFrame implements ActionListener{
             if(response == JOptionPane.OK_OPTION) {
        
                 JOptionPane.showMessageDialog(null, "Signed Out");
+                new welcomePage();
                 dispose();
-              new welcomePage();
             } 
         }else if(e.getSource() == btnChangePassword) {
             
