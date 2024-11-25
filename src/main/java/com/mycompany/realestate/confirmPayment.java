@@ -4,49 +4,54 @@
  */
 package com.mycompany.realestate;
 
-import java.awt.*;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JFrame;
+import javax.swing.JPasswordField;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 
 /**
  *
  * @author jcasu
  */
 public class confirmPayment extends JFrame implements ActionListener{
-private JLabel hdrConPay, hdrPass, hdrRetype1, hdrRetype2;
+private JLabel lblConfirPayment, lblPassword, lblRetypePass1, lblRetypePass2;
 private JPasswordField passWord, retypePass;
 private JButton btnBack, btnContinue;
 
 
     confirmPayment(){
-        setTitle("QRSE");
+        setTitle("Property Transaction");
         setSize(400, 600);
         setLayout(null);
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
         
-        hdrConPay = new JLabel("Confirm Payment");
-        hdrConPay.setBounds(105, 10, 180, 100);
-        hdrConPay.setHorizontalAlignment(SwingConstants.CENTER);
-        hdrConPay.setFont(new Font("Arial", Font.BOLD, 20));
-        add(hdrConPay);
+        lblConfirPayment = new JLabel("Confirm Payment");
+        lblConfirPayment.setBounds(105, 10, 180, 100);
+        lblConfirPayment.setHorizontalAlignment(SwingConstants.CENTER);
+        lblConfirPayment.setFont(new Font("Arial", Font.BOLD, 20));
+        add(lblConfirPayment);
         
-        hdrPass = new JLabel("Password:");
-        hdrPass.setBounds(20, 180, 80, 30);
-        add(hdrPass);
+        lblPassword = new JLabel("Password:");
+        lblPassword.setBounds(20, 180, 80, 30);
+        add(lblPassword);
         
         passWord = new JPasswordField();
         passWord.setBounds(90, 180, 260, 30);
         add(passWord);
         
-        hdrRetype1 = new JLabel("Retype");
-        hdrRetype2 = new JLabel("Password:");
-        hdrRetype1.setBounds(20, 240, 120, 30);
-        hdrRetype2.setBounds(20, 260, 120, 30);
-        add(hdrRetype1);
-        add(hdrRetype2);
+        lblRetypePass1 = new JLabel("Retype");
+        lblRetypePass2 = new JLabel("Password:");
+        lblRetypePass1.setBounds(20, 240, 120, 30);
+        lblRetypePass2.setBounds(20, 260, 120, 30);
+        add(lblRetypePass1);
+        add(lblRetypePass2);
         
         retypePass = new JPasswordField();
         retypePass.setBounds(90, 250, 260, 30);
