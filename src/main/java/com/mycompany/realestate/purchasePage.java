@@ -4,17 +4,22 @@
  */
 package com.mycompany.realestate;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 /**
  *
  * @author jcasu
  */
 public class purchasePage extends JFrame implements ActionListener{
-    private JLabel hdrTitle, hdrPurchasingForm, hdrId, hdrLocation, hdrDate;
+    private JLabel lblRichField, lbPurchaseForm, lblId, lblLocation, lblDate;
     private JButton btnBack, btnContinue;
     private JPanel  logoPanel;
         
@@ -23,37 +28,37 @@ public class purchasePage extends JFrame implements ActionListener{
         setSize(400, 600);
         setLayout(null);
         setLocationRelativeTo(null);
-        //setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
  
-        hdrTitle = new JLabel("QRSE");
-        hdrTitle.setBounds(150, 10, 100, 80);
-        hdrTitle.setHorizontalAlignment(SwingConstants.CENTER);
-        hdrTitle.setFont(new Font("Arial", Font.PLAIN, 34));
-        add(hdrTitle);
+        lblRichField = new JLabel("RichField Real Estates");
+        lblRichField.setBounds(110, 5, 170, 80);
+        lblRichField.setHorizontalAlignment(SwingConstants.CENTER);
+        lblRichField.setFont(new Font("Arial", Font.BOLD, 15));
+        add(lblRichField);
         
         logoPanel = new JPanel();
         logoPanel.setBounds(140, 80, 110, 110);
-        logoPanel.setBackground(Color.red);
+        logoPanel.setBackground(Color.GREEN);
         add(logoPanel);
         
-        hdrPurchasingForm = new JLabel("PURCHASE FORM");
-        hdrPurchasingForm.setHorizontalAlignment(SwingConstants.CENTER);
-        hdrPurchasingForm.setBounds(140, 150, 95, 120);
-        hdrPurchasingForm.setFont(new Font("Arial", Font.BOLD, 10));
-        add(hdrPurchasingForm);
+        lbPurchaseForm = new JLabel("PURCHASE FORM");
+        lbPurchaseForm.setHorizontalAlignment(SwingConstants.CENTER);
+        lbPurchaseForm.setBounds(120, 150, 150, 120);
+        lbPurchaseForm.setFont(new Font("Arial", Font.BOLD, 15));
+        add(lbPurchaseForm);
 
-        hdrId = new JLabel("ID:");
-        hdrId.setBounds(30, 260, 70, 40);
-        add(hdrId);
+        lblId = new JLabel("ID:");
+        lblId.setBounds(30, 260, 70, 40);
+        add(lblId);
         
-        hdrLocation = new JLabel("Location:");
-        hdrLocation.setBounds(30, 320, 70, 40);
-        add(hdrLocation);
+        lblLocation = new JLabel("Location:");
+        lblLocation.setBounds(30, 320, 70, 40);
+        add(lblLocation);
         
-        hdrDate = new JLabel("Date:");
-        hdrDate.setBounds(30, 390, 70, 40);
-        add(hdrDate);
+        lblDate = new JLabel("Date:");
+        lblDate.setBounds(30, 390, 70, 40);
+        add(lblDate);
         
         btnBack = new JButton("Back");
         btnBack.setBounds(110, 480, 110, 30);
