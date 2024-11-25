@@ -14,8 +14,7 @@ public class loginPageMain {
     
     public static void main(String[] args) {
         
-        loginPage frame = new loginPage();
-        frame.setVisible(true);
+       new loginPage();
         
     }
 }
