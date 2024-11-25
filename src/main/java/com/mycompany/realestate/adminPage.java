@@ -17,7 +17,7 @@ public class adminPage extends JFrame implements ActionListener{
 
     
     private JPanel panelLogo, panelHeader, panelUsers, panelADD, panelDelete, panelProfile, transactJPanel, homeJPanel,panelAddLayout,panelTransaction,panelUsersPanel; 
-    private JLabel lblHeader, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails,lblUsers;
+    private JLabel lblRichField, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails,lblUsers;
     private JButton btnHome, btnAdd, btnDel, btnTransact, btnUsers,  btnProfile,btnImage,btnAddImage,btnChangePassword,btnSignOut,btnUserSearch;
     private JTabbedPane jtab;
     private JTable tableEstate, tableUser,tableTransactions;
@@ -40,10 +40,10 @@ public class adminPage extends JFrame implements ActionListener{
         
         
         
-        lblHeader=new JLabel("QUAHOG SPRINGFIELDS");
-        lblHeader.setBounds(120,10,300,50);
-        lblHeader.setFont(new Font("Arial", Font.BOLD, 25));
-        add(lblHeader);
+        lblRichField=new JLabel("QUAHOG SPRINGFIELDS");
+        lblRichField.setBounds(120,10,300,50);
+        lblRichField.setFont(new Font("Arial", Font.BOLD, 25));
+        add(lblRichField);
         
         lblRealEstates=new JLabel("REAL ESTATES");
         lblRealEstates.setBounds(120,40,300,50);
