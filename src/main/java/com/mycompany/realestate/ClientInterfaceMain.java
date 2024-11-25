@@ -4,15 +4,9 @@
  */
 package com.mycompany.realestate;
 
-import com.mycompany.realestate.ClientInterface;
-
-/**
- *
- * @author Admin_2025
- */
 public class ClientInterfaceMain {
   public static void main(String[] args) {
-        new ClientInterface();
-            
+       new ClientInterface();
+
   }
 }
