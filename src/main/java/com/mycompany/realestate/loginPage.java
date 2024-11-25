@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 
@@ -17,7 +18,8 @@ import javax.swing.JTextField;
 public class loginPage extends JFrame implements ActionListener{
     private JLabel hdrLogin,lblUserName,lblPassword,lblProfile;
     private JPanel pnlLogin;
-    private JTextField txtUsername,txtPassword;
+    private JTextField txtUsername;
+    private JPasswordField pfPassword;
     private JButton btnLogin,btnBack;
     private ImageIcon finalAvatarIcon, finalMainBgIC;
     private Color cGreen = (Color.decode("#28A745"));
@@ -74,12 +76,12 @@ public class loginPage extends JFrame implements ActionListener{
         lblPassword.setFont(new Font("Arial",Font.BOLD,15));
         pnlLogin.add(lblPassword);
         
-        txtPassword = new JTextField();
-        txtPassword.setForeground(Color.black);
-        txtPassword.setBackground(cGray);
-        txtPassword.setBounds(100, 80, 130, 30);
+        pfPassword = new JPasswordField();
+        pfPassword.setForeground(Color.black);
+        pfPassword.setBackground(cGray);
+        pfPassword.setBounds(100, 80, 130, 30);
         
-        pnlLogin.add(txtPassword);
+        pnlLogin.add(pfPassword);
                
         btnLogin = new JButton("Login");
         btnLogin.setForeground(Color.white);
