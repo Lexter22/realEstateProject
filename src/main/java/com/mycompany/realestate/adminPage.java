@@ -14,7 +14,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class adminPage extends JFrame implements ActionListener{
 
-    
     private JPanel panelLogo, panelHeader, panelUsers, panelADD, panelDelete, panelProfile, transactJPanel, homeJPanel,panelAddLayout,panelHome,panelTransaction,panelUsersPanel; 
     private JLabel lblRichField, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails,lblUsers, previewImg;
     private JButton btnHome, btnAdd, btnDel, btnTransact, btnUsers,  btnProfile,btnImage,btnAddImage,btnChangePassword,btnSignOut,btnUserSearch;
@@ -54,10 +53,10 @@ public class adminPage extends JFrame implements ActionListener{
         lblRealEstates.setFont(new Font("Arial", Font.BOLD, 15));
         add(lblRealEstates);
         
-        accountIc = new ImageIcon("C:\\Group 10\\realEstateProject\\realEstate\\src\\main\\java\\com\\mycompany\\realestate\\images\\infoIcon.png");
+        accountIc = new ImageIcon("infoIcon.png");
         finalAccountIc = new ImageIcon(accountIc.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 
-        homeIc = new ImageIcon("C:\\Group 10\\realEstateProject\\realEstate\\src\\main\\java\\com\\mycompany\\realestate\\images\\homeIcon.png");
+        homeIc = new ImageIcon("homeIcon.png");
         finalHomeIc = new ImageIcon(homeIc.getImage().getScaledInstance(30,30, Image.SCALE_SMOOTH));
         
         btnHome=new JButton();
@@ -124,7 +123,7 @@ public class adminPage extends JFrame implements ActionListener{
         btnAddImage.setBounds(950, 450, 200, 50);
         panelAddLayout.add(btnAddImage);
         
-        clientIc = new ImageIcon("C:\\Group 10\\realEstateProject\\realEstate\\src\\main\\java\\com\\mycompany\\realestate\\images\\accountIcon.png");
+        clientIc = new ImageIcon("accountIcon.png");
         finalClientIc = new ImageIcon(clientIc.getImage().getScaledInstance(30,30, Image.SCALE_SMOOTH));
         
         btnUsers=new JButton();
@@ -136,7 +135,7 @@ public class adminPage extends JFrame implements ActionListener{
         btnUsers.setFont(new Font("Arial", Font.BOLD, 15));
         add(btnUsers);
         
-        transIc = new ImageIcon("C:\\Group 10\\realEstateProject\\realEstate\\src\\main\\java\\com\\mycompany\\realestate\\images\\transIcon.png");
+        transIc = new ImageIcon("transIcon.png");
         finalTransIc = new ImageIcon(transIc.getImage().getScaledInstance(30,30, Image.SCALE_SMOOTH));
         
         btnTransact=new JButton();
