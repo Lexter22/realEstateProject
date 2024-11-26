@@ -20,7 +20,7 @@ import javax.swing.SwingConstants;
  */
 public class confirmPayment extends JFrame implements ActionListener{
 private JLabel lblConfirPayment, lblPassword, lblRetypePass1, lblRetypePass2;
-private JPasswordField passWord, retypePass;
+private JPasswordField inputPassword, retypePass;
 private JButton btnBack, btnContinue;
 
 
@@ -42,9 +42,9 @@ private JButton btnBack, btnContinue;
         lblPassword.setBounds(20, 180, 80, 30);
         add(lblPassword);
         
-        passWord = new JPasswordField();
-        passWord.setBounds(90, 180, 260, 30);
-        add(passWord);
+        inputPassword = new JPasswordField();
+        inputPassword.setBounds(90, 180, 260, 30);
+        add(inputPassword);
         
         lblRetypePass1 = new JLabel("Retype");
         lblRetypePass2 = new JLabel("Password:");
@@ -80,17 +80,20 @@ private JButton btnBack, btnContinue;
             dispose(); 
             
         } else if (e.getSource() == btnContinue){
-            String pass = passWord.getText();
+            String passWord = inputPassword.getText();
             String retypePassword = new String(retypePass.getPassword());
             
-            if (pass.isEmpty()){
+            if (passWord.equals(retypePassword) && !passWord.isEmpty()){
+                    JOptionPane.showMessageDialog(this, "Purchase Successful\nClick OK to continue.", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
+                    
+                    new receiptPage();
+                    dispose();
+                    
+                
+            } else if (passWord.isEmpty()){
                 JOptionPane.showMessageDialog(this, "Password cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
-            }else if (retypePassword.isEmpty()){
-                JOptionPane.showMessageDialog(this, "Password is required. Please re-type your password", "Error", JOptionPane.ERROR_MESSAGE);
-            }else if (!pass.equals(retypePassword)){
-                 JOptionPane.showMessageDialog(this, "Password does not match", "Error", JOptionPane.ERROR_MESSAGE);
-            }else{
-                JOptionPane.showMessageDialog(this, "Purchase Successful!\n\nClick OK to continue ", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Password does not match", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         
