@@ -1,29 +1,27 @@
 package com.mycompany.realestate;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Image;
 import javax.swing.ImageIcon;
-import com.mycompany.realestate.loginPage;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.JPasswordField;
-import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 
 
-public class loginPage extends JFrame implements ActionListener{
-    private JLabel hdrLogin,lblUserName,lblPassword,lblProfile;
+public class loginPage extends JFrame implements ActionListener, MouseListener{
+    private JLabel hdrLogin,lblUserName,lblPassword,lblProfile,lblsignup;
     private JPanel pnlLogin;
-    private JTextField txtUsername,txtPassword;
+    private JTextField txtUsername;
+    private JPasswordField pfPassword;
     private JButton btnLogin,btnBack;
     private ImageIcon finalAvatarIcon, finalMainBgIC;
     private Color cGreen = (Color.decode("#28A745"));
@@ -37,7 +35,7 @@ public class loginPage extends JFrame implements ActionListener{
         setLayout(null);
         setLocationRelativeTo(null);
         
-        ImageIcon mainBg = new ImageIcon("C:\\Users\\AACI Admin\\Pictures\\ClientUI\\mainBg.png");
+        ImageIcon mainBg = new ImageIcon("mainBg.png");
         finalMainBgIC = new ImageIcon(mainBg.getImage().getScaledInstance(400, 600, Image.SCALE_SMOOTH));
         
         hdrLogin = new JLabel("Login");
@@ -47,7 +45,7 @@ public class loginPage extends JFrame implements ActionListener{
         hdrLogin.setFont(new Font("Arial",Font.BOLD,30));
         add(hdrLogin);
         
-        ImageIcon avatarIcon = new ImageIcon("C:\\Users\\AACI Admin\\Pictures\\ClientUI\\avatarIcon.png");
+        ImageIcon avatarIcon = new ImageIcon("avatarIcon.png");
         finalAvatarIcon = new ImageIcon(avatarIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH));
         
         lblProfile = new JLabel();
@@ -80,12 +78,12 @@ public class loginPage extends JFrame implements ActionListener{
         lblPassword.setFont(new Font("Arial",Font.BOLD,15));
         pnlLogin.add(lblPassword);
         
-        txtPassword = new JTextField();
-        txtPassword.setForeground(Color.black);
-        txtPassword.setBackground(cGray);
-        txtPassword.setBounds(100, 80, 130, 30);
+        pfPassword = new JPasswordField();
+        pfPassword.setForeground(Color.black);
+        pfPassword.setBackground(cGray);
+        pfPassword.setBounds(100, 80, 130, 30);
         
-        pnlLogin.add(txtPassword);
+        pnlLogin.add(pfPassword);
                
         btnLogin = new JButton("Login");
         btnLogin.setForeground(Color.white);
@@ -93,7 +91,7 @@ public class loginPage extends JFrame implements ActionListener{
         btnLogin.setBounds(110, 120, 110, 30);
         pnlLogin.add(btnLogin);
         
-        JLabel lblsignup = new JLabel("I don't have an account");
+        lblsignup = new JLabel("I don't have an account");
         lblsignup.setBounds(0,150,250,30);
         lblsignup.setForeground(Color.white);
         lblsignup.setHorizontalAlignment(SwingConstants.CENTER);
@@ -113,10 +111,36 @@ public class loginPage extends JFrame implements ActionListener{
         lblBg.setBounds(0,0,400,600);
         lblmainBg.add(lblBg);   
         
+        btnBack.addActionListener(this);
+        btnLogin.addActionListener(this);
+        lblsignup.addMouseListener(this);
+        
+        
         setVisible(true);
         
     }
     
+        @Override
+    public void mouseClicked(MouseEvent e) {
+     if(e.getSource()==lblsignup){
+         new SignUp();
+         dispose();
+     }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {}
+
+    @Override
+    public void mouseEntered(MouseEvent e) {}
+
+    @Override
+    public void mouseExited(MouseEvent e) {}
     
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -124,14 +148,38 @@ public class loginPage extends JFrame implements ActionListener{
         
         if(e.getSource()==btnBack){
             
-//            welcomePage frame = new welcomePage();
-//            frame.setVisible(true);
-//            dispose();
+            new welcomePage().setVisible(true);
+            dispose();
             
+        }
+        
+        else if(e.getSource()==btnLogin){
+            
+            String username = txtUsername.getText();
+            String userPassword = pfPassword.getText();
+            String adminPassword = pfPassword.getText();
+            if (username.equals("Admin") && adminPassword.equals("Admin123")) {
+                new adminPage();
+                dispose();
+            }
+            else if (username.equals("User") && userPassword.equals("User123")) {
+                new ClientInterface();
+                dispose();
+         
+            }
+           // temporary, sa sql ito papasok
+                
+                        
         }
         
         
 }
+
+    private void signUp() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+
      
 }
       

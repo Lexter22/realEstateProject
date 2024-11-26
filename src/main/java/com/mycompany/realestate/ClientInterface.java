@@ -312,7 +312,8 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
               String price = (String) itemT.getValueAt(selectedRowItem, 1); 
               String id = (String) itemT.getValueAt(selectedRowItem, 2); 
               String status = (String) itemT.getValueAt(selectedRowItem, 3);
-               new moreInfo();
+
+              new moreInfo().setVisible(true);
               dispose();
         }
       }else if (e.getSource()== btnViewOwned) {
@@ -322,7 +323,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
               String price = (String) accTable.getValueAt(selectedRowAccItem, 1); 
               String id = (String) accTable.getValueAt(selectedRowAccItem, 2); 
               String status = (String) accTable.getValueAt(selectedRowAccItem, 3);
-                 new transactInfo().setVisible(true);
+              new transactInfo().setVisible(true);
               dispose();
         }
       }

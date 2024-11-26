@@ -1,10 +1,18 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.mycompany.realestate;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.*;
 
-public class signUp extends JFrame {
-    private JLabel hdrSignUp, lblFName,lblLName, lblUsername, lblContact, lblEmail, lblRetypePass, lblPassword;
+public class SignUp extends JFrame implements ActionListener, MouseListener{
+    private JLabel hdrSignUp, lblFName,lblLName, lblUsername, lblContact, lblEmail, lblRetypePass, lblPassword, lbllogin;
     private JPanel pnlSignUp;
     private JButton btnBack;
     private JTextField txtName, txtUsername, txtContact, txtEmail;
@@ -14,7 +22,7 @@ public class signUp extends JFrame {
     private Color cGray = (Color.decode("#E0E0E0"));
     private Color cBlue = (Color.decode("#004A8C"));
     
-    public signUp() {
+    public SignUp() {
         
         setSize(400,600);
         setTitle("Sign up");
@@ -22,7 +30,7 @@ public class signUp extends JFrame {
         setLayout(null);
         setLocationRelativeTo(null);
         
-        ImageIcon mainBg = new ImageIcon("C:\\Users\\AACI Admin\\Pictures\\ClientUI\\mainBg.png");
+        ImageIcon mainBg = new ImageIcon("mainBg.png");
         finalMainBgIC = new ImageIcon(mainBg.getImage().getScaledInstance(400, 600, Image.SCALE_SMOOTH));
 
         hdrSignUp = new JLabel("Sign Up");
@@ -116,7 +124,7 @@ public class signUp extends JFrame {
         btnSignUp.setBackground(cGreen);
         pnlSignUp.add(btnSignUp);
         
-        JLabel lbllogin = new JLabel("I have an account");
+        lbllogin = new JLabel("I have an account");
         lbllogin.setBounds(10,395,220,30);
         lbllogin.setForeground(Color.white);
         lbllogin.setHorizontalAlignment(SwingConstants.CENTER);
@@ -142,9 +150,46 @@ public class signUp extends JFrame {
         btnBack.setBounds(10, 10, 80, 30);
         add(btnBack);
         
+        lbllogin.addMouseListener(this);
+        btnSignUp.addActionListener(this);
+        btnBack.addActionListener(this);
+        
         setVisible(true);
     }
-    public static void main (String[] args){
-        new signUp();
+   
+    
+        @Override
+    public void mouseClicked(MouseEvent e) {
+    if(e.getSource()==lbllogin){
+     
+        new loginPage();
+        dispose();
+    }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {}
+
+    @Override
+    public void mouseReleased(MouseEvent e) {}
+
+    @Override
+    public void mouseEntered(MouseEvent e) {}
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource()==btnBack){
+            new welcomePage().setVisible(true);
+            dispose();
+         }
+    }
+
+ public static void main (String[] args){
+        new SignUp();
+
     }
 }
