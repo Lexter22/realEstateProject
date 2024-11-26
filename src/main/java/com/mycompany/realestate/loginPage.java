@@ -35,7 +35,7 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
         setLayout(null);
         setLocationRelativeTo(null);
         
-        ImageIcon mainBg = new ImageIcon("C:\\Users\\AACI Admin\\Pictures\\ClientUI\\mainBg.png");
+        ImageIcon mainBg = new ImageIcon("mainBg.png");
         finalMainBgIC = new ImageIcon(mainBg.getImage().getScaledInstance(400, 600, Image.SCALE_SMOOTH));
         
         hdrLogin = new JLabel("Login");
@@ -45,7 +45,7 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
         hdrLogin.setFont(new Font("Arial",Font.BOLD,30));
         add(hdrLogin);
         
-        ImageIcon avatarIcon = new ImageIcon("C:\\Users\\AACI Admin\\Pictures\\ClientUI\\avatarIcon.png");
+        ImageIcon avatarIcon = new ImageIcon("avatarIcon.png");
         finalAvatarIcon = new ImageIcon(avatarIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH));
         
         lblProfile = new JLabel();

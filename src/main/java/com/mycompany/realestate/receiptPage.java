@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 public class receiptPage extends JFrame implements ActionListener{
     
     
-    private JLabel lblQuahogSpringField1, lblQuahogSpringField2, lblName, lblUserName, lblDate, lblTime, lblProductName, lblProductID, lblPrice, lblTransactionID, lblPurchasedEstate, lblOfficial, lblThankYou;
+    private JLabel lblRichfield, lblRichfield2, lblName, lblUserName, lblDate, lblTime, lblProductName, lblProductID, lblPrice, lblTransactionID, lblPurchasedEstate, lblOfficial, lblThankYou;
     private JPanel jpLogo;
     private JButton btnBackToHome;
     
@@ -36,18 +36,18 @@ public class receiptPage extends JFrame implements ActionListener{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         
-        lblQuahogSpringField1 = new JLabel("Quahog Springfield");
-        lblQuahogSpringField1.setBounds(20, 20, 360, 30);
-        lblQuahogSpringField1.setHorizontalAlignment(JLabel.CENTER);
-        lblQuahogSpringField1.setFont(new Font("Arial", Font.PLAIN, 25));
-        add(lblQuahogSpringField1);
+        lblRichfield = new JLabel("Richfield");
+        lblRichfield.setBounds(20, 20, 360, 30);
+        lblRichfield.setHorizontalAlignment(JLabel.CENTER);
+        lblRichfield.setFont(new Font("Arial", Font.PLAIN, 25));
+        add(lblRichfield);
         
         
-        lblQuahogSpringField2 = new JLabel("Real Estates");
-        lblQuahogSpringField2.setBounds(20, 55, 360, 20);
-        lblQuahogSpringField2.setHorizontalAlignment(JLabel.CENTER);
-        lblQuahogSpringField2.setFont(new Font("Arial", Font.PLAIN, 15));
-        add(lblQuahogSpringField2);
+        lblRichfield2 = new JLabel("Real Estates");
+        lblRichfield2.setBounds(20, 55, 360, 20);
+        lblRichfield2.setHorizontalAlignment(JLabel.CENTER);
+        lblRichfield2.setFont(new Font("Arial", Font.PLAIN, 15));
+        add(lblRichfield2);
         
         
         jpLogo = new JPanel();
@@ -156,9 +156,9 @@ public class receiptPage extends JFrame implements ActionListener{
             
             //temperary to welcomPage
             
-//            welcomePage welcome = new welcomePage();
-//            welcome.setVisible(true);
-//            dispose();
+            welcomePage welcome = new welcomePage();
+            welcome.setVisible(true);
+            dispose();
             
             
         }
