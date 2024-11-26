@@ -148,7 +148,7 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
         
         if(e.getSource()==btnBack){
             
-            new welcomePage();   
+            new welcomePage().setVisible(true);
             dispose();
             
         }
