@@ -256,7 +256,6 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         itemT.addMouseListener(this);
         accTable.addMouseListener(this);
 
-
         setVisible(true);
       }
   
@@ -266,11 +265,11 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
           jtab.setSelectedIndex(1);
           panelItems.add(btnView);
           jtab.setSelectedIndex(0);
-      }else if(e.getSource()==accTable){
-          jtab.setSelectedIndex(0);
-          panelAccount.add(btnViewOwned);
-          jtab.setSelectedIndex(1);
-      }
+        }else if(e.getSource()==accTable){
+            jtab.setSelectedIndex(0);
+            panelAccount.add(btnViewOwned);
+            jtab.setSelectedIndex(1);
+        }
       }
 
       @Override
@@ -313,7 +312,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
               String price = (String) itemT.getValueAt(selectedRowItem, 1); 
               String id = (String) itemT.getValueAt(selectedRowItem, 2); 
               String status = (String) itemT.getValueAt(selectedRowItem, 3);
-              new transactInfo(id, location, price, status);
+               new moreInfo();
               dispose();
         }
       }else if (e.getSource()== btnViewOwned) {
@@ -323,7 +322,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
               String price = (String) accTable.getValueAt(selectedRowAccItem, 1); 
               String id = (String) accTable.getValueAt(selectedRowAccItem, 2); 
               String status = (String) accTable.getValueAt(selectedRowAccItem, 3);
-//              new moreInfo(id, location, price, status);
+                 new transactInfo().setVisible(true);
               dispose();
         }
       }
@@ -331,14 +330,16 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
       else if(e.getSource()==btnSearch){       
             JOptionPane.showMessageDialog(null, "Binary Search");
       }else if(e.getSource()==btnLogout){
-          dispose();
-  //        new welcomePage();
+          
+          int response = JOptionPane.showConfirmDialog(null, "You are signing out \nClick OK to proceed","Sign Out",JOptionPane.OK_CANCEL_OPTION);
+          
+             if(response==JOptionPane.OK_OPTION){
+              JOptionPane.showMessageDialog(null, "Signed Out");
+              dispose();
+              new welcomePage().setVisible(true);
+          }
+
       }
 
     }
- 
-    public static void main(String[] args) {
-       new ClientInterface();
-
-  }
 }
