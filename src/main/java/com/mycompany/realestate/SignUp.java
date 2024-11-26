@@ -152,6 +152,7 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
         
         lbllogin.addMouseListener(this);
         btnSignUp.addActionListener(this);
+        btnBack.addActionListener(this);
         
         setVisible(true);
     }
