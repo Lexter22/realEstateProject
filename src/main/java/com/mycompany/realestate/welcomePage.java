@@ -71,7 +71,7 @@ public class welcomePage extends JFrame implements  ActionListener{
         add(btnSignUp);
         
         btnLogin.addActionListener(this);
-        
+        btnSignUp.addActionListener(this);
         
     }
 
