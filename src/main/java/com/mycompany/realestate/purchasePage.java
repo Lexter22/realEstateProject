@@ -81,7 +81,7 @@ public class purchasePage extends JFrame implements ActionListener{
             payment.setVisible(true);
             dispose();
         } else if(e.getSource()==btnBack){
-            new moreInfo();
+            new moreInfo().setVisible(true);
             dispose();
         }
     }
