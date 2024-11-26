@@ -83,18 +83,20 @@ private JButton btnBack, btnContinue;
             String passWord = inputPassword.getText();
             String retypePassword = new String(retypePass.getPassword());
             
-            if (passWord.equals(retypePassword) && !passWord.isEmpty()){
-                    JOptionPane.showMessageDialog(this, "Purchase Successful\nClick OK to continue.", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
-                    
-                    new receiptPage();
-                    dispose();
-                    
-                
-            } else if (passWord.isEmpty()){
-                JOptionPane.showMessageDialog(this, "Password cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
+            
+            if (passWord.isEmpty() || retypePassword.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Password cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);               
+            } else if (!passWord.equals(retypePassword)){
+                JOptionPane.showMessageDialog(this, "Password does not match!", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (!passWord.equals("User123") && retypePassword.equals("User123")){
+                JOptionPane.showMessageDialog(this, "Incorrect Password! Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(this, "Password does not match", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+                JOptionPane.showMessageDialog(this, "Puchase Successful!\nClick OK to continue.", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
+                
+                new receiptPage().setVisible(true);
+                dispose();
+            } 
+            
         }
         
     }
