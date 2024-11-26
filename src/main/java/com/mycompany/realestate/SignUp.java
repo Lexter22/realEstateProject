@@ -152,6 +152,7 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
         
         lbllogin.addMouseListener(this);
         btnSignUp.addActionListener(this);
+        btnBack.addActionListener(this);
         
         setVisible(true);
     }
@@ -182,7 +183,7 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==btnBack){
-            new welcomePage();
+            new welcomePage().setVisible(true);
             dispose();
          }
     }
