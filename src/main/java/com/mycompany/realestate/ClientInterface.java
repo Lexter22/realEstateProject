@@ -18,8 +18,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class ClientInterface extends JFrame implements ActionListener, MouseListener {
 
-  private JPanel logo, panelHeader, panelItems, panelItemsPanel, panelAccount, panelAccountPanel;
-  private JLabel lblRichfields, lblRealEstates, lblUName, lblInputUName, lblCDetails , lblCID, lblInputCID, lblEmail, lblInputEmail, lblCNumber, lblInputCNumber, lblpreviewImg,imgPreviewImage;
+  private JPanel  panelHeader, panelItems, panelItemsPanel, panelAccount, panelAccountPanel;
+  private JLabel logo, lblRichfields, lblRealEstates, lblUName, lblInputUName, lblCDetails , lblCID, lblInputCID, lblEmail, lblInputEmail, lblCNumber, lblInputCNumber, lblpreviewImg,imgPreviewImage;
   private JButton btnViewOwned, btnView,btnReset, btnAccHome, btnSearch, btnItems, btnLogout;
   private JComboBox jcbLocation, jcbPrice, jcbHtL;
   private JTabbedPane jtab;
@@ -30,11 +30,8 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         {"Binan","$1,000,012", "aaafdraa2", "Sold" },
         {"Santa Rosa","$2,331,523", "aaassaaa1", "Available" }
     };
-
-    // Column Names
-    private String[] columnNames = { "Location","Price", "ID", "Status" };
-  private ImageIcon searchIc, resetIc, accountIc, homeIc, moreInfoIc, finalSearchIc, finalResetIc, finalAccountIc, finalHomeIc, finalMoreInfoIc;
-  private Image searchImg, resetImg, accountImg, homeImg, moreInfoImg, adjustedSearchIc, adjustedResetIc, adjustedAccountIc, adjustedHomeIc, adjustedMoreInfoIc;
+  private String[] columnNames = { "Location","Price", "ID", "Status" };
+  private ImageIcon searchIc, resetIc, accountIc, homeIc, moreInfoIc, finalSearchIc, finalResetIc, finalAccountIc, finalHomeIc, finalMoreInfoIc, logoIC, finalLogoIC;
   private String Location[] = {"Location", "San Pedro", "Santa Rosa", "Binan" };
   private String Price[] = { "Price Range", "$1", "$10,000,001 - $50,000,000", "$50,000,001 - $100,000,000" };
   private String HtL[] = {"Default","High - Low", "Low - High" };
@@ -49,10 +46,12 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
     setLocationRelativeTo(null);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     setLayout(null);
+    
+    logoIC = new ImageIcon("logoRealEstates.png");
+    finalLogoIC = new ImageIcon(logoIC.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
 
-    logo = new JPanel();
+    logo = new JLabel(finalLogoIC);
     logo.setBounds(10, 10, 80, 80);
-    logo.setBackground(Color.green);
     add(logo);
 
     lblRichfields = new JLabel("RICHFIELD");
@@ -314,6 +313,8 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
               String status = (String) itemT.getValueAt(selectedRowItem, 3);
 
               new moreInfo().setVisible(true);
+               //new moreInfo(location, price, id, status).setVisible(true);
+
               dispose();
         }
       }else if (e.getSource()== btnViewOwned) {
@@ -323,7 +324,11 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
               String price = (String) accTable.getValueAt(selectedRowAccItem, 1); 
               String id = (String) accTable.getValueAt(selectedRowAccItem, 2); 
               String status = (String) accTable.getValueAt(selectedRowAccItem, 3);
+
               new transactInfo().setVisible(true);
+
+                 //new transactInfo(location, price, id, status).setVisible(true);
+
               dispose();
         }
       }
