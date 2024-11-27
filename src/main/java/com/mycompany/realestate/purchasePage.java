@@ -6,8 +6,10 @@ package com.mycompany.realestate;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -19,9 +21,10 @@ import javax.swing.SwingConstants;
  * @author jcasu
  */
 public class purchasePage extends JFrame implements ActionListener{
-    private JLabel lblRichField, lbPurchaseForm, lblId, lblLocation, lblDate;
+    private JLabel lblRichField, lbPurchaseForm, lblId, lblLocation, lblDate, lblLogo;
     private JButton btnBack, btnContinue;
     private JPanel  logoPanel;
+    private ImageIcon logoIc, finalLogoIc;
         
     purchasePage(){
         setTitle("Purchase Form");
@@ -37,10 +40,13 @@ public class purchasePage extends JFrame implements ActionListener{
         lblRichField.setFont(new Font("Arial", Font.BOLD, 15));
         add(lblRichField);
         
-        logoPanel = new JPanel();
-        logoPanel.setBounds(140, 80, 110, 110);
-        logoPanel.setBackground(Color.GREEN);
-        add(logoPanel);
+        logoIc = new ImageIcon("logoRealEstates.png");
+        finalLogoIc = new ImageIcon(logoIc.getImage().getScaledInstance(110, 110, Image.SCALE_SMOOTH));
+
+        lblLogo = new JLabel(finalLogoIc);
+        lblLogo.setBounds(10, 10, 110, 110);
+        add(lblLogo);
+        
         
         lbPurchaseForm = new JLabel("PURCHASE FORM");
         lbPurchaseForm.setHorizontalAlignment(SwingConstants.CENTER);

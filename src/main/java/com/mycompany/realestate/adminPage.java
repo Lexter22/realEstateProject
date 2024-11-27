@@ -395,12 +395,12 @@ public class adminPage extends JFrame implements ActionListener{
             if(response == JOptionPane.OK_OPTION) {
        
                 JOptionPane.showMessageDialog(null, "Signed Out");
-                new welcomePage();
+                new welcomePage().setVisible(true);
                 dispose();
             } 
         }else if(e.getSource() == btnChangePassword) {
             
-                new changePassword();
+                new changePassword().setVisible(true);
                 dispose();
             
             
