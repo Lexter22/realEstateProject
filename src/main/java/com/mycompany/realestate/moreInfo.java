@@ -100,7 +100,7 @@ private JPanel pnPic;
             new purchasePage().setVisible(true);
             dispose();
         }else if(e.getSource()==btnBack){
-            new ClientInterface();
+            new ClientInterface().setVisible(true);
             dispose();
         }
     }
