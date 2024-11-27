@@ -97,10 +97,10 @@ private JPanel pnPic;
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()== btnBuy){
-            new purchasePage();
+            new purchasePage().setVisible(true);
             dispose();
         }else if(e.getSource()==btnBack){
-            new ClientInterface();
+            new ClientInterface().setVisible(true);
             dispose();
         }
     }
