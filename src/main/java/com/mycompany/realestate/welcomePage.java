@@ -6,8 +6,10 @@ package com.mycompany.realestate;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,9 +20,10 @@ import javax.swing.JPanel;
  * @author johnl
  */
 public class welcomePage extends JFrame implements  ActionListener{
-    private JLabel lblWelcome,lblRealEstate, lblTagLine1,lblTagLine2;
+    private JLabel lblWelcome,lblRealEstate, lblTagLine1,lblTagLine2, lblLogo;
     private JButton btnLogin,btnSignUp;
     private JPanel jpLogo;
+    private ImageIcon logoIc, finalLogoIc;
     public welcomePage() {
         setTitle("Homepage");
         setSize(400,600);
@@ -40,6 +43,13 @@ public class welcomePage extends JFrame implements  ActionListener{
         lblRealEstate.setHorizontalAlignment(JLabel.CENTER);
         lblRealEstate.setFont(new Font("Arial", Font.PLAIN, 25));
         add(lblRealEstate);
+        
+        logoIc = new ImageIcon("logoRealEstates.png");
+        finalLogoIc = new ImageIcon(logoIc.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH));
+
+        lblLogo = new JLabel(finalLogoIc);
+        lblLogo.setBounds(95, 160, 200, 200);
+        add(lblLogo);
         
         jpLogo = new JPanel();
         jpLogo.setBounds(95,160,200,200);

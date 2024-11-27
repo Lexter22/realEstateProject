@@ -9,8 +9,10 @@ package com.mycompany.realestate;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.HeadlessException;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,10 +25,11 @@ import javax.swing.JTextArea;
  */
 public class transactInfo extends JFrame implements ActionListener {
     
-private JLabel lblNameId, lblID, lblPrice, lblLocation;
+private JLabel lblNameId, lblID, lblPrice, lblLocation, lblLogo;
 private JTextArea txaInfo;
 private JButton btnBack;
 private JPanel pnPic;
+private ImageIcon logoIc, finalLogoIc;
     public transactInfo(){
         
         setTitle("Details");
@@ -34,6 +37,15 @@ private JPanel pnPic;
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        
+        logoIc = new ImageIcon("logoRealEstates.png");
+        finalLogoIc = new ImageIcon(logoIc.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
+
+        lblLogo = new JLabel(finalLogoIc);
+        lblLogo.setBounds(10, 10, 80, 80);
+        add(lblLogo);
+        
         
         lblNameId = new JLabel("Name: ");
         lblNameId.setBounds(50, 50, 350, 50);

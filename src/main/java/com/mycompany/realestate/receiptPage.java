@@ -7,8 +7,10 @@ package com.mycompany.realestate;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,9 +23,9 @@ import javax.swing.JPanel;
 public class receiptPage extends JFrame implements ActionListener{
     
     
-    private JLabel lblRichfield, lblRichfield2, lblName, lblUserName, lblDate, lblTime, lblProductName, lblProductID, lblPrice, lblTransactionID, lblPurchasedEstate, lblOfficial, lblThankYou;
-    private JPanel jpLogo;
+    private JLabel lblRichfield, lblRichfield2, lblName, lblUserName, lblDate, lblTime, lblProductName, lblProductID, lblPrice, lblTransactionID, lblPurchasedEstate, lblOfficial, lblThankYou, lblLogo;
     private JButton btnBackToHome;
+    private ImageIcon logoIc, finalLogoIc;
     
     
     public receiptPage () {
@@ -50,10 +52,13 @@ public class receiptPage extends JFrame implements ActionListener{
         add(lblRichfield2);
         
         
-        jpLogo = new JPanel();
-        jpLogo.setBounds(150,80,100,100);
-        jpLogo.setBackground(Color.red);
-        add(jpLogo);
+        logoIc = new ImageIcon("logoRealEstates.png");
+        finalLogoIc = new ImageIcon(logoIc.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
+
+        lblLogo = new JLabel(finalLogoIc);
+        lblLogo.setBounds(10, 10, 80, 80);
+        add(lblLogo);
+        
         
         
         lblName = new JLabel("Name :");

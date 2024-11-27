@@ -14,8 +14,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class adminPage extends JFrame implements ActionListener{
 
-    private JPanel panelLogo, panelHeader, panelUsers, panelADD, panelDelete, panelProfile, transactJPanel, homeJPanel,panelAddLayout,panelHome,panelTransaction,panelUsersPanel; 
-    private JLabel lblRichField, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails,lblUsers, previewImg;
+    private JPanel panelHeader, panelUsers, panelADD, panelDelete, panelProfile, transactJPanel, homeJPanel,panelAddLayout,panelHome,panelTransaction,panelUsersPanel; 
+    private JLabel lblRichField, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails,lblUsers, previewImg, lblLogo;
     private JButton btnHome, btnAdd, btnDel, btnTransact, btnUsers,  btnProfile,btnImage,btnAddImage,btnChangePassword,btnSignOut,btnUserSearch;
     private JTabbedPane jtab;
     private JTable tableEstate, tableUser,tableTransactions;
@@ -27,6 +27,7 @@ public class adminPage extends JFrame implements ActionListener{
     private JFileChooser jfcImage = new JFileChooser();
     private Color cGreen = (Color.decode("#28A745"));
     private Color cBlue = (Color.decode("#004A8C")); 
+    private ImageIcon logoIc, finalLogoIc;
         
         
     public adminPage() {
@@ -36,10 +37,14 @@ public class adminPage extends JFrame implements ActionListener{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         
-        panelLogo=new JPanel();
-        panelLogo.setBounds(10,10,80,80);
-        panelLogo.setBackground(Color.green);
-        add(panelLogo);
+        
+        logoIc = new ImageIcon("logoRealEstates.png");
+        finalLogoIc = new ImageIcon(logoIc.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
+
+        lblLogo = new JLabel(finalLogoIc);
+        lblLogo.setBounds(10, 10, 80, 80);
+        add(lblLogo);
+        
         
         lblRichField=new JLabel("RICHFIELD");
         lblRichField.setBounds(120,10,350,50);
