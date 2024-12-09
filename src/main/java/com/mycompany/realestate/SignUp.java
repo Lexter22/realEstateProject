@@ -9,20 +9,29 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 public class SignUp extends JFrame implements ActionListener, MouseListener{
     private JLabel hdrSignUp, lblFName,lblLName, lblUsername, lblContact, lblEmail, lblRetypePass, lblPassword, lbllogin;
     private JPanel pnlSignUp;
-    private JButton btnBack;
-    private JTextField txtName, txtUsername, txtContact, txtEmail;
+    private JButton btnBack, btnSignUp;
+    private JTextField txtName,txtLName, txtUsername, txtContact, txtEmail;
     private JPasswordField jpfPassword, jpfRetypePass;
     private ImageIcon mainBg, finalMainBgIC;
     private Color cGreen = (Color.decode("#28A745"));
     private Color cGray = (Color.decode("#E0E0E0"));
     private Color cBlue = (Color.decode("#004A8C"));
+    private Connection con;
+    private Statement st;
     
     public SignUp() {
+        Connect();
         
         setSize(400,600);
         setTitle("Sign up");
@@ -63,11 +72,11 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
         lblLName.setHorizontalAlignment(SwingConstants.CENTER);
         pnlSignUp.add(lblLName);
         
-        txtName = new JTextField();
-        txtName.setBackground(cGray);
-        txtName.setForeground(Color.black);
-        txtName.setBounds(130,40,100,30);
-        pnlSignUp.add(txtName);
+        txtLName = new JTextField();
+        txtLName.setBackground(cGray);
+        txtLName.setForeground(Color.black);
+        txtLName.setBounds(130,40,100,30);
+        pnlSignUp.add(txtLName);
         
         lblUsername=new JLabel("USERNAME");
         lblUsername.setBounds(0,80,240,30);
@@ -118,7 +127,7 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
         jpfPassword.setForeground(Color.BLACK);
         pnlSignUp.add(jpfPassword);
         
-        JButton btnSignUp = new JButton("SignUp");
+        btnSignUp = new JButton("SignUp");
         btnSignUp.setBounds(10,370,220,30);
         btnSignUp.setForeground(Color.white);
         btnSignUp.setBackground(cGreen);
@@ -186,6 +195,58 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
             new welcomePage().setVisible(true);
             dispose();
          }
+        else if (e.getSource() == btnSignUp){
+            String firstValue = txtName.getText();
+            String lastValue = txtLName.getText();
+            String userNameValue = txtUsername.getText();
+            String contactNumValue = txtContact.getText();
+            String emailValue = txtEmail.getText();
+            String passwordValue = jpfPassword.getText();
+            
+            String values = "insert into clientsinfo (firstname, lastname, username, contactnum, email, password) "
+                    + "values ('"+firstValue+"', '"+lastValue+"', '"+userNameValue+"', '"+contactNumValue+"', '"+emailValue+"', '"+passwordValue+"')";
+           
+            if (!firstValue.isEmpty() && !lastValue.isEmpty() && !userNameValue.isEmpty() && !contactNumValue.isEmpty() && !emailValue.isEmpty() && !passwordValue.isEmpty() && emailValue.contains("@gmail.com")){
+                
+                
+                    try {
+                        st = con.createStatement();
+                
+                        st.executeUpdate(values);
+                
+                        txtName.setText("");
+                        txtLName.setText("");
+                        txtUsername.setText("");
+                        txtContact.setText("");
+                        txtEmail.setText("");
+                        jpfPassword.setText("");
+                        
+                        JOptionPane.showMessageDialog(null, "SignUp Successful", "Registration Success", JOptionPane.INFORMATION_MESSAGE);
+            
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+                 }
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "ERROR");
+            }
+            
+        }
+    }
+    
+    
+    public void Connect(){
+        String url = "jdbc:mysql://localhost:3306/realestates";
+        String username = "root";
+        String password = "admin123";
+        
+        try {
+            con = DriverManager.getConnection(url, username, password);
+        } catch (SQLException ex) {
+            Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
  public static void main (String[] args){
