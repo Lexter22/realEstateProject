@@ -206,35 +206,6 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
             }     
             }
             
-//            try {
-//                if (pst = con.prepareStatement(clients))
-//                {
-//                    pst.setString(1, username);
-//                pst.setString(2, userPassword);
-//                rs = pst.executeQuery();
-//                
-//                while(rs.next()){
-//                    
-//                     new ClientInterface().setVisible(true);
-//                    
-//                }}
-//                
-//                else if (pst = con.prepareStatement(admin))
-//                {
-//                    pst.setString(1, username);
-//                pst.setString(2, adminPassword);
-//                rs = pst.executeQuery();
-//                        }
-//                while(rs.next()){
-//                    
-//                     new ClientInterface().setVisible(true);
-//                    
-//                }
-//
-//            } catch (SQLException ex) {
-//                Logger.getLogger(loginPage.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-                
  
 }
     public void Connect(){
