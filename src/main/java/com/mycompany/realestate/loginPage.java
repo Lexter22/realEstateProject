@@ -8,9 +8,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
@@ -27,8 +35,10 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
     private Color cGreen = (Color.decode("#28A745"));
     private Color cGray = (Color.decode("#E0E0E0"));
     private Color cBlue = (Color.decode("#004A8C")); 
+    private Connection con;
     public loginPage() {
         
+        Connect();
         setSize(400, 600);
         setTitle("Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -155,28 +165,89 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
         
         else if(e.getSource()==btnLogin){
             
+            PreparedStatement pst;
+            ResultSet rs;
             String username = txtUsername.getText();
             String userPassword = pfPassword.getText();
-            String adminPassword = pfPassword.getText();
-            if (username.equals("Admin") && adminPassword.equals("Admin123")) {
-                new adminPage();
-                dispose();
-            }
-            else if (username.equals("User") && userPassword.equals("User123")) {
-                new ClientInterface();
-                dispose();
-         
-            }
-           // temporary, sa sql ito papasok
+            
+            String admin = "Select * from admindetails where username=? and password=? ";
+            String clients = "Select * from clientsinfo where username=? and password=? ";
+            
+            
+            try{
+                if (username.isEmpty()|| userPassword.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Error");
+                }    
+                else if (username.contains("Admin")){
+                    pst = con.prepareStatement(admin);
+                    pst.setString(1, username);
+                    pst.setString(2, userPassword);
+                    rs = pst.executeQuery();
+                    while(rs.next()){
+                    
+                     new adminPage().setVisible(true);
+                    }
+                }
                 
-                        
+                else {
+                    pst = con.prepareStatement(clients);
+                    pst.setString(1, username);
+                    pst.setString(2, userPassword);
+                    rs = pst.executeQuery();
+                        while(rs.next()){
+                    
+                     new ClientInterface().setVisible(true);
+                        }
+                }
+                    
+                }
+            catch (SQLException ex) {
+                Logger.getLogger(loginPage.class.getName()).log(Level.SEVERE, null, ex);
+            }     
+            }
+            
+//            try {
+//                if (pst = con.prepareStatement(clients))
+//                {
+//                    pst.setString(1, username);
+//                pst.setString(2, userPassword);
+//                rs = pst.executeQuery();
+//                
+//                while(rs.next()){
+//                    
+//                     new ClientInterface().setVisible(true);
+//                    
+//                }}
+//                
+//                else if (pst = con.prepareStatement(admin))
+//                {
+//                    pst.setString(1, username);
+//                pst.setString(2, adminPassword);
+//                rs = pst.executeQuery();
+//                        }
+//                while(rs.next()){
+//                    
+//                     new ClientInterface().setVisible(true);
+//                    
+//                }
+//
+//            } catch (SQLException ex) {
+//                Logger.getLogger(loginPage.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+                
+ 
+}
+    public void Connect(){
+        String url = "jdbc:mysql://localhost:3306/realestates";
+        String username = "root";
+        String password = "admin123";
+        
+        try {
+          con = DriverManager.getConnection(url, username, password);
+        } catch (SQLException ex) {
+            Logger.getLogger(loginPage.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        
-}
-
-    private void signUp() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 
