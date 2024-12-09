@@ -176,16 +176,19 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
             
             try{
                 if (username.isEmpty()|| userPassword.isEmpty()){
-                    JOptionPane.showMessageDialog(null, "Error");
+                    JOptionPane.showMessageDialog(null, "Enter details");
                 }    
                 else if (username.contains("Admin")){
                     pst = con.prepareStatement(admin);
                     pst.setString(1, username);
                     pst.setString(2, userPassword);
                     rs = pst.executeQuery();
-                    while(rs.next()){
-                    
-                     new adminPage().setVisible(true);
+                    if(rs.next()){
+                        JOptionPane.showMessageDialog(null, "Welcome Admin","Login Successful",JOptionPane.PLAIN_MESSAGE);
+                        dispose();
+                        new adminPage().setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Incorrect details\nTry again","Error",JOptionPane.WARNING_MESSAGE);
                     }
                 }
                 
@@ -194,10 +197,14 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
                     pst.setString(1, username);
                     pst.setString(2, userPassword);
                     rs = pst.executeQuery();
-                        while(rs.next()){
-                    
-                     new ClientInterface().setVisible(true);
-                        }
+                     if(rs.next()){
+                          JOptionPane.showMessageDialog(null, "Welcome "+username,"Login Successful",JOptionPane.PLAIN_MESSAGE);
+                          dispose();
+                          new ClientInterface().setVisible(true);
+                     } else {
+                         JOptionPane.showMessageDialog(null, "Incorrect details\nTry again","Error",JOptionPane.WARNING_MESSAGE);
+
+                     }
                 }
                     
                 }
