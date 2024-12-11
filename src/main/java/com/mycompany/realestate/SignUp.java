@@ -156,10 +156,15 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
         lblmainBg.add(lblBg);
         
         btnBack = new JButton("Back");
-        btnBack.setBounds(10, 10, 80, 30);
+        btnBack.setBounds(10, 10, 80, 25);
+        btnBack.setBackground(cGreen);
+        btnBack.setBorder(null);
+        btnBack.setForeground(Color.white);
+        btnBack.setFont(new Font("Arial",Font.CENTER_BASELINE,14));
         add(btnBack);
         
         lbllogin.addMouseListener(this);
+        lbllogin.setCursor(new Cursor(HAND_CURSOR));
         btnSignUp.addActionListener(this);
         btnBack.addActionListener(this);
         
@@ -229,7 +234,7 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
                  }
             }
             else {
-                JOptionPane.showMessageDialog(null, "ERROR");
+                JOptionPane.showMessageDialog(null, "Please fill all the field");
             }
             
         }
