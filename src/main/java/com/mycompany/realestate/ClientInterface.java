@@ -14,6 +14,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 public class ClientInterface extends JFrame implements ActionListener, MouseListener {
@@ -24,14 +32,9 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
   private JComboBox jcbLocation, jcbPrice, jcbHtL;
   private JTabbedPane jtab;
   private JTable itemTable, accTable;
-  private Object[][] data = {
-        {"San Pedro","$1", "aasadaaa0", "Sold" },
-        {"Santa Rosa","$50,321,4afdsa42", "aaaaa0", "Sold" },
-        {"Binan","$1,000,012", "aaafdraa2", "Sold" },
-        {"Santa Rosa","$2,331,523", "aaassaaa1", "Available" }
-    };
-  private String[] columnNames = { "Location","Price", "ID", "Status" };
+  private Object[][] houses = {} , ownedHouses = {};
   private ImageIcon searchIc, resetIc, accountIc, homeIc, moreInfoIc, finalSearchIc, finalResetIc, finalAccountIc, finalHomeIc, finalMoreInfoIc, logoIC, finalLogoIC;
+  private String[] columnNames = { "Location","Price", "ID", "Status" };
   private String Location[] = {"Location", "San Pedro", "Santa Rosa", "Binan" };
   private String Price[] = { "Price Range", "$1", "$10,000,001 - $50,000,000", "$50,000,001 - $100,000,000" };
   private String HtL[] = {"Default","High - Low", "Low - High" };
@@ -39,8 +42,16 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
   private JTable itemT;
   private Color cGreen = (Color.decode("#28A745"));
   private Color cBlue = (Color.decode("#004A8C")); 
+  private Connection con;
+  private Statement st;
+  private PreparedStatement pst;
+  private ResultSet rs;
+  private String inheret, username, fname, lname, userNum, userEmail, houseLocation, houseName, houseDescription, houseStatus;
+  private int userId, houseId, housePrice;
 
-  public ClientInterface() {
+  public ClientInterface(String username) {
+     
+     Connect();
 
     setSize(1200, 700);
     setLocationRelativeTo(null);
@@ -131,21 +142,48 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
     panelItemsPanel.setBounds(0, 0, 800, 560);
     panelItems.add(panelItemsPanel);
 
- Object[][] data1 = {
-        {"San Pedro","$100,210,000", "aasadaaa0", "Owned" },
-        {"Santa Rosa","$50,321,4afdsa42", "aaaaa0", "Owned" },
-        {"Binan","$1,000,012", "aaafdraa2", "Owned" },
-        {"Santa Rosa","$2,331,523", "aaassaaa1", "Owned" }
-    };
-
-    String[] tablecolumn = {"Property Name", "Location", "Price", "Status"};
+    Object[][] houses = {};
+    String[] tablecolumn = {"ID","Property Name", "Location", "Price", "Status"};
         
-    itemTModel = new DefaultTableModel(data, tablecolumn);
+    itemTModel = new DefaultTableModel(houses, tablecolumn);
     itemT = new JTable(itemTModel);
     itemT.setDefaultEditor(Object.class, null);
     itemT.setRowHeight(30);
     itemT.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     itemT.setBounds(0,0,800,560);
+    
+          String UsersInfo = "Select firstname, lastname, id, contactnum, email From clientsinfo where username=? ";
+          String HousesData = "Select * from residentialrealestates";
+      try {
+          
+          st = con.createStatement();
+          ResultSet rsHouses = st.executeQuery(HousesData);
+           
+            while(rsHouses.next()){
+                 houseId = rsHouses.getInt("id");
+                 houseName = rsHouses.getString("name");
+                 houseLocation = rsHouses.getString("location");
+                 housePrice = rsHouses.getInt("price");
+                 houseDescription = rsHouses.getString("description");
+                 houseStatus = rsHouses.getString("status");
+                 
+                 Object [] dataSql={houseId, houseName, houseLocation, housePrice, houseStatus};
+                 itemTModel.addRow(dataSql);
+                 
+            }
+            pst = con.prepareStatement(UsersInfo);
+            pst.setString(1, username);
+            rs = pst.executeQuery();
+            while(rs.next()){
+                 fname = rs.getString("firstname");
+                 lname = rs.getString("lastname");
+                 userId = rs.getInt("id");
+                 userNum = rs.getString("contactnum");
+                 userEmail = rs.getString("email");
+            }
+      } catch (SQLException ex) {
+          Logger.getLogger(ClientInterface.class.getName()).log(Level.SEVERE, null, ex);
+      }
         
         JScrollPane scrollPaneEstate = new JScrollPane(itemT);
         scrollPaneEstate.setPreferredSize(new Dimension(800, 560));
@@ -161,6 +199,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         btnView.setBounds(810, 470, 350, 35);
         btnView.setBackground(cGreen);
         btnView.setForeground(Color.white);
+        panelItems.add(btnView);
         
         imgPreviewImage = new JLabel();
         imgPreviewImage.setBounds(810, 60, 350, 280);
@@ -182,7 +221,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         lblCDetails.setFont(new Font("Arial", Font.BOLD, 25));
         panelAccountPanel.add(lblCDetails);
         
-        accTModel = new DefaultTableModel(data1, columnNames);
+        accTModel = new DefaultTableModel(ownedHouses, columnNames);
         accTable = new JTable(accTModel);
         accTable.setDefaultEditor(Object.class, null);
         accTable.setRowHeight(30);
@@ -192,29 +231,29 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         sp2.setPreferredSize(new Dimension(800, 560));
         panelAccountPanel.add(sp2);
     
-        lblCDetails = new JLabel("About You");
-        lblCDetails.setBounds(940, 20, 200, 30);
+        lblCDetails = new JLabel("Your information");
+        lblCDetails.setBounds(900, 20, 200, 30);
         lblCDetails.setFont(new Font("Arial", Font.BOLD, 25));
         panelAccount.add(lblCDetails);
-    
-        lblUName=new JLabel("Name : ");
+        
+        lblUName=new JLabel("Name : " + fname +" " + lname);
         lblUName.setBounds(810,50,300,50);
         lblUName.setFont(new Font("Arial", Font.BOLD, 15));
         panelAccount.add(lblUName);
 
-        lblCID=new JLabel("ID : ");
+        lblCID=new JLabel("ID :       "+ userId);
         lblCID.setHorizontalAlignment(SwingConstants.LEFT);
         lblCID.setBounds(810,80,300,50);
         lblCID.setFont(new Font("Arial", Font.BOLD, 15));
         panelAccount.add(lblCID);
 
-        lblEmail=new JLabel("Email : ");
+        lblEmail=new JLabel("Email :  "+userEmail);
         lblEmail.setHorizontalAlignment(SwingConstants.LEFT);
         lblEmail.setBounds(810,110,300,50);
         lblEmail.setFont(new Font("Arial", Font.BOLD, 15));
         panelAccount.add(lblEmail);
 
-        lblCNumber=new JLabel("No. : ");
+        lblCNumber=new JLabel("No.     : "+userNum);
         lblCNumber.setHorizontalAlignment(SwingConstants.LEFT);
         lblCNumber.setBounds(810,140,300,50);
         lblCNumber.setFont(new Font("Arial", Font.BOLD, 15));
@@ -236,6 +275,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         btnViewOwned.setBounds(810, 470, 350, 35);
         btnViewOwned.setBackground(cGreen);
         btnViewOwned.setForeground(Color.white);
+        panelAccount.add(btnViewOwned);
         
         btnLogout = new JButton("Log Out");
         btnLogout.setBounds(810, 510, 350, 35);
@@ -256,18 +296,30 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         accTable.addMouseListener(this);
 
         setVisible(true);
+        
+        inheret = username;
+        System.out.println("ClientInterface " + inheret);
       }
+  
+     public void Connect(){
+        String url = "jdbc:mysql://localhost:3306/realestates";
+        String username = "root";
+        String password = "admin123";
+        
+        try {
+            con = DriverManager.getConnection(url, username, password);
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
   
     @Override
       public void mouseClicked(MouseEvent e) {
       if(e.getSource()==itemT){
-          jtab.setSelectedIndex(1);
-          panelItems.add(btnView);
-          jtab.setSelectedIndex(0);
+  
         }else if(e.getSource()==accTable){
-            jtab.setSelectedIndex(0);
-            panelAccount.add(btnViewOwned);
-            jtab.setSelectedIndex(1);
+    
         }
       }
 
@@ -307,30 +359,30 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
       else if (e.getSource()== btnView) {
         int selectedRowItem = itemT.getSelectedRow();
           if (selectedRowItem != -1) {
-              String location = (String) itemT.getValueAt(selectedRowItem, 0); 
-              String price = (String) itemT.getValueAt(selectedRowItem, 1); 
-              String id = (String) itemT.getValueAt(selectedRowItem, 2); 
-              String status = (String) itemT.getValueAt(selectedRowItem, 3);
-
-              new moreInfo().setVisible(true);
-               //new moreInfo(location, price, id, status).setVisible(true);
+              String id = String.valueOf(itemT.getValueAt(selectedRowItem, 0)); 
+              String name =String.valueOf(itemT.getValueAt(selectedRowItem, 1)); 
+              String location = String.valueOf(itemT.getValueAt(selectedRowItem, 2));
+              String price =String.valueOf(itemT.getValueAt(selectedRowItem, 3)); 
+              String status = String.valueOf(itemT.getValueAt(selectedRowItem, 4)); 
+              new moreInfo(id, name, location, price, status, inheret, fname, lname, userId, userNum, userEmail).setVisible(true);
 
               dispose();
-        }
+        }else{
+               JOptionPane.showMessageDialog(null, "Please Select a row");
+           }
       }else if (e.getSource()== btnViewOwned) {
          int selectedRowAccItem = accTable.getSelectedRow();
            if(selectedRowAccItem != -1) {
               String location = (String) accTable.getValueAt(selectedRowAccItem, 0); 
-              String price = (String) accTable.getValueAt(selectedRowAccItem, 1); 
-              String id = (String) accTable.getValueAt(selectedRowAccItem, 2); 
+               String id = (String) accTable.getValueAt(selectedRowAccItem, 1); 
+              String price = (String) accTable.getValueAt(selectedRowAccItem, 2); 
               String status = (String) accTable.getValueAt(selectedRowAccItem, 3);
 
               new transactInfo().setVisible(true);
-
-                 //new transactInfo(location, price, id, status).setVisible(true);
-
               dispose();
-        }
+        }else{
+               JOptionPane.showMessageDialog(null, "Please Select a row");
+           }
       }
 
       else if(e.getSource()==btnSearch){       
