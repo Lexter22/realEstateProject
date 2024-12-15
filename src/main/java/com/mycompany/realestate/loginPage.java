@@ -3,6 +3,7 @@ package com.mycompany.realestate;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -55,7 +56,7 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
         hdrLogin.setFont(new Font("Arial",Font.BOLD,30));
         add(hdrLogin);
         
-        ImageIcon avatarIcon = new ImageIcon("avatarIcon.png");
+        ImageIcon avatarIcon = new ImageIcon("accountAvatar.png");
         finalAvatarIcon = new ImageIcon(avatarIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH));
         
         lblProfile = new JLabel();
@@ -92,7 +93,6 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
         pfPassword.setForeground(Color.black);
         pfPassword.setBackground(cGray);
         pfPassword.setBounds(100, 80, 130, 30);
-        
         pnlLogin.add(pfPassword);
                
         btnLogin = new JButton("Login");
@@ -109,7 +109,11 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
         pnlLogin.add(lblsignup);
         
         btnBack = new JButton("Back");
-        btnBack.setBounds(10, 10, 80, 30);
+        btnBack.setBounds(10, 10, 80, 25);
+        btnBack.setBackground(cGreen);
+        btnBack.setBorder(null);
+        btnBack.setForeground(Color.white);
+        btnBack.setFont(new Font("Arial",Font.CENTER_BASELINE,14));
         add(btnBack);
         
         JPanel lblmainBg = new JPanel();
@@ -123,7 +127,9 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
         
         btnBack.addActionListener(this);
         btnLogin.addActionListener(this);
+        
         lblsignup.addMouseListener(this);
+        lblsignup.setCursor(new Cursor(HAND_CURSOR));
         
         
         setVisible(true);
@@ -140,7 +146,6 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
 
     @Override
     public void mousePressed(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -200,7 +205,7 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
                      if(rs.next()){
                           JOptionPane.showMessageDialog(null, "Welcome "+username,"Login Successful",JOptionPane.PLAIN_MESSAGE);
                           dispose();
-                          new ClientInterface().setVisible(true);
+                          new ClientInterface(username).setVisible(true);
                      } else {
                          JOptionPane.showMessageDialog(null, "Incorrect details\nTry again","Error",JOptionPane.WARNING_MESSAGE);
 
