@@ -25,6 +25,8 @@ public class purchasePage extends JFrame implements ActionListener{
     private JButton btnBack, btnContinue;
     private JPanel  logoPanel;
     private ImageIcon logoIc, finalLogoIc;
+    private String username, fname, lname, userNum, userEmail;
+    private int userId;
         
     purchasePage(){
         setTitle("Purchase Form");
@@ -87,7 +89,9 @@ public class purchasePage extends JFrame implements ActionListener{
             payment.setVisible(true);
             dispose();
         } else if(e.getSource()==btnBack){
-            new moreInfo().setVisible(true);
+               String location = null, status = null, name=null,price = "1321321", id = "323232";
+        
+        new moreInfo(location, price, id, status, name,username, fname, lname, userId, userNum, userEmail);
             dispose();
         }
     }
