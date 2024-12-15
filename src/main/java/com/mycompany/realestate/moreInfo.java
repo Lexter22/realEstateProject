@@ -1,108 +1,141 @@
 package com.mycompany.realestate;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.HeadlessException;
-
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 
-/**
- *
- * @author johnl
- */
+
+
+        
 public class moreInfo extends JFrame implements ActionListener{
 
+    private JLabel lblNameId, lblID, lblPrice, lblLocation,lblStatus, lblRichField, lblRealEstates, lblLogo,lblInfo,pnPic;
+    private JTextArea txaInfo;
+    private JButton btnBack, btnBuy;
+    private ImageIcon logoIc, finalLogoIc;
+    private JPanel  panelAddLayout, panelHeader;
+    private String inheretBack, location, status, name, id, price, fname, lname, userNum, userEmail;
+    private String userId;
+    private Color cGreen = (Color.decode("#28A745"));
+    private Color cBlue = (Color.decode("#004A8C")); 
     
-private JLabel lblNameId, lblID, lblPrice, lblLocation;
-private JTextArea txaInfo;
-private JButton btnBack, btnBuy;
-private JPanel pnPic;
-    public moreInfo(){
-        
-        setTitle("Details");
-        setSize(800,700);
-        setLayout(null);
+   public moreInfo(String id, String name, String location, String price, String status, String inheret, String fname, String lname, int userId, String userNum, String userEmail){
+  
+        setSize(1200, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
         
-        lblNameId = new JLabel("Name: ");
-        lblNameId.setBounds(50, 50, 350, 50);
-        lblNameId.setFont(new Font("Arial" ,Font.PLAIN, 17));
-        add(lblNameId);
-       
+        logoIc = new ImageIcon("logoRealEstates.png");
+        finalLogoIc = new ImageIcon(logoIc.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
+
+        lblLogo = new JLabel(finalLogoIc);
+        lblLogo.setBounds(10, 10, 80, 80);
+        add(lblLogo);
         
-        lblID = new JLabel("Property ID: ");
-        lblID.setBounds(50, 110, 350, 50);
-        lblID.setFont(new Font("Arial" ,Font.PLAIN, 17));
-        add(lblID);
+        lblRichField=new JLabel("RICHFIELD");
+        lblRichField.setBounds(120,10,350,50);
+        lblRichField.setForeground(Color.WHITE);
+        lblRichField.setFont(new Font("Arial", Font.BOLD, 25));
+        add(lblRichField);
         
-        lblLocation = new JLabel("Location: " );
-        lblLocation.setBounds(50, 170, 350, 50);
-        lblLocation.setFont(new Font("Arial" ,Font.PLAIN, 17));
-        add(lblLocation);
+        lblRealEstates=new JLabel("REAL ESTATES");
+        lblRealEstates.setBounds(120,40,300,50);
+        lblRealEstates.setForeground(Color.WHITE);
+        lblRealEstates.setFont(new Font("Arial", Font.BOLD, 15));
+        add(lblRealEstates);
         
-        lblPrice = new JLabel("Price: ");
-        lblPrice.setBounds(50, 230, 350, 50);
-        lblPrice.setFont(new Font("Arial" ,Font.PLAIN, 17));
-        add(lblPrice);
+
+        panelAddLayout = new JPanel();
+        panelAddLayout.setLayout(null);
+        panelAddLayout.setBounds(0, 95, 1200, 560);
+        add(panelAddLayout);
+
+        lblNameId = new JLabel("Property Name : " + name);
+        lblNameId.setBounds(50, 50, 500, 30);
+        lblNameId.setHorizontalAlignment(SwingConstants.LEFT);
+        lblNameId.setFont(new Font("Arial", Font.BOLD, 14));
+        panelAddLayout.add(lblNameId);
+
+        lblID = new JLabel("Property ID :         " + id);
+        lblID.setBounds(50, 80, 500, 30);
+        lblID.setFont(new Font("Arial", Font.BOLD, 14));
+        panelAddLayout.add(lblID);
         
+        lblID = new JLabel("Location  :   " + location);
+        lblID.setBounds(50, 110, 500, 30);
+        lblID.setFont(new Font("Arial", Font.BOLD, 14));
+        panelAddLayout.add(lblID);
+        
+        lblPrice = new JLabel("Price :" + price);
+        lblPrice.setBounds(50, 140, 500, 30);
+        lblPrice.setFont(new Font("Arial", Font.BOLD, 14));
+        panelAddLayout.add(lblPrice);
+    
+        lblStatus = new JLabel("Status :" + status);
+        lblStatus.setBounds(50, 170, 500, 30);
+        lblStatus.setFont(new Font("Arial", Font.BOLD, 14));
+        panelAddLayout.add(lblStatus);
+
+        lblInfo = new JLabel("DESCRIPTION :");
+        lblInfo.setBounds(50, 200, 500, 30);
+        lblInfo.setFont(new Font("Arial", Font.BOLD, 14));
+        panelAddLayout.add(lblInfo);
+
         txaInfo = new JTextArea();
-        txaInfo.setBounds(50, 290, 680, 290);
-        txaInfo.setFont(new Font("Arial" ,Font.PLAIN, 17));
-        txaInfo.setEditable(false);
-        add(txaInfo);
+        txaInfo.setBounds(50, 240, 500, 300);
+        panelAddLayout.add(txaInfo);
         
+        pnPic = new JLabel();
+        pnPic.setBounds(650, 100, 500, 300);
+        pnPic.setBackground(Color.gray);
+        pnPic.setOpaque(true);
+        panelAddLayout.add(pnPic);
+
         btnBack = new JButton("Back");
-        btnBack.setBounds(550, 610, 75, 30);
-        add(btnBack);
+        btnBack.setBounds(650, 450, 200, 50);
+        btnBack.setBackground(cGreen);
+        btnBack.setForeground(Color.white);
+        panelAddLayout.add(btnBack);
         
         btnBuy = new JButton("Buy");
-        btnBuy.setBounds(650, 610, 75, 30);
-        add(btnBuy);
+        btnBuy.setBounds(950, 450, 200, 50);
+        btnBuy.setBackground(cGreen);
+        btnBuy.setForeground(Color.white);
+        panelAddLayout.add(btnBuy);
         
-        pnPic = new JPanel();
-        pnPic.setBounds(400, 50, 330, 230);
-        pnPic.setBackground(Color.red);
-        add(pnPic);
-               
+        panelHeader=new JPanel();
+        panelHeader.setBounds(0,0,1200,100);
+        panelHeader.setBackground(cBlue);
+        add(panelHeader);
+            
+        inheretBack = inheret;
+        
         setVisible(true);
-
-    
-//    public void detailsMethod(String name,String propertyID,String location,String price,String note){
-//        lblNameId.setText("Name: "+name);
-//        lblLocation.setText("Location: "+location);         ito yung method para magamit natin para maulit
-//        lblID.setText("Property ID: "+propertyID);
-//        lblPrice.setText("Price: "+price);
-//        txaInfo.add(this);
-//    }
-
         
         btnBack.addActionListener(this);
         btnBuy.addActionListener(this);
     }
 
-    @Override
+ 
+           @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()== btnBuy){
             new purchasePage().setVisible(true);
             dispose();
         }else if(e.getSource()==btnBack){
-            new ClientInterface().setVisible(true);
+            new ClientInterface(inheretBack).setVisible(true);
             dispose();
+            
         }
     }
-   
+    
 }
