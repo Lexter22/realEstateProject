@@ -5,6 +5,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
@@ -28,9 +36,16 @@ public class adminPage extends JFrame implements ActionListener{
     private Color cGreen = (Color.decode("#28A745"));
     private Color cBlue = (Color.decode("#004A8C")); 
     private ImageIcon logoIc, finalLogoIc;
+    private Connection con;
+  private Statement st;
+  private PreparedStatement pst;
+  private ResultSet rs;
+  private String  houseLocation, houseName, houseDescription, houseStatus;
+  private int userId, houseId, housePrice;
         
         
     public adminPage() {
+        Connect();
         
         setSize(1200, 700);
         setLocationRelativeTo(null);
@@ -171,6 +186,7 @@ public class adminPage extends JFrame implements ActionListener{
         panelHome = new JPanel();
         panelHome.setBounds(0, 0, 800, 560);
         homeJPanel.add(panelHome);
+        
 
         
         Object[][] data = {{}};
@@ -237,6 +253,38 @@ public class adminPage extends JFrame implements ActionListener{
         panelADD.setBounds(0,0,1200,560);
         panelADD.setBackground(Color.green);
         jtab.add(panelAddLayout);
+        //String UsersInfo = "Select firstname, lastname, id, contactnum, email From clientsinfo where username=? ";
+          String HousesData = "Select * from realestatess";
+        try {
+          
+          st = con.createStatement();
+          ResultSet rsHouses = st.executeQuery(HousesData);
+           
+            while(rsHouses.next()){
+                 
+                 houseName = rsHouses.getString("name");
+                 houseLocation = rsHouses.getString("location");
+                 housePrice = rsHouses.getInt("price");
+                 //houseStatus = rsHouses.getString("status");
+                 houseDescription = rsHouses.getString("description");
+                 
+                 Object [] dataSql={ houseName, houseLocation, housePrice, houseDescription};
+                 tableEstateModel.addRow(dataSql);
+                 
+            }
+            /*pst = con.prepareStatement(UsersInfo);
+            pst.setString(1, username);
+            rs = pst.executeQuery();
+            while(rs.next()){
+                 fname = rs.getString("firstname");
+                 lname = rs.getString("lastname");
+                 userId = rs.getInt("id");
+                 userNum = rs.getString("contactnum");
+                 userEmail = rs.getString("email");
+        }*/
+      } catch (SQLException ex) {
+          Logger.getLogger(ClientInterface.class.getName()).log(Level.SEVERE, null, ex);
+      }
         
         panelUsers= new JPanel();
         panelUsers.setBounds(0,0,1200,560);
@@ -345,6 +393,8 @@ public class adminPage extends JFrame implements ActionListener{
         btnChangePassword.addActionListener(this);
         setVisible(true);
     }
+    
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -387,6 +437,37 @@ public class adminPage extends JFrame implements ActionListener{
                     lblImage.setIcon(imageIcon);
                 }
         }else if (e.getSource() == btnAddImage) {
+            String name = txtPropertyName.getText();
+            String location = txtLocation.getText();
+            String price = txtPrice.getText();
+            String description = txaDescription.getText();
+            
+            String values = "insert into realestatess (name,location,price,description) "
+                    + "values ('"+name+"', '"+location+"', '"+price+"', '"+description+"')";
+           
+            if (!name.isEmpty() && !location.isEmpty() && !price.isEmpty() && !description.isEmpty()){
+                
+                
+                    try {
+                        st = con.createStatement();
+                
+                        st.executeUpdate(values);
+                
+                        txtPropertyName.setText("");
+                        txtLocation.setText("");
+                        txtPrice.setText("");
+                        txaDescription.setText("");
+                        
+                        JOptionPane.showMessageDialog(null, "ADDING COMPLETED", "ADD SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+            
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+                 }
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Please fill all the field");
+            }
             
         }else if(e.getSource() == btnSignOut) {
             
@@ -407,9 +488,26 @@ public class adminPage extends JFrame implements ActionListener{
         }
        
     }
+
     public static void main(String[] args) {
         new adminPage();
     }
+    public void Connect(){
+        String url = "jdbc:mysql://localhost:3306/realestates";
+        String username = "root";
+        String password = "admin123";
+        
+        try {
+            con = DriverManager.getConnection(url, username, password);
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    /*@Override
+    public void actionPerformed(ActionEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }*/
     
    
 }
