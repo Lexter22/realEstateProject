@@ -397,7 +397,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
               new welcomePage().setVisible(true);
           }
 
-      }
-
-    }
+      } 
+      
+    } 
 }

@@ -254,7 +254,7 @@ public class adminPage extends JFrame implements ActionListener{
         panelADD.setBackground(Color.green);
         jtab.add(panelAddLayout);
         //String UsersInfo = "Select firstname, lastname, id, contactnum, email From clientsinfo where username=? ";
-          String HousesData = "Select * from realestatess";
+          String HousesData = "Select * from residentialrealestates";
         try {
           
           st = con.createStatement();
@@ -265,7 +265,7 @@ public class adminPage extends JFrame implements ActionListener{
                  houseName = rsHouses.getString("name");
                  houseLocation = rsHouses.getString("location");
                  housePrice = rsHouses.getInt("price");
-                 //houseStatus = rsHouses.getString("status");
+                 houseStatus = rsHouses.getString("status");
                  houseDescription = rsHouses.getString("description");
                  
                  Object [] dataSql={ houseName, houseLocation, housePrice, houseDescription};
@@ -441,12 +441,12 @@ public class adminPage extends JFrame implements ActionListener{
             String location = txtLocation.getText();
             String price = txtPrice.getText();
             String description = txaDescription.getText();
-            
-            String values = "insert into realestatess (name,location,price,description) "
-                    + "values ('"+name+"', '"+location+"', '"+price+"', '"+description+"')";
-           
+                                        // name ng table sa sql
+            String values = "insert into residentialrealestates (name,location,price,description) "
+                    + "values ('"+name+"', '"+location+"', '"+price+"', '"+description+"'+)";
+            // dapat may papasok na default value yung status which is available  kasi dun nag eerror wala daw value yung status.
             if (!name.isEmpty() && !location.isEmpty() && !price.isEmpty() && !description.isEmpty()){
-                
+                // diba normally nasa unahan id, dun sa sql table ilagay niyo sa dulo para hindi mag error
                 
                     try {
                         st = con.createStatement();
