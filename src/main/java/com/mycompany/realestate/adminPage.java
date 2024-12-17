@@ -190,8 +190,8 @@ public class adminPage extends JFrame implements ActionListener{
 
         
         Object[][] data = {{}};
-        String[] tablecolumn = {"Property Name", "Location", "Price", "Status"};
-        
+        String[] tablecolumn = {"ID","Property Name", "Location", "Price", "Status"};
+        // ito yung nilgay ko na ID column
         tableEstateModel = new DefaultTableModel(data, tablecolumn);
         tableEstate = new JTable(tableEstateModel);
         tableEstate.setDefaultEditor(Object.class, null);
@@ -446,7 +446,7 @@ public class adminPage extends JFrame implements ActionListener{
                     + "values ('"+name+"', '"+location+"', '"+price+"', '"+description+"'+)";
             // dapat may papasok na default value yung status which is available  kasi dun nag eerror wala daw value yung status.
             if (!name.isEmpty() && !location.isEmpty() && !price.isEmpty() && !description.isEmpty()){
-                // diba normally nasa unahan id, dun sa sql table ilagay niyo sa dulo para hindi mag error
+                // updated comment, naglagay ako ng id sa table, lagay niyo na ulit sa unahan yung id sa sql table
                 
                     try {
                         st = con.createStatement();
