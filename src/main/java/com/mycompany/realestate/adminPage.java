@@ -445,8 +445,6 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
               btnHome.setIcon(finalHomeIc);
             } else  {
               btnHome.setIcon(finalAccountIc);
-              dispose();
-              new adminPage().setVisible(true);
                 jtab.setSelectedIndex(0);
             }
         }else if(e.getSource()==btnAdd){
@@ -480,7 +478,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
             String location = txtLocation.getText();
             String price = txtPrice.getText();
             String description = txaDescription.getText();
-            if (!name.isEmpty() && !location.isEmpty() && !price.isEmpty() && !description.isEmpty() && imagePath!=null){
+            if (!name.isEmpty() && !location.isEmpty() && !price.isEmpty() && !description.isEmpty()){
               
                 try {
                     pst = con.prepareStatement(values);
@@ -492,17 +490,22 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
                     pst.setString(3,txtPrice.getText());
                     pst.setString(4,txaDescription.getText());
                     pst.setString(5,status);
+                if(imagePath!=null){
                     InputStream imagefinalpt5 = new FileInputStream(new File(imagePath));
                     pst.setBlob(6,imagefinalpt5);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Please insert an Image","ERROR", JOptionPane.ERROR_MESSAGE);
+                }
                     pst.executeUpdate();
                     lblImage.setIcon(null);
                     txtPropertyName.setText("");
                     txtLocation.setText("");
                     txtPrice.setText("");
                     txaDescription.setText("");
-                        
+                    
+                    dispose();
                     JOptionPane.showMessageDialog(null, "House Added", "ADD SUCCESS", JOptionPane.INFORMATION_MESSAGE);
-            
+                    new adminPage();
             } catch (SQLException ex) {
                 Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
               
@@ -511,19 +514,19 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
             }
             }
             else {
-                JOptionPane.showMessageDialog(null, "Please fill all the field");
+                JOptionPane.showMessageDialog(null, "Please fill all the field","ERROR", JOptionPane.ERROR_MESSAGE);
             }
             
         }else if(e.getSource() == btnSignOut) {
             int response = JOptionPane.showConfirmDialog(this, "You are signing out\nClick ok to proceed","Sign out",JOptionPane.OK_CANCEL_OPTION);
             if(response == JOptionPane.OK_OPTION) {
                 JOptionPane.showMessageDialog(null, "Signed Out");
-                new welcomePage().setVisible(true);
                 dispose();
+                new welcomePage().setVisible(true);
             } 
         }else if(e.getSource() == btnChangePassword) {
-                new changePassword().setVisible(true);
                 dispose();
+                new changePassword().setVisible(true);
         }
     }
     
