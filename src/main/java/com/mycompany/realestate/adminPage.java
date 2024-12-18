@@ -196,7 +196,6 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         
         Object[][] data = {{}};
         String[] tablecolumn = {"ID","Property Name", "Location", "Price", "Status"};
-        // ito yung nilgay ko na ID column
         tableEstateModel = new DefaultTableModel(data, tablecolumn);
         tableEstate = new JTable(tableEstateModel);
         tableEstate.setDefaultEditor(Object.class, null);
@@ -258,39 +257,26 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         panelADD.setBounds(0,0,1200,560);
         panelADD.setBackground(Color.green);
         jtab.add(panelAddLayout);
-        //String UsersInfo = "Select firstname, lastname, id, contactnum, email From clientsinfo where username=? ";
-          String HousesData = "Select * from residentialrealestates";
+        
         try {
+          String HousesData = "Select * from residentialrealestates";
           
           st = con.createStatement();
-          ResultSet rsHouses = st.executeQuery(HousesData);
+          ResultSet rs = st.executeQuery(HousesData);
            
-            while(rsHouses.next()){
-                 
-                 houseId = rsHouses.getString("id");
-                 houseName = rsHouses.getString("name");
-                 houseLocation = rsHouses.getString("location");
-                 housePrice = rsHouses.getInt("price");
-                 houseStatus = rsHouses.getString("status");
-                 //houseDescription = rsHouses.getString("description");
-                 
-                 Object [] dataSql={ houseId, houseName, houseLocation, housePrice, houseStatus};
-                 tableEstateModel.addRow(dataSql);
-                 
-            }
-            /*pst = con.prepareStatement(UsersInfo);
-            pst.setString(1, username);
-            rs = pst.executeQuery();
             while(rs.next()){
-                 fname = rs.getString("firstname");
-                 lname = rs.getString("lastname");
-                 userId = rs.getInt("id");
-                 userNum = rs.getString("contactnum");
-                 userEmail = rs.getString("email");
-        }*/
-      } catch (SQLException ex) {
-          Logger.getLogger(ClientInterface.class.getName()).log(Level.SEVERE, null, ex);
-      }
+                 
+                 houseId = rs.getString("id");
+                 houseName = rs.getString("name");
+                 houseLocation = rs.getString("location");
+                 housePrice = rs.getInt("price");
+                 houseStatus = rs.getString("status");
+                 Object [] dataSql={houseId, houseName, houseLocation, housePrice, houseStatus};
+                 tableEstateModel.addRow(dataSql);
+            }
+           } catch (SQLException ex) {
+             Logger.getLogger(ClientInterface.class.getName()).log(Level.SEVERE, null, ex);
+           }   
         
         panelUsers= new JPanel();
         panelUsers.setBounds(0,0,1200,560);
@@ -301,12 +287,9 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         panelUsersPanel.setBounds(0, 0, 800, 560);
         panelUsers.add(panelUsersPanel);
         
-        //Temporary Data
-        
         String[][] data2 = {{"1", "Lex", "Reyes", "Lexterqtqt", "91234567890", "lexterqtqt@gmail.com"},
                             {"2", "Abdul", "Disomimba", "Abdulmalik22", "91235621", "malik@gmail.com"}};
         String[] tablecolumn2 = {"ID", "First Name", "Last Name", "Username", "Contact No.", "Email"};
-        // sa database mang gagaling
         tableUserModel = new DefaultTableModel(data2, tablecolumn2);
         tableUser = new JTable(tableUserModel);
         tableUser.setDefaultEditor(Object.class, null);
@@ -344,7 +327,6 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         panelTransaction.setBounds(0, 0, 800, 560);
         transactJPanel.add(panelTransaction);
         
-        // sa database ito kukunin
         String[][] transactions = {{"123", "property123", "ClientID", "10/28/2024"}};
         String[] transactionsColumns = {"Transaction ID", "Property ID", "Client ID", "Date"};
         tableTransactionModel = new DefaultTableModel(transactions, transactionsColumns);
@@ -367,7 +349,6 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         JButton btnSalesReport = new JButton("Sales Report");
         btnSalesReport.setBounds(900, 80, 200, 30);
         transactJPanel.add(btnSalesReport);
-        
         
         panelProfile= new JPanel();
         panelProfile.setBounds(0,0,1200,560);
@@ -401,37 +382,30 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         setVisible(true);
     }
     
-
-    
     @Override
       public void mouseClicked(MouseEvent e) {
       if(e.getSource()==tableEstate){
   
         int selectedrows = tableEstate.getSelectedRow();
         if(selectedrows != -1){
-            
             String id = String.valueOf(tableEstateModel.getValueAt(selectedrows, 0));
             displayImage(id);
         }
     
-        }
+      }
       }
 
       @Override
-      public void mousePressed(MouseEvent e) {
-       }
+      public void mousePressed(MouseEvent e) {}
 
       @Override
-      public void mouseReleased(MouseEvent e) {
-       }
+      public void mouseReleased(MouseEvent e) {}
 
       @Override
-      public void mouseEntered(MouseEvent e) {
-      }
+      public void mouseEntered(MouseEvent e) {}
 
       @Override
-      public void mouseExited(MouseEvent e) {
-       }
+      public void mouseExited(MouseEvent e) {}
       
          
       public void displayImage(String id){
@@ -442,27 +416,24 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
             pst = con.prepareStatement(image);
             pst.setString(1, id);
             rs = pst.executeQuery();
+            
             while(rs.next()){
-            Blob images = rs.getBlob("img");
-            InputStream imagefinalpt2 = images.getBinaryStream();
-            Image imagefinalpt3 = ImageIO.read(imagefinalpt2);
-            ImageIcon imagefinalpt4 = new ImageIcon(imagefinalpt3);
-            finalPreviewImage = new ImageIcon(imagefinalpt4.getImage().getScaledInstance(350,280, Image.SCALE_SMOOTH));
-            previewImg.setIcon(finalPreviewImage);
+                Blob images = rs.getBlob("img");
+                InputStream imagefinalpt2 = images.getBinaryStream();
+                Image imagefinalpt3 = ImageIO.read(imagefinalpt2);
+                ImageIcon imagefinalpt4 = new ImageIcon(imagefinalpt3);
+                finalPreviewImage = new ImageIcon(imagefinalpt4.getImage().getScaledInstance(350,280, Image.SCALE_SMOOTH));
+                previewImg.setIcon(finalPreviewImage);
             }
         } catch (SQLException ex) {
             Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
   
-
     @Override
     public void actionPerformed(ActionEvent e) {
-        
-        
         if(e.getSource()==btnHome){
             int currentIndex = jtab.getSelectedIndex();
             if (currentIndex == 0) {
@@ -473,7 +444,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
               dispose();
               new adminPage().setVisible(true);
                 jtab.setSelectedIndex(0);
-              }
+            }
         }else if(e.getSource()==btnAdd){
             btnHome.setIcon(finalHomeIc);
             jtab.setSelectedIndex(1);
@@ -495,95 +466,70 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
                 if (res == JFileChooser.APPROVE_OPTION) {
                     File fSelect = jfcImage.getSelectedFile();
                     imagePath = fSelect.getAbsolutePath();
-
                     ImageIcon path = new ImageIcon(imagePath);
                     ImageIcon imageIcon = new ImageIcon(path.getImage().getScaledInstance(500, 300, Image.SCALE_SMOOTH));
-
                     lblImage.setIcon(imageIcon);
                 }
         }else if (e.getSource() == btnAddImage) {
-                                        // name ng table sa sql
-            String values = "insert into residentialrealestates (name,location,price,description,status,img) "+ "values (?,?,?,?,?,?)";
-            // dapat may papasok na default value yung status which is available  kasi dun nag eerror wala daw value yung status.
+            String values = "insert into residentialrealestates (name,location,price,description,status,img) values (?,?,?,?,?,?)";
             String name = txtPropertyName.getText();
             String location = txtLocation.getText();
             String price = txtPrice.getText();
             String description = txaDescription.getText();
-            if (!name.isEmpty() && !location.isEmpty() && !price.isEmpty() && !description.isEmpty()){
-                // updated comment, naglagay ako ng id sa table, lagay niyo na ulit sa unahan yung id sa sql table
-                
-                    try {
-                        pst = con.prepareStatement(values);
-                
-                        String status = "Available";
-                
-                        pst.setString(1,txtPropertyName.getText());
-                        pst.setString(2,txtLocation.getText());
-                        pst.setString(3,txtPrice.getText());
-                        pst.setString(4,txaDescription.getText());
-                        pst.setString(5,status);
-                            InputStream imagefinalpt5 = new FileInputStream(new File(imagePath));
-                        pst.setBlob(6,imagefinalpt5);
-                        lblImage.setIcon(null);
-                        pst.executeUpdate();
-                        txtPropertyName.setText("");
-                        txtLocation.setText("");
-                        txtPrice.setText("");
-                        txaDescription.setText("");
+            if (!name.isEmpty() && !location.isEmpty() && !price.isEmpty() && !description.isEmpty() && imagePath!=null){
+              
+                try {
+                    pst = con.prepareStatement(values);
+
+                    String status = "Available";
+
+                    pst.setString(1,txtPropertyName.getText());
+                    pst.setString(2,txtLocation.getText());
+                    pst.setString(3,txtPrice.getText());
+                    pst.setString(4,txaDescription.getText());
+                    pst.setString(5,status);
+                    InputStream imagefinalpt5 = new FileInputStream(new File(imagePath));
+                    pst.setBlob(6,imagefinalpt5);
+                    pst.executeUpdate();
+                    lblImage.setIcon(null);
+                    txtPropertyName.setText("");
+                    txtLocation.setText("");
+                    txtPrice.setText("");
+                    txaDescription.setText("");
                         
-                        
-                        JOptionPane.showMessageDialog(null, "ADDING COMPLETED", "ADD SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "ADDING COMPLETED", "ADD SUCCESS", JOptionPane.INFORMATION_MESSAGE);
             
-                
             } catch (SQLException ex) {
                 Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
-                 } catch (FileNotFoundException ex) {
-                    Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
             }
             else {
                 JOptionPane.showMessageDialog(null, "Please fill all the field");
             }
             
         }else if(e.getSource() == btnSignOut) {
-            
             int response = JOptionPane.showConfirmDialog(this, "You are signing out\nClick ok to proceed","Sign out",JOptionPane.OK_CANCEL_OPTION);
-            
             if(response == JOptionPane.OK_OPTION) {
-       
                 JOptionPane.showMessageDialog(null, "Signed Out");
                 new welcomePage().setVisible(true);
                 dispose();
             } 
         }else if(e.getSource() == btnChangePassword) {
-            
                 new changePassword().setVisible(true);
                 dispose();
-            
-            
         }
-       
     }
-
-    public static void main(String[] args) {
-        new adminPage();
-    }
+    
     public void Connect(){
         String url = "jdbc:mysql://localhost:3306/realestates";
         String username = "root";
         String password = "admin123";
-        
         try {
             con = DriverManager.getConnection(url, username, password);
         } catch (SQLException ex) {
             Logger.getLogger(ClientInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
-    /*@Override
-    public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }*/
-    
-   
 }
