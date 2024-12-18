@@ -216,7 +216,6 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
                 
                     try {
                         st = con.createStatement();
-                
                         st.executeUpdate(values);
                 
                         txtName.setText("");
@@ -239,7 +238,6 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
             
         }
     }
-    
     
     public void Connect(){
         String url = "jdbc:mysql://localhost:3306/realestates";
