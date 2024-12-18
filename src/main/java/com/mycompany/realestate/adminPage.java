@@ -35,23 +35,24 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
     private JTextField txtPropertyName,txtLocation,txtPrice;
     private JTextArea txaDescription;
     private ImageIcon accountIc, homeIc, finalAccountIc, finalHomeIc, clientIc, finalClientIc, transIc, finalTransIc, previewImage, finalPreviewImage;
-    private DefaultTableModel tableEstateModel, tableUserModel, tableTransactionModel;
+    private DefaultTableModel tableEstateModel, tableUserModel, tableTransactionModel,tbModel;
     private JFileChooser jfcImage = new JFileChooser();
     private Color cGreen = (Color.decode("#28A745"));
     private Color cBlue = (Color.decode("#004A8C")); 
     private ImageIcon logoIc, finalLogoIc;
     private Connection con;
-  private Statement st;
-  private PreparedStatement pst;
-  private ResultSet rs;
-  private String  houseLocation, houseName, houseDescription, houseStatus, userId, houseId;
-  private int housePrice;
-  private String imagePath;
-        
+    private Statement st;
+    private PreparedStatement pst;
+    private ResultSet rs;
+    private String  houseLocation, houseName, houseDescription, houseStatus, userId, houseId;
+    private int housePrice;
+    private String imagePath;
+    private String userID,firstName,lastName,username,contactNum,email,password;
+    
         
     public adminPage() {
         Connect();
-        
+  
         setSize(1200, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -195,6 +196,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
 
         
         Object[][] data = {{}};
+        tbModel = new DefaultTableModel();
         String[] tablecolumn = {"ID","Property Name", "Location", "Price", "Status"};
         tableEstateModel = new DefaultTableModel(data, tablecolumn);
         tableEstate = new JTable(tableEstateModel);
@@ -287,10 +289,12 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         panelUsersPanel.setBounds(0, 0, 800, 560);
         panelUsers.add(panelUsersPanel);
         
-        String[][] data2 = {{"1", "Lex", "Reyes", "Lexterqtqt", "91234567890", "lexterqtqt@gmail.com"},
-                            {"2", "Abdul", "Disomimba", "Abdulmalik22", "91235621", "malik@gmail.com"}};
-        String[] tablecolumn2 = {"ID", "First Name", "Last Name", "Username", "Contact No.", "Email"};
+        
+        String[][] data2 = {};
+        String[] tablecolumn2 = {"ID", "First Name", "Last Name", "Username", "Contact No.", "Email","Password"};
+       
         tableUserModel = new DefaultTableModel(data2, tablecolumn2);
+        showClients();
         tableUser = new JTable(tableUserModel);
         tableUser.setDefaultEditor(Object.class, null);
         tableUser.setRowHeight(30);
@@ -497,10 +501,11 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
                     txtPrice.setText("");
                     txaDescription.setText("");
                         
-                    JOptionPane.showMessageDialog(null, "ADDING COMPLETED", "ADD SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "House Added", "ADD SUCCESS", JOptionPane.INFORMATION_MESSAGE);
             
             } catch (SQLException ex) {
                 Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+              
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -531,5 +536,30 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         } catch (SQLException ex) {
             Logger.getLogger(ClientInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    public void showClients(){        
+            String sql = "Select * from clientsinfo";
+            PreparedStatement pst;
+        try {
+            pst = con.prepareStatement(sql);
+             rs = pst.executeQuery(sql);
+            
+            while(rs.next()) {
+                userID = rs.getString("id");
+                firstName = rs.getString("firstname");
+                lastName = rs.getString("lastname");
+                username = rs.getString("username");
+                contactNum = rs.getString("contactnum");
+                email = rs.getString("email");
+                password = rs.getString("password");
+                
+                String clientsData[] = {userID,firstName,lastName,username,contactNum,email,password}; 
+                tableUserModel.addRow(clientsData);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+          
+        
     }
 }
