@@ -20,14 +20,14 @@ public class moreInfo extends JFrame implements ActionListener{
     private JLabel lblNameId, lblID, lblPrice, lblLocation,lblStatus, lblRichField, lblRealEstates, lblLogo,lblInfo,pnPic;
     private JTextArea txaInfo;
     private JButton btnBack, btnBuy;
-    private ImageIcon logoIc, finalLogoIc;
+    private ImageIcon logoIc, finalLogoIc, picture, finalPicture;
     private JPanel  panelAddLayout, panelHeader;
     private String inheretBack, location, status, name, id, price, fname, lname, userNum, userEmail;
     private String userId;
     private Color cGreen = (Color.decode("#28A745"));
     private Color cBlue = (Color.decode("#004A8C")); 
     
-   public moreInfo(String id, String name, String location, String price, String status, String inheret, String fname, String lname, int userId, String userNum, String userEmail){
+   public moreInfo(String id, String name, String location, String price, String status, String inheret, String fname, String lname, int userId, String userNum, String userEmail, ImageIcon picture){
   
         setSize(1200, 700);
         setLocationRelativeTo(null);
@@ -65,22 +65,22 @@ public class moreInfo extends JFrame implements ActionListener{
         lblNameId.setFont(new Font("Arial", Font.BOLD, 14));
         panelAddLayout.add(lblNameId);
 
-        lblID = new JLabel("Property ID :         " + id);
+        lblID = new JLabel("Property ID       : " + id);
         lblID.setBounds(50, 80, 500, 30);
         lblID.setFont(new Font("Arial", Font.BOLD, 14));
         panelAddLayout.add(lblID);
         
-        lblID = new JLabel("Location  :   " + location);
+        lblID = new JLabel("Location            : " + location);
         lblID.setBounds(50, 110, 500, 30);
         lblID.setFont(new Font("Arial", Font.BOLD, 14));
         panelAddLayout.add(lblID);
         
-        lblPrice = new JLabel("Price :" + price);
+        lblPrice = new JLabel("Price                 : " + price);
         lblPrice.setBounds(50, 140, 500, 30);
         lblPrice.setFont(new Font("Arial", Font.BOLD, 14));
         panelAddLayout.add(lblPrice);
     
-        lblStatus = new JLabel("Status :" + status);
+        lblStatus = new JLabel("Status               : " + status);
         lblStatus.setBounds(50, 170, 500, 30);
         lblStatus.setFont(new Font("Arial", Font.BOLD, 14));
         panelAddLayout.add(lblStatus);
@@ -91,12 +91,17 @@ public class moreInfo extends JFrame implements ActionListener{
         panelAddLayout.add(lblInfo);
 
         txaInfo = new JTextArea();
+        txaInfo.setEditable(false);
+        txaInfo.setFocusable(false);
         txaInfo.setBounds(50, 240, 500, 300);
         panelAddLayout.add(txaInfo);
+        
+        finalPicture = new ImageIcon(picture.getImage().getScaledInstance(500,300, Image.SCALE_SMOOTH));
         
         pnPic = new JLabel();
         pnPic.setBounds(650, 100, 500, 300);
         pnPic.setBackground(Color.gray);
+        pnPic.setIcon(finalPicture);
         pnPic.setOpaque(true);
         panelAddLayout.add(pnPic);
 
@@ -137,5 +142,4 @@ public class moreInfo extends JFrame implements ActionListener{
             
         }
     }
-    
 }
