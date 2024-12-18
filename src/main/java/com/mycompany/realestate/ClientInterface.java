@@ -14,6 +14,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -22,6 +25,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.table.DefaultTableModel;
 
 public class ClientInterface extends JFrame implements ActionListener, MouseListener {
@@ -33,7 +37,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
   private JTabbedPane jtab;
   private JTable itemTable, accTable;
   private Object[][] houses = {} , ownedHouses = {};
-  private ImageIcon searchIc, resetIc, accountIc, homeIc, moreInfoIc, finalSearchIc, finalResetIc, finalAccountIc, finalHomeIc, finalMoreInfoIc, logoIC, finalLogoIC;
+  private ImageIcon searchIc, resetIc, accountIc, homeIc, moreInfoIc, finalSearchIc, finalResetIc, finalAccountIc, finalHomeIc, finalMoreInfoIc, logoIC, finalLogoIC, previewImage, finalPreviewImage;
   private String[] columnNames = { "Location","Price", "ID", "Status" };
   private String Location[] = {"Location", "San Pedro", "Santa Rosa", "Binan" };
   private String Price[] = { "Price Range", "$1", "$10,000,001 - $50,000,000", "$50,000,001 - $100,000,000" };
@@ -190,19 +194,19 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         panelItemsPanel.add(scrollPaneEstate);
            
         lblpreviewImg = new JLabel("IMAGE PREVIEW");
-        lblpreviewImg.setBounds(820, 20, 360, 30);
+        lblpreviewImg.setBounds(800,50,390,50);
         lblpreviewImg.setHorizontalAlignment(SwingConstants.CENTER);
         lblpreviewImg.setFont(new Font("Arial", Font.BOLD, 15));
         panelItems.add(lblpreviewImg);
         
         btnView = new JButton("View Details");
-        btnView.setBounds(810, 470, 350, 35);
+        btnView.setBounds(815, 430, 350, 35);
         btnView.setBackground(cGreen);
         btnView.setForeground(Color.white);
         panelItems.add(btnView);
         
         imgPreviewImage = new JLabel();
-        imgPreviewImage.setBounds(810, 60, 350, 280);
+        imgPreviewImage.setBounds(815, 90, 350, 280);
         imgPreviewImage.setBorder(BorderFactory.createLineBorder(Color.black));
         panelItems.add(imgPreviewImage);
         
@@ -241,15 +245,15 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         lblUName.setFont(new Font("Arial", Font.BOLD, 15));
         panelAccount.add(lblUName);
 
-        lblCID=new JLabel("ID :       "+ userId);
+        lblCID=new JLabel("ID       : "+ userId);
         lblCID.setHorizontalAlignment(SwingConstants.LEFT);
         lblCID.setBounds(810,80,300,50);
         lblCID.setFont(new Font("Arial", Font.BOLD, 15));
         panelAccount.add(lblCID);
 
-        lblEmail=new JLabel("Email :  "+userEmail);
+        lblEmail=new JLabel("Email : "+userEmail);
         lblEmail.setHorizontalAlignment(SwingConstants.LEFT);
-        lblEmail.setBounds(810,110,300,50);
+        lblEmail.setBounds(810,110,350,50);
         lblEmail.setFont(new Font("Arial", Font.BOLD, 15));
         panelAccount.add(lblEmail);
 
@@ -260,25 +264,25 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         panelAccount.add(lblCNumber);
         
         JLabel lblUserPreview =new JLabel("IMAGE PREVIEW");
-        lblUserPreview.setBounds(810,160,390,50);
+        lblUserPreview.setBounds(800,160,390,50);
         lblUserPreview.setHorizontalAlignment(SwingConstants.CENTER);
         lblUserPreview.setFont(new Font("Arial", Font.BOLD, 15));
         panelAccount.add(lblUserPreview);
 
         JLabel lblUserImage = new JLabel();
-        lblUserImage.setBounds(810, 200, 350, 250);
+        lblUserImage.setBounds(815, 200, 350, 250);
         lblUserImage.setBorder(BorderFactory.createLineBorder(Color.black));
         lblUserImage.setBackground(Color.red);
         panelAccount.add(lblUserImage);
         
         btnViewOwned = new JButton("View Details");
-        btnViewOwned.setBounds(810, 470, 350, 35);
+        btnViewOwned.setBounds(815, 470, 350, 35);
         btnViewOwned.setBackground(cGreen);
         btnViewOwned.setForeground(Color.white);
         panelAccount.add(btnViewOwned);
         
         btnLogout = new JButton("Log Out");
-        btnLogout.setBounds(810, 510, 350, 35);
+        btnLogout.setBounds(815, 510, 350, 35);
         btnLogout.setBackground(cGreen);
         btnLogout.setForeground(Color.white);
         panelAccount.add(btnLogout);
@@ -296,10 +300,9 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         accTable.addMouseListener(this);
 
         setVisible(true);
-        
         inheret = username;
-        System.out.println("ClientInterface " + inheret);
-      }
+        
+       }
   
      public void Connect(){
         String url = "jdbc:mysql://localhost:3306/realestates";
@@ -318,26 +321,51 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
       public void mouseClicked(MouseEvent e) {
       if(e.getSource()==itemT){
   
-        }else if(e.getSource()==accTable){
-    
+        int selectedrows = itemT.getSelectedRow();
+        if(selectedrows != -1){
+            String id = String.valueOf(itemTModel.getValueAt(selectedrows, 0));
+            displayImage(id);
         }
+          
+      }
       }
 
       @Override
-      public void mousePressed(MouseEvent e) {
-       }
+      public void mousePressed(MouseEvent e) {}
 
       @Override
-      public void mouseReleased(MouseEvent e) {
-       }
+      public void mouseReleased(MouseEvent e) {}
 
       @Override
-      public void mouseEntered(MouseEvent e) {
-      }
+      public void mouseEntered(MouseEvent e) {}
 
       @Override
-      public void mouseExited(MouseEvent e) {
-       }
+      public void mouseExited(MouseEvent e) {}
+      
+      public void displayImage(String id){
+          
+        try {
+            String image = "select img from residentialrealestates where id = ?";
+            
+            pst = con.prepareStatement(image);
+            pst.setString(1, id);
+            rs = pst.executeQuery();
+            
+            while(rs.next()){
+                
+                Blob images = rs.getBlob("img");
+                InputStream isImage = images.getBinaryStream();
+                Image ioImage = ImageIO.read(isImage);
+                previewImage = new ImageIcon(ioImage);
+                finalPreviewImage = new ImageIcon(previewImage.getImage().getScaledInstance(350,280, Image.SCALE_SMOOTH));
+                imgPreviewImage.setIcon(finalPreviewImage);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
   
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -364,7 +392,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
               String location = String.valueOf(itemT.getValueAt(selectedRowItem, 2));
               String price =String.valueOf(itemT.getValueAt(selectedRowItem, 3)); 
               String status = String.valueOf(itemT.getValueAt(selectedRowItem, 4)); 
-              new moreInfo(id, name, location, price, status, inheret, fname, lname, userId, userNum, userEmail).setVisible(true);
+              new moreInfo(id, name, location, price, status, inheret, fname, lname, userId, userNum, userEmail, finalPreviewImage).setVisible(true);
 
               dispose();
         }else{
@@ -374,7 +402,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
          int selectedRowAccItem = accTable.getSelectedRow();
            if(selectedRowAccItem != -1) {
               String location = (String) accTable.getValueAt(selectedRowAccItem, 0); 
-               String id = (String) accTable.getValueAt(selectedRowAccItem, 1); 
+              String id = (String) accTable.getValueAt(selectedRowAccItem, 1); 
               String price = (String) accTable.getValueAt(selectedRowAccItem, 2); 
               String status = (String) accTable.getValueAt(selectedRowAccItem, 3);
 
@@ -396,8 +424,11 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
               dispose();
               new welcomePage().setVisible(true);
           }
-
-      } 
-      
-    } 
+      }
+    }
+    
+    public static void main(String[] args) {
+        String username = "jhommm";
+        new ClientInterface(username);
+    }
 }
