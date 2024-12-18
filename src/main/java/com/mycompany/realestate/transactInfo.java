@@ -29,7 +29,7 @@ public class transactInfo extends JFrame implements ActionListener{
     
    public transactInfo(){
   
-        setSize(1200, 700);
+      setSize(1200, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
@@ -65,22 +65,22 @@ public class transactInfo extends JFrame implements ActionListener{
         lblNameId.setFont(new Font("Arial", Font.BOLD, 14));
         panelAddLayout.add(lblNameId);
 
-        lblID = new JLabel("Property ID :         " + id);
+        lblID = new JLabel("Property ID       : " + id);
         lblID.setBounds(50, 80, 500, 30);
         lblID.setFont(new Font("Arial", Font.BOLD, 14));
         panelAddLayout.add(lblID);
         
-        lblID = new JLabel("Location  :   " + location);
+        lblID = new JLabel("Location            : " + location);
         lblID.setBounds(50, 110, 500, 30);
         lblID.setFont(new Font("Arial", Font.BOLD, 14));
         panelAddLayout.add(lblID);
         
-        lblPrice = new JLabel("Price :" + price);
+        lblPrice = new JLabel("Price                 : " + price);
         lblPrice.setBounds(50, 140, 500, 30);
         lblPrice.setFont(new Font("Arial", Font.BOLD, 14));
         panelAddLayout.add(lblPrice);
     
-        lblStatus = new JLabel("Status :" + status);
+        lblStatus = new JLabel("Status               : " + status);
         lblStatus.setBounds(50, 170, 500, 30);
         lblStatus.setFont(new Font("Arial", Font.BOLD, 14));
         panelAddLayout.add(lblStatus);
@@ -91,35 +91,34 @@ public class transactInfo extends JFrame implements ActionListener{
         panelAddLayout.add(lblInfo);
 
         txaInfo = new JTextArea();
+        txaInfo.setEditable(false);
+        txaInfo.setFocusable(false);
         txaInfo.setBounds(50, 240, 500, 300);
         panelAddLayout.add(txaInfo);
         
         pnPic = new JLabel();
         pnPic.setBounds(650, 100, 500, 300);
         pnPic.setBackground(Color.gray);
+        pnPic.setIcon(null);
         pnPic.setOpaque(true);
         panelAddLayout.add(pnPic);
 
         btnBack = new JButton("Back");
-        btnBack.setBounds(650, 450, 200, 50);
+        btnBack.setBounds(650, 450, 500, 50);
         btnBack.setBackground(cGreen);
         btnBack.setForeground(Color.white);
+        
         panelAddLayout.add(btnBack);
-        
-        btnBuy = new JButton("Buy");
-        btnBuy.setBounds(950, 450, 200, 50);
-        btnBuy.setBackground(cGreen);
-        btnBuy.setForeground(Color.white);
-        panelAddLayout.add(btnBuy);
-        
+
         panelHeader=new JPanel();
         panelHeader.setBounds(0,0,1200,100);
         panelHeader.setBackground(cBlue);
         add(panelHeader);
-        
+            
         setVisible(true);
         
         btnBack.addActionListener(this);
+        btnBuy.addActionListener(this);
     }
 
  
