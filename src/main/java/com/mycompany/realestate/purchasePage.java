@@ -91,7 +91,7 @@ public class purchasePage extends JFrame implements ActionListener{
         } else if(e.getSource()==btnBack){
                String location = null, status = null, name=null,price = "1321321", id = "323232";
         
-        new moreInfo(location, price, id, status, name,username, fname, lname, userId, userNum, userEmail);
+        new moreInfo(location, price, id, status, name,username, fname, lname, userId, userNum, userEmail, finalLogoIc);
             dispose();
         }
     }
