@@ -22,7 +22,7 @@ public class moreInfo extends JFrame implements ActionListener{
     private JButton btnBack, btnBuy;
     private ImageIcon logoIc, finalLogoIc, picture, finalPicture;
     private JPanel  panelAddLayout, panelHeader;
-    private String inheretBack, location, status, name, id, price, fname, lname, userNum, userEmail;
+    private String inheretBack, location, status, name, id, price, fname, lname, userNum, userEmail, admin;
     private String userId;
     private Color cGreen = (Color.decode("#28A745"));
     private Color cBlue = (Color.decode("#004A8C")); 
@@ -33,6 +33,8 @@ public class moreInfo extends JFrame implements ActionListener{
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
+        
+        admin = inheret;
         
         logoIc = new ImageIcon("logoRealEstates.png");
         finalLogoIc = new ImageIcon(logoIc.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
@@ -137,8 +139,14 @@ public class moreInfo extends JFrame implements ActionListener{
             new purchasePage().setVisible(true);
             dispose();
         }else if(e.getSource()==btnBack){
-            new ClientInterface(inheretBack).setVisible(true);
+            if(admin.equals("Admin")){
+            new adminPage().setVisible(true);
             dispose();
+            }else{
+               new ClientInterface(inheretBack).setVisible(true);
+               dispose(); 
+
+            }
             
         }
     }

@@ -28,7 +28,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
 
     private JPanel panelHeader, panelUsers, panelADD, panelDelete, panelProfile, transactJPanel, homeJPanel,panelAddLayout,panelHome,panelTransaction,panelUsersPanel; 
     private JLabel lblRichField, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails,lblUsers, previewImg, lblLogo;
-    private JButton btnHome, btnAdd, btnDel, btnTransact, btnUsers,  btnProfile,btnImage,btnAddImage,btnChangePassword,btnSignOut,btnUserSearch;
+    private JButton btnHome, btnAdd, btnDel, btnTransact, btnUsers,btnDetails, btnProfile,btnImage,btnAddImage,btnChangePassword,btnSignOut,btnUserSearch,btnUpdate;
     private JTabbedPane jtab;
     private JTable tableEstate, tableUser,tableTransactions;
     private JScrollPane estates;
@@ -47,6 +47,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
     private String  houseLocation, houseName, houseDescription, houseStatus, userId, houseId;
     private int housePrice;
     private String imagePath;
+    private int selectedrows = -1;
     private String userID,firstName,lastName,username,contactNum,email,password;
     
         
@@ -219,7 +220,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         previewImg.setBorder(BorderFactory.createLineBorder(Color.black));
         homeJPanel.add(previewImg);
         
-        JButton btnDetails=new JButton("DETAILS");
+        btnDetails=new JButton("DETAILS");
         btnDetails.setBounds(820,350,100,25);
         btnDetails.setForeground(Color.WHITE);
         btnDetails.setBorder(null);
@@ -228,7 +229,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         btnDetails.setFont(new Font("Arial", Font.BOLD, 15));
         homeJPanel.add(btnDetails);
         
-        JButton btnUpdate =new JButton("UPDATE");
+        btnUpdate =new JButton("UPDATE");
         btnUpdate.setBounds(950,350,100,25);
         btnUpdate.setForeground(Color.WHITE);
         btnUpdate.setBorder(null);
@@ -277,7 +278,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
                  tableEstateModel.addRow(dataSql);
             }
            } catch (SQLException ex) {
-             Logger.getLogger(ClientInterface.class.getName()).log(Level.SEVERE, null, ex);
+             Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
            }   
         
         panelUsers= new JPanel();
@@ -383,6 +384,8 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         btnSignOut.addActionListener(this);
         btnChangePassword.addActionListener(this);
         tableEstate.addMouseListener(this);
+        btnUpdate.addActionListener(this);
+        btnDetails.addActionListener(this);
         setVisible(true);
     }
     
@@ -390,14 +393,15 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
       public void mouseClicked(MouseEvent e) {
       if(e.getSource()==tableEstate){
   
-        int selectedrows = tableEstate.getSelectedRow();
+        selectedrows = tableEstate.getSelectedRow();
         if(selectedrows != -1){
             String id = String.valueOf(tableEstateModel.getValueAt(selectedrows, 0));
             displayImage(id);
         }
+        }
     
       }
-      }
+      
 
       @Override
       public void mousePressed(MouseEvent e) {}
@@ -527,6 +531,34 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         }else if(e.getSource() == btnChangePassword) {
                 dispose();
                 new changePassword().setVisible(true);
+        }else if(e.getSource()==btnUpdate){
+           if(selectedrows != -1){
+            System.out.println("UPDATE");
+           }else{
+               System.out.println("Select row");
+           }
+        }else if(e.getSource()==btnDetails){
+            
+            int selectedRowItem = tableEstate.getSelectedRow();
+          if (selectedRowItem != -1) {
+              String houseId = String.valueOf(tableEstate.getValueAt(selectedRowItem, 0)); 
+              String houseName =String.valueOf(tableEstate.getValueAt(selectedRowItem, 1)); 
+              String houseLocation = String.valueOf(tableEstate.getValueAt(selectedRowItem, 2));
+              String housePrice =String.valueOf(tableEstate.getValueAt(selectedRowItem, 3)); 
+              String houseStatus = String.valueOf(tableEstate.getValueAt(selectedRowItem, 4)); 
+              String a = "Admin";
+              String b = null;
+              String c = null;
+              int d = 0;
+              String ee = null;
+              String f = null;
+              new moreInfo(houseId, houseName, houseLocation, housePrice, houseStatus, a, b, c, d, ee, f, finalPreviewImage).setVisible(true);
+
+              dispose();
+        }else{
+               JOptionPane.showMessageDialog(null, "Please Select a row");
+           }
+            
         }
     }
     
