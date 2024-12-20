@@ -74,21 +74,18 @@ public class purchasePage extends JFrame implements ActionListener{
         purchasePagePanel.add(lbPurchaseForm);
 
         lblId = new JLabel("ID:");
-        lblId.setBounds(30, 180, 70, 30);
+        lblId.setBounds(30, 180, 335, 30);
         lblId.setForeground(Color.white);
         purchasePagePanel.add(lblId);
-        lblId.setBounds(30, 260, 200, 40);
-        add(lblId);
+     
         
         lblLocation = new JLabel("Location:");
-        lblLocation.setBounds(30, 220, 70, 30);
+        lblLocation.setBounds(30, 220, 335, 30);
         lblLocation.setForeground(Color.white);
         purchasePagePanel.add(lblLocation);
-        lblLocation.setBounds(30, 320, 200, 40);
-        add(lblLocation);
-        
+   
         lblDate = new JLabel("Date:");
-        lblDate.setBounds(30, 260, 70, 30);
+        lblDate.setBounds(30, 260, 335, 30);
         lblDate.setForeground(Color.white);
         purchasePagePanel.add(lblDate);
        
@@ -126,9 +123,7 @@ public class purchasePage extends JFrame implements ActionListener{
         lblrepass.setForeground(Color.white);
         purchasePagePanel.add(lblrepass);
         
-        lblDate.setBounds(30, 390, 200, 40);
-        add(lblDate);
-        
+      
         btnBack = new JButton("Back");
         btnBack.setBounds(95, 500, 90, 35);
         btnBack.setHorizontalAlignment(JLabel.CENTER);
