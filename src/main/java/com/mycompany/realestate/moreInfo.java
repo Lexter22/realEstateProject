@@ -22,8 +22,8 @@ public class moreInfo extends JFrame implements ActionListener{
     private JButton btnBack, btnBuy;
     private ImageIcon logoIc, finalLogoIc, picture, finalPicture;
     private JPanel  panelAddLayout, panelHeader;
-    private String inheretBack, location, status, name, id, price, fname, lname, userNum, userEmail, admin;
-    private String userId;
+    private String inheretBack, location, status, name, id, price, locationBack, priceBack, idBack, statusBack, nameBack, fname, lname, userNum, userEmail, admin;
+    private int userId;
     private Color cGreen = (Color.decode("#28A745"));
     private Color cBlue = (Color.decode("#004A8C")); 
     
@@ -123,7 +123,13 @@ public class moreInfo extends JFrame implements ActionListener{
         panelHeader.setBounds(0,0,1200,100);
         panelHeader.setBackground(cBlue);
         add(panelHeader);
-            
+        
+        locationBack = location;
+        priceBack = price;
+        idBack = id;
+        statusBack = status;
+        nameBack = name;
+        finalPicture = picture;
         inheretBack = inheret;
         
         setVisible(true);
@@ -131,17 +137,12 @@ public class moreInfo extends JFrame implements ActionListener{
         btnBack.addActionListener(this);
         btnBuy.addActionListener(this);
     }
-
-    moreInfo() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
- 
+   
            @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()== btnBuy){
             
-            new purchasePage().setVisible(true);
+            new purchasePage(locationBack, priceBack, idBack, statusBack, nameBack, inheretBack, fname, lname, userId, userNum, userEmail, finalPicture).setVisible(true);
             dispose();
         }else if(e.getSource()==btnBack){
             if(admin.equals("Admin")){

@@ -20,14 +20,14 @@ public class transactInfo extends JFrame implements ActionListener{
     private JLabel lblNameId, lblID, lblPrice, lblLocation,lblStatus, lblRichField, lblRealEstates, lblLogo,lblInfo,pnPic;
     private JTextArea txaInfo;
     private JButton btnBack, btnBuy;
-    private ImageIcon logoIc, finalLogoIc;
+    private ImageIcon logoIc, finalLogoIc, picture, finalPicture;
     private JPanel  panelAddLayout, panelHeader;
-    private String inheretBack, location, status, name, id, price, fname, lname, userNum, userEmail;
+    private String inheretBack,inheret, location, status, name, id, price, locationBack, priceBack, idBack, statusBack, nameBack, fname, lname, userNum, userEmail;
     private String userId;
     private Color cGreen = (Color.decode("#28A745"));
     private Color cBlue = (Color.decode("#004A8C")); 
     
-   public transactInfo(){
+   public transactInfo(String id, String name, String location, String price, String status, String inheret, String fname, String lname, int userId, String userNum, String userEmail, ImageIcon picture){
   
       setSize(1200, 700);
         setLocationRelativeTo(null);
@@ -116,6 +116,13 @@ public class transactInfo extends JFrame implements ActionListener{
         add(panelHeader);
             
         setVisible(true);
+        locationBack = location;
+        priceBack = price;
+        idBack = id;
+        statusBack = status;
+        nameBack = name;
+        finalPicture = picture;
+        inheretBack = inheret;
         
         btnBack.addActionListener(this);
         btnBuy.addActionListener(this);
@@ -124,13 +131,10 @@ public class transactInfo extends JFrame implements ActionListener{
  
            @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()== btnBuy){
-            
-            new purchasePage().setVisible(true);
+            if(e.getSource()==btnBack){
             dispose();
-        }else if(e.getSource()==btnBack){
             new ClientInterface(inheretBack).setVisible(true);
-            dispose();
+            
             
         }
     }

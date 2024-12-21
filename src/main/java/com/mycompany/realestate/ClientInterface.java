@@ -401,12 +401,13 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
       }else if (e.getSource()== btnViewOwned) {
          int selectedRowAccItem = accTable.getSelectedRow();
            if(selectedRowAccItem != -1) {
-              String location = (String) accTable.getValueAt(selectedRowAccItem, 0); 
-              String id = (String) accTable.getValueAt(selectedRowAccItem, 1); 
-              String price = (String) accTable.getValueAt(selectedRowAccItem, 2); 
-              String status = (String) accTable.getValueAt(selectedRowAccItem, 3);
+              String id = String.valueOf(itemT.getValueAt(selectedRowAccItem, 0)); 
+              String name =String.valueOf(itemT.getValueAt(selectedRowAccItem, 1)); 
+              String location = String.valueOf(itemT.getValueAt(selectedRowAccItem, 2));
+              String price =String.valueOf(itemT.getValueAt(selectedRowAccItem, 3)); 
+              String status = String.valueOf(itemT.getValueAt(selectedRowAccItem, 4)); 
 
-              new transactInfo().setVisible(true);
+              new transactInfo(id, name, location, price, status, inheret, fname, lname, userId, userNum, userEmail, finalPreviewImage).setVisible(true);
               dispose();
         }else{
                JOptionPane.showMessageDialog(null, "Please Select a row");

@@ -37,15 +37,15 @@ public class purchasePage extends JFrame implements ActionListener{
     private JPasswordField txtpass, txtrepass;
     private JButton btnBack, btnContinue;
     private JPanel  logoPanel;
-    private ImageIcon logoIc, finalLogoIc;
-    private String username, fname, lname, userNum, userEmail;
+    private ImageIcon logoIc, finalLogoIc, picture, finalPicture;
+    private String location, price, id, status, name, locationBack, priceBack, idBack, statusBack, nameBack, username, fname, lname, userNum, userEmail, inheretBack;
     private int userId;
     private Color cGreen = (Color.decode("#28A745"));
     private Color cGray = (Color.decode("#E0E0E0"));
     private Color cBlue = (Color.decode("#004A8C"));
     private Connection con;
         
-    purchasePage(){
+    purchasePage(String id, String name, String location, String price, String status, String inheret, String fname, String lname, int userId, String userNum, String userEmail, ImageIcon picture){
         
         setTitle("Purchase Form");
         setSize(400, 600);
@@ -144,6 +144,13 @@ public class purchasePage extends JFrame implements ActionListener{
         
         btnBack.addActionListener(this);
         btnContinue.addActionListener(this);
+        locationBack = location;
+        priceBack = price;
+        idBack = id;
+        statusBack = status;
+        nameBack = name;
+        finalPicture = picture;
+        inheretBack = inheret;
         databaseGetInfo();
         getStoredDate();
         getDate();
@@ -249,10 +256,8 @@ private void getStoredDate() {
 
                 try (ResultSet rs = ps.executeQuery()) {
                     
-                    
                     if (rs.next()) {
 
-                        
                         java.sql.Date dateStored = rs.getDate("date"); 
                         lblDate.setText("Date: " + dateStored.toString()); 
                         
@@ -299,9 +304,7 @@ private void getStoredDate() {
             } 
             
         } else if(e.getSource()==btnBack){
-               String location = null, status = null, name=null,price = "1321321", id = "323232";
-        
-               new moreInfo(location, price, id, status, name,username, fname, lname, userId, userNum, userEmail, finalLogoIc);
+                new moreInfo(locationBack, priceBack, idBack, statusBack, nameBack, inheretBack, fname, lname, userId, userNum, userEmail, finalPicture);
             dispose();
         }
     }

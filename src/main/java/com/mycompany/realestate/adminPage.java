@@ -46,7 +46,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
     private ResultSet rs;
     private String  houseLocation, houseName, houseDescription, houseStatus, userId, houseId;
     private int housePrice;
-    private String imagePath;
+    private String imagePath = null;
     private int selectedrows = -1;
     private String userID,firstName,lastName,username,contactNum,email,password;
     
@@ -196,7 +196,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         
 
         
-        Object[][] data = {{}};
+        Object[][] data = {};
         tbModel = new DefaultTableModel();
         String[] tablecolumn = {"ID","Property Name", "Location", "Price", "Status"};
         tableEstateModel = new DefaultTableModel(data, tablecolumn);
@@ -553,9 +553,9 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
               int d = 0;
               String ee = null;
               String f = null;
-              new moreInfo(houseId, houseName, houseLocation, housePrice, houseStatus, a, b, c, d, ee, f, finalPreviewImage).setVisible(true);
-
+              
               dispose();
+              new transactInfo(houseId, houseName, houseLocation, housePrice, houseStatus, a, b, c, d, ee, f, finalPreviewImage).setVisible(true);
         }else{
                JOptionPane.showMessageDialog(null, "Please Select a row");
            }
@@ -569,10 +569,10 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
                  PreparedStatement pst = con.prepareStatement(query);
                  pst.setString(1, id); 
                  pst.executeUpdate();
-                 tableEstateModel.removeRow(index); // para mawala mismo sa jtable
-                  // pagkadelete ng resident yung picture ng icon babalik sa default
+                 tableEstateModel.removeRow(index); 
                  JOptionPane.showMessageDialog(null, "Resident Deleted","Delete Success",JOptionPane.OK_OPTION);
-                
+                 ImageIcon none = new ImageIcon();
+                 previewImg.setIcon(none);
                 } catch (Exception ex) {
                   Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
                 }
