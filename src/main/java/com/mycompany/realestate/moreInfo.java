@@ -132,10 +132,15 @@ public class moreInfo extends JFrame implements ActionListener{
         btnBuy.addActionListener(this);
     }
 
+    moreInfo() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
  
            @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()== btnBuy){
+            
             new purchasePage().setVisible(true);
             dispose();
         }else if(e.getSource()==btnBack){

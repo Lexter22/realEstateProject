@@ -12,7 +12,8 @@ package com.mycompany.realestate;
 public class purchasePageMain {
     public static void main(String[] args) {
         
-        purchasePage purPage = new purchasePage();
-        purPage.setVisible(true);
+       
+new purchasePage().setVisible(true);
+
     }
 }

@@ -125,6 +125,7 @@ public class transactInfo extends JFrame implements ActionListener{
            @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()== btnBuy){
+            
             new purchasePage().setVisible(true);
             dispose();
         }else if(e.getSource()==btnBack){
