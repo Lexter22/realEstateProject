@@ -386,6 +386,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         tableEstate.addMouseListener(this);
         btnUpdate.addActionListener(this);
         btnDetails.addActionListener(this);
+        btnDel.addActionListener(this);
         setVisible(true);
     }
     
@@ -539,7 +540,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
            }
         }else if(e.getSource()==btnDetails){
             
-            int selectedRowItem = tableEstate.getSelectedRow();
+          int selectedRowItem = tableEstate.getSelectedRow();
           if (selectedRowItem != -1) {
               String houseId = String.valueOf(tableEstate.getValueAt(selectedRowItem, 0)); 
               String houseName =String.valueOf(tableEstate.getValueAt(selectedRowItem, 1)); 
@@ -559,7 +560,28 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
                JOptionPane.showMessageDialog(null, "Please Select a row");
            }
             
-        }
+        }else if(e.getSource()==btnDel) { // dito yung delete function ng residentials
+            int index = tableEstate.getSelectedRow();
+            if(index != -1){
+                try {
+                 String id = tableEstateModel.getValueAt(index, 0).toString();
+                 String query = "delete from residentialrealestates where id = ?";
+                 PreparedStatement pst = con.prepareStatement(query);
+                 pst.setString(1, id); 
+                 pst.executeUpdate();
+                 tableEstateModel.removeRow(index); // para mawala mismo sa jtable
+                  // pagkadelete ng resident yung picture ng icon babalik sa default
+                 JOptionPane.showMessageDialog(null, "Resident Deleted","Delete Success",JOptionPane.OK_OPTION);
+                
+                } catch (Exception ex) {
+                  Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                
+            } else{
+                JOptionPane.showMessageDialog(null, "Select a row from the table","Error",JOptionPane.WARNING_MESSAGE);
+            }
+       }
     }
     
     public void Connect(){
