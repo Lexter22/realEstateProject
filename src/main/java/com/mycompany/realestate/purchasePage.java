@@ -14,6 +14,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -143,41 +145,141 @@ public class purchasePage extends JFrame implements ActionListener{
         btnBack.addActionListener(this);
         btnContinue.addActionListener(this);
         databaseGetInfo();
+        getStoredDate();
+        getDate();
+
         
     }
 
     private void databaseGetInfo() {
         
+        
         String url = "jdbc:mysql://localhost:3306/realestates";
         String username = "root";
         String password = "admin123";
         
+        
          String getInfoForConfirm = "SELECT id, location FROM residentialrealestates";
 
          
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-         PreparedStatement ps = connection.prepareStatement(getInfoForConfirm);
-         ResultSet rs = ps.executeQuery()) {
+        try (Connection connection = DriverManager.getConnection(url, username, password); 
+                PreparedStatement ps = connection.prepareStatement(getInfoForConfirm))
+        {
         
-        if (rs.next()) { 
-            
-            if (rs.next()) { 
-                lblId.setText("ID:     " + rs.getString("id"));
-                lblLocation.setText("Location:   " + rs.getString("location"));
-            } 
-            
-            else {
-                lblId.setText("ID:     Not Found");
-                lblLocation.setText("Location:   Not Found");
+            try (ResultSet rs = ps.executeQuery()) {
+
+                if (rs.next()) { 
+
+                    lblId.setText("ID:     " + rs.getString("id"));
+                    lblLocation.setText("Location:   " + rs.getString("location"));
+
+                } 
+                else {
+
+                    lblId.setText("ID:     Not Found");
+                    lblLocation.setText("Location:   Not Found");
+
+                }
                 
             }
-        }
-    } 
+            
+        } 
+        
         catch (Exception e) {
-        Logger.getLogger(purchasePage.class.getName()).log(Level.SEVERE, null, e);
+            
+            Logger.getLogger(purchasePage.class.getName()).log(Level.SEVERE, null, e);
+            
+        }
+        
     }
-}
     
+    
+    private void getDate() {
+    
+        String url = "jdbc:mysql://localhost:3306/realestates"; 
+        String username = "root";
+        String password = "admin123";
+
+        try (Connection con = DriverManager.getConnection(url, username, password)) {
+            String storeDate = "INSERT INTO date (date) VALUES (?)";
+
+            
+
+            try (PreparedStatement ps = con.prepareStatement(storeDate)) {
+                
+
+                java.util.Date utilDate = new java.util.Date();
+                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+                
+
+                ps.setDate(1, sqlDate); 
+                
+
+                ps.executeUpdate();
+                
+            }
+            
+        } 
+        
+        catch (SQLException e) {
+            
+            e.printStackTrace();
+            
+        }
+        
+    }
+    
+    
+private void getStoredDate() {
+    
+    
+        String url = "jdbc:mysql://localhost:3306/realestates"; 
+        String username = "root";
+        String password = "admin123";
+
+        
+        try (Connection con = DriverManager.getConnection(url, username, password)) {
+            
+            
+        String gettingStoredDate = "SELECT date FROM date ORDER BY date DESC LIMIT 1"; 
+        
+        
+            try (PreparedStatement ps = con.prepareStatement(gettingStoredDate)) {
+
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    
+                    
+                    if (rs.next()) {
+
+                        
+                        java.sql.Date dateStored = rs.getDate("date"); 
+                        lblDate.setText("Date: " + dateStored.toString()); 
+                        
+                        
+                    } 
+                    
+                    else {
+                        
+                        lblDate.setText("Date: Not Found");
+                        
+                    }
+                    
+                }
+                
+            }
+            
+        } 
+        
+        
+        catch (SQLException e) {
+            e.printStackTrace();
+            
+        }
+        
+    }
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnContinue){
