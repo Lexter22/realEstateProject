@@ -708,10 +708,7 @@ public void mouseClicked(MouseEvent e) {
                 JOptionPane.showMessageDialog(null, "Select a row from the table","Error",JOptionPane.WARNING_MESSAGE);
             }
        }
-    }public static void main(String[] args) {
-        new adminPage();
     }
-    
     public void Connect(){
         String url = "jdbc:mysql://localhost:3306/realestates";
         String username = "root";
