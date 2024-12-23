@@ -392,7 +392,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
               String location = String.valueOf(itemT.getValueAt(selectedRowItem, 2));
               String price =String.valueOf(itemT.getValueAt(selectedRowItem, 3)); 
               String status = String.valueOf(itemT.getValueAt(selectedRowItem, 4)); 
-              new moreInfo(id, name, location, price, status, inheret, fname, lname, userId, userNum, userEmail, finalPreviewImage).setVisible(true);
+              new moreInfo(id, name, location, price, status, houseDescription, inheret, fname, lname, userId, userNum, userEmail, finalPreviewImage).setVisible(true);
 
               dispose();
         }else{
@@ -407,7 +407,8 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
               String price =String.valueOf(itemT.getValueAt(selectedRowAccItem, 3)); 
               String status = String.valueOf(itemT.getValueAt(selectedRowAccItem, 4)); 
 
-              new transactInfo(id, name, location, price, status, inheret, fname, lname, userId, userNum, userEmail, finalPreviewImage).setVisible(true);
+              
+              new transactInfo(id, name, location, price, status, houseDescription, inheret, fname, lname, userId, userNum, userEmail, finalPreviewImage).setVisible(true);
               dispose();
         }else{
                JOptionPane.showMessageDialog(null, "Please Select a row");

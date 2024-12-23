@@ -38,14 +38,14 @@ public class purchasePage extends JFrame implements ActionListener{
     private JButton btnBack, btnContinue;
     private JPanel  logoPanel;
     private ImageIcon logoIc, finalLogoIc, picture, finalPicture;
-    private String location, price, id, status, name, locationBack, priceBack, idBack, statusBack, nameBack, username, fname, lname, userNum, userEmail, inheretBack;
+    private String location, price, id, status, description, name, locationBack, priceBack, idBack, statusBack, descriptionBack, nameBack, username, fname, lname, userNum, userEmail, inheretBack;
     private int userId;
     private Color cGreen = (Color.decode("#28A745"));
     private Color cGray = (Color.decode("#E0E0E0"));
     private Color cBlue = (Color.decode("#004A8C"));
     private Connection con;
         
-    purchasePage(String id, String name, String location, String price, String status, String inheret, String fname, String lname, int userId, String userNum, String userEmail, ImageIcon picture){
+    purchasePage(String id, String name, String location, String price, String status, String description, String inheret, String fname, String lname, int userId, String userNum, String userEmail, ImageIcon picture){
         
         setTitle("Purchase Form");
         setSize(400, 600);
@@ -75,13 +75,13 @@ public class purchasePage extends JFrame implements ActionListener{
         lbPurchaseForm.setFont(new Font("Arial", Font.BOLD, 15));
         purchasePagePanel.add(lbPurchaseForm);
 
-        lblId = new JLabel("ID:");
+        lblId = new JLabel("ID : " + id);
         lblId.setBounds(30, 180, 335, 30);
         lblId.setForeground(Color.white);
         purchasePagePanel.add(lblId);
      
         
-        lblLocation = new JLabel("Location:");
+        lblLocation = new JLabel("Location : " + location);
         lblLocation.setBounds(30, 220, 335, 30);
         lblLocation.setForeground(Color.white);
         purchasePagePanel.add(lblLocation);
@@ -148,58 +148,15 @@ public class purchasePage extends JFrame implements ActionListener{
         priceBack = price;
         idBack = id;
         statusBack = status;
+        descriptionBack = description;
         nameBack = name;
         finalPicture = picture;
         inheretBack = inheret;
-        databaseGetInfo();
         getStoredDate();
         getDate();
 
         
     }
-
-    private void databaseGetInfo() {
-        
-        
-        String url = "jdbc:mysql://localhost:3306/realestates";
-        String username = "root";
-        String password = "admin123";
-        
-        
-         String getInfoForConfirm = "SELECT id, location FROM residentialrealestates";
-
-         
-        try (Connection connection = DriverManager.getConnection(url, username, password); 
-                PreparedStatement ps = connection.prepareStatement(getInfoForConfirm))
-        {
-        
-            try (ResultSet rs = ps.executeQuery()) {
-
-                if (rs.next()) { 
-
-                    lblId.setText("ID:     " + rs.getString("id"));
-                    lblLocation.setText("Location:   " + rs.getString("location"));
-
-                } 
-                else {
-
-                    lblId.setText("ID:     Not Found");
-                    lblLocation.setText("Location:   Not Found");
-
-                }
-                
-            }
-            
-        } 
-        
-        catch (Exception e) {
-            
-            Logger.getLogger(purchasePage.class.getName()).log(Level.SEVERE, null, e);
-            
-        }
-        
-    }
-    
     
     private void getDate() {
     
@@ -304,7 +261,7 @@ private void getStoredDate() {
             } 
             
         } else if(e.getSource()==btnBack){
-                new moreInfo(locationBack, priceBack, idBack, statusBack, nameBack, inheretBack, fname, lname, userId, userNum, userEmail, finalPicture);
+                new moreInfo(idBack, nameBack, locationBack, priceBack, statusBack, descriptionBack, inheretBack, fname, lname, userId, userNum, userEmail, finalPicture);
             dispose();
         }
     }

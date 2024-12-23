@@ -26,27 +26,27 @@ import javax.swing.table.DefaultTableModel;
 
 public class adminPage extends JFrame implements ActionListener, MouseListener{
 
-    private JPanel panelHeader, panelUsers, panelADD, panelDelete, panelProfile, transactJPanel, homeJPanel,panelAddLayout,panelHome,panelTransaction,panelUsersPanel; 
-    private JLabel lblRichField, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails,lblUsers, previewImg, lblLogo;
-    private JButton btnHome, btnAdd, btnDel, btnTransact, btnUsers,btnDetails, btnProfile,btnImage,btnAddImage,btnChangePassword,btnSignOut,btnUserSearch,btnUpdate;
+    private JPanel panelUpdateLayout, panelHeader, panelUsers, panelADD, panelDelete, panelProfile, transactJPanel, homeJPanel,panelAddLayout,panelHome,panelTransaction,panelUsersPanel; 
+    private JLabel lblUpdate, lblRichField, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails,lblUsers, previewImg, lblLogo;
+    private JButton btnUpdateData, btnHome, btnAdd, btnDel, btnTransact, btnUsers,btnDetails, btnProfile,btnImage,btnAddImage,btnChangePassword,btnSignOut,btnUserSearch,btnUpdate;
     private JTabbedPane jtab;
     private JTable tableEstate, tableUser,tableTransactions;
     private JScrollPane estates;
-    private JTextField txtPropertyName,txtLocation,txtPrice;
-    private JTextArea txaDescription;
+    private JTextField txtPropertyName,txtLocation,txtPrice,txtUpdatePropertyName, txtUpdateLocation, txtUpdatePrice;
+    private JTextArea txaDescription, txaUpdateDescription;
     private ImageIcon accountIc, homeIc, finalAccountIc, finalHomeIc, clientIc, finalClientIc, transIc, finalTransIc, previewImage, finalPreviewImage;
     private DefaultTableModel tableEstateModel, tableUserModel, tableTransactionModel,tbModel;
     private JFileChooser jfcImage = new JFileChooser();
     private Color cGreen = (Color.decode("#28A745"));
     private Color cBlue = (Color.decode("#004A8C")); 
-    private ImageIcon logoIc, finalLogoIc;
+    private ImageIcon logoIc, finalLogoIc, finalHousePicture;
     private Connection con;
     private Statement st;
     private PreparedStatement pst;
     private ResultSet rs;
-    private String  houseLocation, houseName, houseDescription, houseStatus, userId, houseId;
+    private String houseUpdateId, houseLocation, houseName, houseDescription, houseDetailsDescription , houseStatus, houseId;
     private int housePrice;
-    private String imagePath = null;
+    private String updateImagePath, imagePath;
     private int selectedrows = -1;
     private String userID,firstName,lastName,username,contactNum,email,password;
     
@@ -371,9 +371,75 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         panelProfile.add(btnChangePassword);
         
         btnSignOut = new JButton("Sign Out");
-         btnSignOut.setBounds(480, 240, 200, 30);
+        btnSignOut.setBounds(480, 240, 200, 30);
         btnSignOut.setFont(new Font("Arial", Font.BOLD, 15));
         panelProfile.add(btnSignOut);
+        
+        panelUpdateLayout = new JPanel();
+        panelUpdateLayout.setLayout(null);
+        panelUpdateLayout.setBounds(0, 0, 1200, 560);
+        jtab.add(panelUpdateLayout);
+        
+        lblUpdate = new JLabel("You are Updating : ");
+        lblUpdate.setBounds(0, 0, 1195, 25);
+        lblUpdate.setHorizontalAlignment(SwingConstants.CENTER);
+        lblUpdate.setFont(new Font("Arial", Font.BOLD, 15));
+        panelUpdateLayout.add(lblUpdate);
+
+        lblPropertyName = new JLabel("PROPERTY NAME : ");
+        lblPropertyName.setBounds(50, 50, 250, 30);
+        lblPropertyName.setHorizontalAlignment(SwingConstants.LEFT);
+        lblPropertyName.setFont(new Font("Arial", Font.BOLD, 14));
+        panelUpdateLayout.add(lblPropertyName);
+
+        txtUpdatePropertyName = new JTextField();
+        txtUpdatePropertyName.setBounds(220, 50, 250, 30);
+        panelUpdateLayout.add(txtUpdatePropertyName);
+
+        lblLocation = new JLabel("LOCATION :");
+        lblLocation.setBounds(50, 95, 250, 30);
+        lblLocation.setFont(new Font("Arial", Font.BOLD, 14));
+        panelUpdateLayout.add(lblLocation);
+        
+        txtUpdateLocation = new JTextField();
+        txtUpdateLocation.setBounds(220, 95, 250, 30);
+        panelUpdateLayout.add(txtUpdateLocation);
+        
+        lblPrice = new JLabel("Price :");
+        lblPrice.setBounds(50, 140, 250, 30);
+        lblPrice.setFont(new Font("Arial", Font.BOLD, 14));
+        panelUpdateLayout.add(lblPrice);
+
+        txtUpdatePrice = new JTextField();
+        txtUpdatePrice.setBounds(220, 140, 250, 30);
+        panelUpdateLayout.add(txtUpdatePrice);
+
+        lblDescription = new JLabel("DESCRIPTION :");
+        lblDescription.setBounds(50, 185, 250, 30);
+        lblDescription.setFont(new Font("Arial", Font.BOLD, 14));
+        panelUpdateLayout.add(lblDescription);
+
+        txaUpdateDescription = new JTextArea();
+        txaUpdateDescription.setBounds(50, 215, 500, 300);
+        panelUpdateLayout.add(txaUpdateDescription);
+        
+        lblImage = new JLabel();
+        lblImage.setBounds(650, 100, 500, 300);
+        lblImage.setBackground(Color.gray);
+        lblImage.setOpaque(true);
+        panelUpdateLayout.add(lblImage);
+
+        btnImage = new JButton("Change Image");
+        btnImage.setBounds(650, 450, 200, 50);
+        panelUpdateLayout.add(btnImage);
+        
+        btnUpdateData = new JButton("Update");
+        btnUpdateData.setBounds(950, 450, 200, 50);
+        panelUpdateLayout.add(btnUpdateData);
+        
+        btnUpdateData.addActionListener(this);
+        btnImage.addActionListener(this);
+    
         
         btnHome.addActionListener(this);
         btnAdd.addActionListener(this);
@@ -387,21 +453,22 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         btnUpdate.addActionListener(this);
         btnDetails.addActionListener(this);
         btnDel.addActionListener(this);
+        
         setVisible(true);
     }
     
-    @Override
-      public void mouseClicked(MouseEvent e) {
-      if(e.getSource()==tableEstate){
-  
+   @Override
+public void mouseClicked(MouseEvent e) {
+    if (e.getSource() == tableEstate) {
         selectedrows = tableEstate.getSelectedRow();
-        if(selectedrows != -1){
-            String id = String.valueOf(tableEstateModel.getValueAt(selectedrows, 0));
-            displayImage(id);
+        if (selectedrows != -1) {
+            houseId = String.valueOf(tableEstateModel.getValueAt(selectedrows, 0));
+            houseUpdateId = houseId; 
+            lblUpdate.setText("You are Updating Residential ID : "+houseUpdateId);
+            displayImage(houseId);
         }
-        }
-    
-      }
+    }
+}
       
 
       @Override
@@ -451,6 +518,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
             } else  {
               btnHome.setIcon(finalAccountIc);
                 jtab.setSelectedIndex(0);
+                
             }
         }else if(e.getSource()==btnAdd){
             btnHome.setIcon(finalHomeIc);
@@ -461,7 +529,22 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         }else if(e.getSource()==btnTransact){
             btnHome.setIcon(finalHomeIc);
             jtab.setSelectedIndex(3);
-        }else if (e.getSource() == btnImage) {
+        }
+        
+        else if (e.getSource() == btnUpdate) {
+    int currentIndex = jtab.getSelectedIndex();
+    int selectedRowItem = tableEstate.getSelectedRow();
+    if (selectedRowItem != -1 && currentIndex == 0) {
+        
+        btnHome.setIcon(finalHomeIc);
+        jtab.setSelectedIndex(5);
+    } else {
+        JOptionPane.showMessageDialog(null, "Select a row from the table", "Error", JOptionPane.WARNING_MESSAGE);
+        btnHome.setIcon(finalAccountIc);
+        jtab.setSelectedIndex(0);
+    }
+}
+        else if (e.getSource() == btnImage) {
             
             jfcImage.setCurrentDirectory(new File("user.dir"));
             
@@ -469,7 +552,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
             jfcImage.addChoosableFileFilter(fneFilter);
             
             int res = jfcImage.showOpenDialog(null);
-        
+                
                 if (res == JFileChooser.APPROVE_OPTION) {
                     File fSelect = jfcImage.getSelectedFile();
                     imagePath = fSelect.getAbsolutePath();
@@ -501,6 +584,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
                 }else{
                     JOptionPane.showMessageDialog(null, "Please insert an Image","ERROR", JOptionPane.ERROR_MESSAGE);
                 }
+                    
                     pst.executeUpdate();
                     lblImage.setIcon(null);
                     txtPropertyName.setText("");
@@ -532,16 +616,12 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         }else if(e.getSource() == btnChangePassword) {
                 dispose();
                 new changePassword().setVisible(true);
-        }else if(e.getSource()==btnUpdate){
-           if(selectedrows != -1){
-            System.out.println("UPDATE");
-           }else{
-               System.out.println("Select row");
-           }
         }else if(e.getSource()==btnDetails){
             
           int selectedRowItem = tableEstate.getSelectedRow();
+          
           if (selectedRowItem != -1) {
+              
               String houseId = String.valueOf(tableEstate.getValueAt(selectedRowItem, 0)); 
               String houseName =String.valueOf(tableEstate.getValueAt(selectedRowItem, 1)); 
               String houseLocation = String.valueOf(tableEstate.getValueAt(selectedRowItem, 2));
@@ -554,13 +634,28 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
               String ee = null;
               String f = null;
               
+             
+        try {
+            String descriptionSql = "select description from residentialrealestates where id = ?";
+            
+            pst = con.prepareStatement(descriptionSql);
+            pst.setString(1, houseId);
+            rs = pst.executeQuery();
+            
+            while(rs.next()){
+               houseDetailsDescription = rs.getString("description");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+              
               dispose();
-              new transactInfo(houseId, houseName, houseLocation, housePrice, houseStatus, a, b, c, d, ee, f, finalPreviewImage).setVisible(true);
+              new transactInfo(houseId, houseName, houseLocation, housePrice, houseStatus, houseDetailsDescription, a, b, c, d, ee, f, finalPreviewImage).setVisible(true);
         }else{
-               JOptionPane.showMessageDialog(null, "Please Select a row");
+               JOptionPane.showMessageDialog(null, "Select a row from the table","Error",JOptionPane.WARNING_MESSAGE);
            }
             
-        }else if(e.getSource()==btnDel) { // dito yung delete function ng residentials
+        }else if(e.getSource()==btnDel) { 
             int index = tableEstate.getSelectedRow();
             if(index != -1){
                 try {
@@ -581,7 +676,40 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
             } else{
                 JOptionPane.showMessageDialog(null, "Select a row from the table","Error",JOptionPane.WARNING_MESSAGE);
             }
+       }else if(e.getSource()==btnUpdateData){ 
+           int index = Integer.parseInt(houseId);
+            if(index != -1){
+                try {
+                 String query = "UPDATE residentialrealestates SET name=?, location=?, price=?, description=?, img=? where id = ?";
+                 PreparedStatement pst = con.prepareStatement(query);
+                 pst.setString(1, txtUpdatePropertyName.getText());
+                 pst.setString(2, txtUpdateLocation.getText());
+                 pst.setString(3, txtUpdatePrice.getText());
+                 pst.setString(4, txaUpdateDescription.getText());
+                 pst.setInt(6, index);
+                 if(imagePath!=null){
+                     InputStream imagefinalpt5 = new FileInputStream(new File(imagePath));
+                     pst.setBlob(5,imagefinalpt5);
+                 }else{
+                     JOptionPane.showMessageDialog(null, "Please insert an Image","ERROR", JOptionPane.ERROR_MESSAGE);
+                 }
+                 
+                 pst.executeUpdate();
+                 
+                 dispose();
+                 JOptionPane.showMessageDialog(null, "Resident Updated");
+                 new adminPage();
+                } catch (Exception ex) {
+                  Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                
+            } else{
+                JOptionPane.showMessageDialog(null, "Select a row from the table","Error",JOptionPane.WARNING_MESSAGE);
+            }
        }
+    }public static void main(String[] args) {
+        new adminPage();
     }
     
     public void Connect(){
@@ -616,7 +744,5 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         } catch (SQLException ex) {
             Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
         }
-          
-        
     }
 }

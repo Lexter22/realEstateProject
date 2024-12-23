@@ -19,15 +19,15 @@ public class transactInfo extends JFrame implements ActionListener{
 
     private JLabel lblNameId, lblID, lblPrice, lblLocation,lblStatus, lblRichField, lblRealEstates, lblLogo,lblInfo,pnPic;
     private JTextArea txaInfo;
-    private JButton btnBack, btnBuy;
+    private JButton btnBack;
     private ImageIcon logoIc, finalLogoIc, picture, finalPicture;
     private JPanel  panelAddLayout, panelHeader;
-    private String inheretBack,inheret, location, status, name, id, price, locationBack, priceBack, idBack, statusBack, nameBack, fname, lname, userNum, userEmail;
+    private String admin, inheretBack,inheret, location, status, name, id, price, locationBack, priceBack, idBack, statusBack, nameBack, fname, lname, userNum, userEmail;
     private String userId;
     private Color cGreen = (Color.decode("#28A745"));
     private Color cBlue = (Color.decode("#004A8C")); 
     
-   public transactInfo(String id, String name, String location, String price, String status, String inheret, String fname, String lname, int userId, String userNum, String userEmail, ImageIcon picture){
+   public transactInfo(String id, String name, String location, String price, String status,String description, String inheret, String fname, String lname, int userId, String userNum, String userEmail, ImageIcon picture){
   
       setSize(1200, 700);
         setLocationRelativeTo(null);
@@ -53,7 +53,6 @@ public class transactInfo extends JFrame implements ActionListener{
         lblRealEstates.setFont(new Font("Arial", Font.BOLD, 15));
         add(lblRealEstates);
         
-
         panelAddLayout = new JPanel();
         panelAddLayout.setLayout(null);
         panelAddLayout.setBounds(0, 95, 1200, 560);
@@ -90,16 +89,18 @@ public class transactInfo extends JFrame implements ActionListener{
         lblInfo.setFont(new Font("Arial", Font.BOLD, 14));
         panelAddLayout.add(lblInfo);
 
-        txaInfo = new JTextArea();
+        txaInfo = new JTextArea(description);
         txaInfo.setEditable(false);
         txaInfo.setFocusable(false);
         txaInfo.setBounds(50, 240, 500, 300);
         panelAddLayout.add(txaInfo);
         
+        finalPicture = new ImageIcon(picture.getImage().getScaledInstance(500,300, Image.SCALE_SMOOTH));
+        
         pnPic = new JLabel();
         pnPic.setBounds(650, 100, 500, 300);
         pnPic.setBackground(Color.gray);
-        pnPic.setIcon(null);
+        pnPic.setIcon(finalPicture);
         pnPic.setOpaque(true);
         panelAddLayout.add(pnPic);
 
@@ -123,19 +124,22 @@ public class transactInfo extends JFrame implements ActionListener{
         nameBack = name;
         finalPicture = picture;
         inheretBack = inheret;
-        
+        admin = inheret;
         btnBack.addActionListener(this);
-        btnBuy.addActionListener(this);
     }
 
  
            @Override
     public void actionPerformed(ActionEvent e) {
             if(e.getSource()==btnBack){
+           if(admin.equals("Admin")){
+            new adminPage().setVisible(true);
             dispose();
-            new ClientInterface(inheretBack).setVisible(true);
-            
-            
+            }else{
+               new ClientInterface(inheretBack).setVisible(true);
+               dispose(); 
+
+            }
         }
     }
     
