@@ -21,14 +21,11 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
-
-
-
 public class adminPage extends JFrame implements ActionListener, MouseListener{
 
-    private JPanel panelUpdateLayout, panelHeader, panelUsers, panelADD, panelDelete, panelProfile, transactJPanel, homeJPanel,panelAddLayout,panelHome,panelTransaction,panelUsersPanel; 
-    private JLabel lblUpdate, lblRichField, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails,lblUsers, previewImg, lblLogo;
-    private JButton btnUpdateData, btnHome, btnAdd, btnDel, btnTransact, btnUsers,btnDetails, btnProfile,btnImage,btnAddImage,btnChangePassword,btnSignOut,btnUserSearch,btnUpdate;
+    private JPanel  panelUpdateLayout, panelHeader, panelUsers, panelADD, panelDelete, panelProfile, transactJPanel, homeJPanel,panelAddLayout,panelHome,panelTransaction,panelUsersPanel; 
+    private JLabel lblUpdate, lblImageUpdate, lblRichField, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails,lblUsers, previewImg, lblLogo;
+    private JButton btnUpdateData,btnImageUpdate, btnHome, btnAdd, btnDel, btnTransact, btnUsers,btnDetails, btnProfile,btnImage,btnAddImage,btnChangePassword,btnSignOut,btnUserSearch,btnUpdate;
     private JTabbedPane jtab;
     private JTable tableEstate, tableUser,tableTransactions;
     private JScrollPane estates;
@@ -193,8 +190,6 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         panelHome = new JPanel();
         panelHome.setBounds(0, 0, 800, 560);
         homeJPanel.add(panelHome);
-        
-
         
         Object[][] data = {};
         tbModel = new DefaultTableModel();
@@ -423,15 +418,15 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         txaUpdateDescription.setBounds(50, 215, 500, 300);
         panelUpdateLayout.add(txaUpdateDescription);
         
-        lblImage = new JLabel();
-        lblImage.setBounds(650, 100, 500, 300);
-        lblImage.setBackground(Color.gray);
-        lblImage.setOpaque(true);
-        panelUpdateLayout.add(lblImage);
+        lblImageUpdate = new JLabel();
+        lblImageUpdate.setBounds(650, 100, 500, 300);
+        lblImageUpdate.setBackground(Color.gray);
+        lblImageUpdate.setOpaque(true);
+        panelUpdateLayout.add(lblImageUpdate);
 
-        btnImage = new JButton("Change Image");
-        btnImage.setBounds(650, 450, 200, 50);
-        panelUpdateLayout.add(btnImage);
+        btnImageUpdate = new JButton("Change Image");
+        btnImageUpdate.setBounds(650, 450, 200, 50);
+        panelUpdateLayout.add(btnImageUpdate);
         
         btnUpdateData = new JButton("Update");
         btnUpdateData.setBounds(950, 450, 200, 50);
@@ -453,6 +448,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         btnUpdate.addActionListener(this);
         btnDetails.addActionListener(this);
         btnDel.addActionListener(this);
+        btnImageUpdate.addActionListener(this);
         
         setVisible(true);
     }
@@ -515,10 +511,11 @@ public void mouseClicked(MouseEvent e) {
             if (currentIndex == 0) {
               jtab.setSelectedIndex(4);
               btnHome.setIcon(finalHomeIc);
-            } else  {
+            }else  {
               btnHome.setIcon(finalAccountIc);
                 jtab.setSelectedIndex(0);
-                
+                ImageIcon none = new ImageIcon();
+                lblImageUpdate.setIcon(none);
             }
         }else if(e.getSource()==btnAdd){
             btnHome.setIcon(finalHomeIc);
@@ -532,9 +529,9 @@ public void mouseClicked(MouseEvent e) {
         }
         
         else if (e.getSource() == btnUpdate) {
-    int currentIndex = jtab.getSelectedIndex();
-    int selectedRowItem = tableEstate.getSelectedRow();
-    if (selectedRowItem != -1 && currentIndex == 0) {
+            int currentIndex = jtab.getSelectedIndex();
+            int selectedRowItem = tableEstate.getSelectedRow();
+            if (selectedRowItem != -1 && currentIndex == 0) {
         
         btnHome.setIcon(finalHomeIc);
         jtab.setSelectedIndex(5);
@@ -543,8 +540,7 @@ public void mouseClicked(MouseEvent e) {
         btnHome.setIcon(finalAccountIc);
         jtab.setSelectedIndex(0);
     }
-}
-        else if (e.getSource() == btnImage) {
+}else if (e.getSource() == btnImage || e.getSource() == btnImageUpdate) {
             
             jfcImage.setCurrentDirectory(new File("user.dir"));
             
@@ -559,6 +555,7 @@ public void mouseClicked(MouseEvent e) {
                     ImageIcon path = new ImageIcon(imagePath);
                     ImageIcon imageIcon = new ImageIcon(path.getImage().getScaledInstance(500, 300, Image.SCALE_SMOOTH));
                     lblImage.setIcon(imageIcon);
+                    lblImageUpdate.setIcon(imageIcon);
                 }
         }else if (e.getSource() == btnAddImage) {
             String values = "insert into residentialrealestates (name,location,price,description,status,img) values (?,?,?,?,?,?)";
