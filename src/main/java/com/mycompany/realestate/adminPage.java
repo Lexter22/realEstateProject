@@ -41,7 +41,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
     private Statement st;
     private PreparedStatement pst;
     private ResultSet rs;
-    private String houseUpdateId, houseLocation, houseName, houseDescription, houseDetailsDescription , houseStatus, houseId;
+    private String clientId, houseUpdateId, houseLocation, houseName, houseDescription, houseDetailsDescription , houseStatus, houseId;
     private int housePrice;
     private String updateImagePath, imagePath;
     private int selectedrows = -1;
@@ -188,7 +188,8 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         jtab.add(homeJPanel);
         
         panelHome = new JPanel();
-        panelHome.setBounds(0, 0, 800, 560);
+        panelHome.setBounds(20, 20, 780, 530);
+        panelHome.setLayout(null);
         homeJPanel.add(panelHome);
         
         Object[][] data = {};
@@ -199,10 +200,9 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         tableEstate.setDefaultEditor(Object.class, null);
         tableEstate.setRowHeight(30);
         tableEstate.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tableEstate.setBounds(0,0,800,560);
 
         JScrollPane scrollPaneEstate = new JScrollPane(tableEstate);
-        scrollPaneEstate.setPreferredSize(new Dimension(800, 560));
+        scrollPaneEstate.setBounds(0, 0, 780, 530);
         panelHome.add(scrollPaneEstate);
            
         JLabel lblpreviewImg = new JLabel("Preview Image");
@@ -282,7 +282,8 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         jtab.add(panelUsers);      
         
         panelUsersPanel = new JPanel();
-        panelUsersPanel.setBounds(0, 0, 800, 560);
+        panelUsersPanel.setBounds(20, 20, 780, 530);
+        panelUsersPanel.setLayout(null);
         panelUsers.add(panelUsersPanel);
         
         
@@ -297,7 +298,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         tableUser.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
         JScrollPane sp2 = new JScrollPane(tableUser);
-        sp2.setPreferredSize(new Dimension(800, 560));
+        sp2.setBounds(0,0,780,530);
         panelUsersPanel.add(sp2);
 
         lblUsers = new JLabel("Clients");
@@ -306,19 +307,34 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         panelUsers.add(lblUsers);
         
         JTextField txtUserSearch = new JTextField();
-        txtUserSearch.setBounds(890, 80, 200, 30);
+        txtUserSearch.setBounds(880, 80, 220, 30);
         panelUsers.add(txtUserSearch);
         
-        JButton btnUserSearch = new JButton("Search");
-        btnUserSearch.setBounds(890, 120, 100, 30);
+        JButton btnUserSearch = new JButton("SEARCH");
+        btnUserSearch.setBounds(880, 120, 100, 30);
+        btnUserSearch.setBorder(null);
+        btnUserSearch.setForeground(Color.white);
+        btnUserSearch.setBackground(cGreen);
+        btnUserSearch.setFocusable(false);
+        btnUserSearch.setFont(new Font("Arial", Font.BOLD, 15));
         panelUsers.add(btnUserSearch);
         
-        JButton btnClearUserSearch = new JButton("Clear");
-        btnClearUserSearch.setBounds(990, 120, 100, 30);
+        JButton btnClearUserSearch = new JButton("CLEAR");
+        btnClearUserSearch.setBounds(1000, 120, 100, 30);
+        btnClearUserSearch.setBorder(null);
+        btnClearUserSearch.setForeground(Color.white);
+        btnClearUserSearch.setBackground(cGreen);
+        btnClearUserSearch.setFocusable(false);
+        btnClearUserSearch.setFont(new Font("Arial", Font.BOLD, 15));
         panelUsers.add(btnClearUserSearch);
         
-        btnClientDetails = new JButton("View Details");
-        btnClientDetails.setBounds(930,160,140,30);
+        btnClientDetails = new JButton("VIEW DETAILS");
+        btnClientDetails.setBounds(880,160,220,30);
+        btnClientDetails.setBorder(null);
+        btnClientDetails.setForeground(Color.white);
+        btnClientDetails.setBackground(cGreen);
+        btnClientDetails.setFocusable(false);
+        btnClientDetails.setFont(new Font("Arial", Font.BOLD, 15));
         panelUsers.add(btnClientDetails);
         
         transactJPanel= new JPanel();
@@ -328,12 +344,14 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         jtab.add(transactJPanel);
         
         panelTransaction = new JPanel();
-        panelTransaction.setBounds(0, 0, 800, 560);
+        panelTransaction.setBounds(20, 20, 780, 530);
+        panelTransaction.setLayout(null);
         transactJPanel.add(panelTransaction);
         
-        String[][] transactions = {{"123", "property123", "ClientID", "10/28/2024"}};
+        String[][] transactions = {};
         String[] transactionsColumns = {"Transaction ID", "Property ID", "Client ID", "Date"};
         tableTransactionModel = new DefaultTableModel(transactions, transactionsColumns);
+        showTransactions();
         tableTransactions = new JTable(tableTransactionModel);
         tableTransactions.setDefaultEditor(Object.class, null);
         tableTransactions.setRowHeight(30);
@@ -343,7 +361,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         panelTransaction.add(tableTransactions);
 
         JScrollPane scrollPaneTransaction = new JScrollPane(tableTransactions);
-        scrollPaneTransaction.setPreferredSize(new Dimension(800, 560));
+        scrollPaneTransaction.setBounds(0,0,780,530);
         panelTransaction.add(scrollPaneTransaction);
         
         JButton btnMarketAnalysis = new JButton("Generate Market Analysis");
@@ -709,7 +727,8 @@ public void mouseClicked(MouseEvent e) {
        } else if(e.getSource()==btnClientDetails){ // pupunta sa viewClientDetails class
            int index = tableUser.getSelectedRow();
            if(index != -1) {
-               new viewClientsDetails().setVisible(true);
+               clientId = String.valueOf(tableUserModel.getValueAt(index, 0));
+               new viewClientsDetails(clientId).setVisible(true);
                dispose();
            } else {
                JOptionPane.showMessageDialog(null, "Pick a user","Error",JOptionPane.ERROR_MESSAGE);
@@ -745,6 +764,25 @@ public void mouseClicked(MouseEvent e) {
                 
                 String clientsData[] = {userID,firstName,lastName,username,contactNum,email,password}; 
                 tableUserModel.addRow(clientsData);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void showTransactions(){        
+            String sql = "Select * from transactions";
+        try {
+            PreparedStatement pstTransact = con.prepareStatement(sql);
+             ResultSet rsTransact = pstTransact.executeQuery(sql);
+            
+            while(rsTransact.next()) {
+                String transactionId = rsTransact.getString("transactionId");
+                String clientId = rsTransact.getString("clientId");
+                String propertyId = rsTransact.getString("propertyId");
+                String date = rsTransact.getString("date");
+                
+                String transactData[] = {transactionId, propertyId, clientId, date}; 
+                tableTransactionModel.addRow(transactData);
             }
         } catch (SQLException ex) {
             Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
