@@ -46,7 +46,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
     private String updateImagePath, imagePath;
     private int selectedrows = -1;
     private String userID,firstName,lastName,username,contactNum,email,password;
-    
+    private JButton btnClientDetails;
         
     public adminPage() {
         Connect();
@@ -317,6 +317,10 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         btnClearUserSearch.setBounds(990, 120, 100, 30);
         panelUsers.add(btnClearUserSearch);
         
+        btnClientDetails = new JButton("View Details");
+        btnClientDetails.setBounds(930,160,140,30);
+        panelUsers.add(btnClientDetails);
+        
         transactJPanel= new JPanel();
         transactJPanel.setBounds(0,0,1200,560);
         transactJPanel.setLayout(null);
@@ -432,10 +436,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         btnUpdateData.setBounds(950, 450, 200, 50);
         panelUpdateLayout.add(btnUpdateData);
         
-        btnUpdateData.addActionListener(this);
-        btnImage.addActionListener(this);
-    
-        
+        btnUpdateData.addActionListener(this); 
         btnHome.addActionListener(this);
         btnAdd.addActionListener(this);
         btnUsers.addActionListener(this);
@@ -449,6 +450,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         btnDetails.addActionListener(this);
         btnDel.addActionListener(this);
         btnImageUpdate.addActionListener(this);
+        btnClientDetails.addActionListener(this);
         
         setVisible(true);
     }
@@ -704,6 +706,15 @@ public void mouseClicked(MouseEvent e) {
             } else{
                 JOptionPane.showMessageDialog(null, "Select a row from the table","Error",JOptionPane.WARNING_MESSAGE);
             }
+       } else if(e.getSource()==btnClientDetails){ // pupunta sa viewClientDetails class
+           int index = tableUser.getSelectedRow();
+           if(index != -1) {
+               new viewClientsDetails().setVisible(true);
+               dispose();
+           } else {
+               JOptionPane.showMessageDialog(null, "Pick a user","Error",JOptionPane.ERROR_MESSAGE);
+           }
+           
        }
     }
     public void Connect(){
