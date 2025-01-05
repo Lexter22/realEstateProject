@@ -23,12 +23,13 @@ import javax.swing.JPanel;
 public class receiptPage extends JFrame implements ActionListener{
     
     
-    private JLabel lblRichfield, lblRichfield2, lblName, lblUserName, lblDate, lblTime, lblProductName, lblProductID, lblPrice, lblTransactionID, lblPurchasedEstate, lblOfficial, lblThankYou, lblLogo;
+    private JLabel lblRichfield, lblRichfield2, lblName, lblUserName, lblDate, lblLocation, lblProductName, lblProductID, lblPrice, lblTransactionID, lblPurchasedEstate, lblOfficial, lblThankYou, lblLogo;
     private JButton btnBackToHome;
     private ImageIcon logoIc, finalLogoIc;
+    private String user;
     
     
-    public receiptPage () {
+    public receiptPage (String firstName, String surname, String userName, String propertyId, String propertyName, String propertyLocation, String datePurchased, String pricePaid, String transactionId) {
        
         
         setSize(400, 600);
@@ -61,14 +62,14 @@ public class receiptPage extends JFrame implements ActionListener{
         
         
         
-        lblName = new JLabel("Name :");
+        lblName = new JLabel("Name : " + firstName + " " + surname);
         lblName.setBounds(20, 210, 360, 15);
         lblName.setHorizontalAlignment(JLabel.LEFT);
         lblName.setFont(new Font("Arial", Font.PLAIN, 10));
         add(lblName);
         
         
-        lblUserName = new JLabel("Username :");
+        lblUserName = new JLabel("Username : " + userName);
         lblUserName.setBounds(20, 240, 360, 15);
         lblUserName.setHorizontalAlignment(JLabel.LEFT);
         lblUserName.setFont(new Font("Arial", Font.PLAIN, 10));
@@ -82,42 +83,42 @@ public class receiptPage extends JFrame implements ActionListener{
         add(lblPurchasedEstate);
         
         
-        lblProductName = new JLabel("Estate Name :");
+        lblProductName = new JLabel("Estate Name : " + propertyName);
         lblProductName.setBounds(20, 300, 360, 15);
         lblProductName.setHorizontalAlignment(JLabel.LEFT);
         lblProductName.setFont(new Font("Arial", Font.PLAIN, 10));
         add(lblProductName);
         
         
-        lblProductID = new JLabel("Estate ID :");
+        lblProductID = new JLabel("Estate ID : " + propertyId);
         lblProductID.setBounds(20, 330, 360, 15);
         lblProductID.setHorizontalAlignment(JLabel.LEFT);
         lblProductID.setFont(new Font("Arial", Font.PLAIN, 10));
         add(lblProductID);
         
         
-        lblTime = new JLabel("Time Purchased :");
-        lblTime.setBounds(20, 360, 360, 15);
-        lblTime.setHorizontalAlignment(JLabel.LEFT);
-        lblTime.setFont(new Font("Arial", Font.PLAIN, 10));
-        add(lblTime);
+        lblLocation = new JLabel("Estate Location : " + propertyLocation);
+        lblLocation.setBounds(20, 360, 360, 15);
+        lblLocation.setHorizontalAlignment(JLabel.LEFT);
+        lblLocation.setFont(new Font("Arial", Font.PLAIN, 10));
+        add(lblLocation);
         
         
-        lblDate = new JLabel("Date Purchased :");
+        lblDate = new JLabel("Date Purchased : " + datePurchased);
         lblDate.setBounds(20, 390, 360, 15);
         lblDate.setHorizontalAlignment(JLabel.LEFT);
         lblDate.setFont(new Font("Arial", Font.PLAIN, 10));
         add(lblDate);
         
         
-        lblPrice = new JLabel("Paid Amount :");
+        lblPrice = new JLabel("Paid Amount : " + pricePaid);
         lblPrice.setBounds(20, 420, 360, 15);
         lblPrice.setHorizontalAlignment(JLabel.LEFT);
         lblPrice.setFont(new Font("Arial", Font.PLAIN, 10));
         add(lblPrice);
         
         
-        lblTransactionID = new JLabel("Transaction ID :");
+        lblTransactionID = new JLabel("Transaction ID : " + transactionId);
         lblTransactionID.setBounds(20, 450, 360, 15);
         lblTransactionID.setHorizontalAlignment(JLabel.LEFT);
         lblTransactionID.setFont(new Font("Arial", Font.PLAIN, 10));
@@ -150,6 +151,7 @@ public class receiptPage extends JFrame implements ActionListener{
         
         
         setVisible(true);
+        user = userName;
         
     }
 
@@ -159,10 +161,7 @@ public class receiptPage extends JFrame implements ActionListener{
         if (e.getSource() == btnBackToHome) {
             
             
-            //temperary to welcomPage
-            
-            welcomePage welcome = new welcomePage();
-            welcome.setVisible(true);
+            new ClientInterface(user).setVisible(true);
             dispose();
             
             

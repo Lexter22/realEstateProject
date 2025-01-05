@@ -50,8 +50,10 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
   private Statement st;
   private PreparedStatement pst;
   private ResultSet rs;
-  private String inheret, username, fname, lname, userNum, userEmail, houseLocation, houseName, houseDescription, houseStatus;
-  private int userId, houseId, housePrice;
+  private String userId, inheret, username, fname, lname, userNum, userEmail, houseLocation, houseName, houseDescription, houseStatus, ownedLocation, ownedId, ownedPrice, ownedName;
+  private int houseId, housePrice;
+  
+  
 
   public ClientInterface(String username) {
      
@@ -181,7 +183,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
             while(rs.next()){
                  fname = rs.getString("firstname");
                  lname = rs.getString("lastname");
-                 userId = rs.getInt("id");
+                 userId = rs.getString("id");
                  userNum = rs.getString("contactnum");
                  userEmail = rs.getString("email");
             }
@@ -235,6 +237,8 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         sp2.setPreferredSize(new Dimension(800, 560));
         panelAccountPanel.add(sp2);
     
+        propertiesOwned();
+        
         lblCDetails = new JLabel("Your information");
         lblCDetails.setBounds(900, 20, 200, 30);
         lblCDetails.setFont(new Font("Arial", Font.BOLD, 25));
@@ -366,6 +370,38 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
             Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+      
+      public void propertiesOwned() {
+          
+          String owned = "SELECT * FROM propertiesowned WHERE userId = ?";
+      try {
+          
+          PreparedStatement ps = con.prepareStatement(owned);
+          ps.setString(1, userId);
+          rs = ps.executeQuery();
+          while (rs.next()) {
+              
+              ownedId = rs.getString("propertyid");
+              ownedName = rs.getString("propertyName");
+              ownedLocation = rs.getString("propertyLocation");
+              ownedPrice = rs .getString("propertyprice");
+              
+              String ownedStatus = "Owned";
+              
+              Object [] dataSql = {ownedId, ownedName, ownedLocation, ownedPrice, ownedStatus};
+              
+              accTModel.addRow(dataSql);
+                  
+              
+              
+          }
+      } 
+      
+      catch (SQLException ex) {
+          Logger.getLogger(ClientInterface.class.getName()).log(Level.SEVERE, null, ex);
+      }
+          
+      }
   
     @Override
     public void actionPerformed(ActionEvent e) {

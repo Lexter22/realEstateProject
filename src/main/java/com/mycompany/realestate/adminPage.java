@@ -647,7 +647,7 @@ public void mouseClicked(MouseEvent e) {
               String a = "Admin";
               String b = null;
               String c = null;
-              int d = 0;
+              String d = null;
               String ee = null;
               String f = null;
               

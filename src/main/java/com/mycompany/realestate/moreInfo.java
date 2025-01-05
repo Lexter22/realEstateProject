@@ -27,7 +27,7 @@ public class moreInfo extends JFrame implements ActionListener{
     private Color cGreen = (Color.decode("#28A745"));
     private Color cBlue = (Color.decode("#004A8C")); 
     
-   public moreInfo(String id, String name, String location, String price, String status, String description, String inheret, String fname, String lname, int userId, String userNum, String userEmail, ImageIcon picture){
+   public moreInfo(String id, String name, String location, String price, String status, String description, String inheret, String fname, String lname, String userId, String userNum, String userEmail, ImageIcon picture){
   
         setSize(1200, 700);
         setLocationRelativeTo(null);
