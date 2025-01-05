@@ -31,13 +31,13 @@ import javax.swing.table.DefaultTableModel;
 public class ClientInterface extends JFrame implements ActionListener, MouseListener {
 
   private JPanel  panelHeader, panelItems, panelItemsPanel, panelAccount, panelAccountPanel;
-  private JLabel logo, lblRichfields, lblRealEstates, lblUName, lblInputUName, lblCDetails , lblCID, lblInputCID, lblEmail, lblInputEmail, lblCNumber, lblInputCNumber, lblpreviewImg,imgPreviewImage;
+  private JLabel lblUserImage, logo, lblRichfields, lblRealEstates, lblUName, lblInputUName, lblCDetails , lblCID, lblInputCID, lblEmail, lblInputEmail, lblCNumber, lblInputCNumber, lblpreviewImg,imgPreviewImage;
   private JButton btnViewOwned, btnView,btnReset, btnAccHome, btnSearch, btnItems, btnLogout;
   private JComboBox jcbLocation, jcbPrice, jcbHtL;
   private JTabbedPane jtab;
   private JTable itemTable, accTable;
   private Object[][] houses = {} , ownedHouses = {};
-  private ImageIcon searchIc, resetIc, accountIc, homeIc, moreInfoIc, finalSearchIc, finalResetIc, finalAccountIc, finalHomeIc, finalMoreInfoIc, logoIC, finalLogoIC, previewImage, finalPreviewImage;
+  private ImageIcon finalPreviewImageOwned, searchIc, resetIc, accountIc, homeIc, moreInfoIc, finalSearchIc, finalResetIc, finalAccountIc, finalHomeIc, finalMoreInfoIc, logoIC, finalLogoIC, previewImage, finalPreviewImage;
   private String[] columnNames = { "Location","Price", "ID", "Status" };
   private String Location[] = {"Location", "San Pedro", "Santa Rosa", "Binan" };
   private String Price[] = { "Price Range", "$1", "$10,000,001 - $50,000,000", "$50,000,001 - $100,000,000" };
@@ -273,7 +273,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         lblUserPreview.setFont(new Font("Arial", Font.BOLD, 15));
         panelAccount.add(lblUserPreview);
 
-        JLabel lblUserImage = new JLabel();
+        lblUserImage = new JLabel();
         lblUserImage.setBounds(815, 200, 350, 250);
         lblUserImage.setBorder(BorderFactory.createLineBorder(Color.black));
         lblUserImage.setBackground(Color.red);
@@ -330,7 +330,12 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
             String id = String.valueOf(itemTModel.getValueAt(selectedrows, 0));
             displayImage(id);
         }
-          
+      }else if(e.getSource()==accTable){
+          int selectedrowss = accTable.getSelectedRow();
+        if(selectedrowss != -1){
+            String id = String.valueOf(accTModel.getValueAt(selectedrowss, 0));
+            displayImageOwned(id);
+        }
       }
       }
 
@@ -365,15 +370,53 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
                 imgPreviewImage.setIcon(finalPreviewImage);
             }
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Remove The Code Below this JOption Para di makita SQLEXCEPTION");
+            JOptionPane.showMessageDialog(null, "DAPAT ITO LANG LALABAS HAHAHA");
+            JOptionPane.showMessageDialog(null, "Please Wait for the Preview Image");
             Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Remove The Code Below this JOption Para di makita IOEXCEPTION");
+            JOptionPane.showMessageDialog(null, "DAPAT ITO LANG LALABAS HAHAHA");
+            JOptionPane.showMessageDialog(null, "Please Wait for the Preview Image");
             Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
       
+      public void displayImageOwned(String id){
+          
+        try {
+            String image = "select img from propertiesowned where propertyID = ?";
+            
+            pst = con.prepareStatement(image);
+            pst.setString(1, id);
+            rs = pst.executeQuery();
+            
+            while(rs.next()){
+                
+                Blob images = rs.getBlob("img");
+                InputStream isImage = images.getBinaryStream();
+                Image ioImage = ImageIO.read(isImage);
+                ImageIcon previewImageOwned = new ImageIcon(ioImage);
+                finalPreviewImageOwned = new ImageIcon(previewImageOwned.getImage().getScaledInstance(350,280, Image.SCALE_SMOOTH));
+                lblUserImage.setIcon(finalPreviewImageOwned);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Remove The Code Below this JOption Para di makita SQLEXCEPTION");
+            JOptionPane.showMessageDialog(null, "DAPAT ITO LANG LALABAS HAHAHA");
+            JOptionPane.showMessageDialog(null, "Please Wait for the Preview Image");
+            Logger.getLogger(ClientInterface.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Remove The Code Below this JOption Para di makita IOEXCEPTION");
+            JOptionPane.showMessageDialog(null, "DAPAT ITO LANG LALABAS HAHAHA");
+            JOptionPane.showMessageDialog(null, "Please Wait for the Preview Image");
+            Logger.getLogger(ClientInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+  
+      
       public void propertiesOwned() {
           
-          String owned = "SELECT * FROM propertiesowned WHERE userId = ?";
+          String owned = "SELECT * FROM propertiesowned WHERE usersId = ?";
       try {
           
           PreparedStatement ps = con.prepareStatement(owned);
@@ -391,9 +434,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
               Object [] dataSql = {ownedId, ownedName, ownedLocation, ownedPrice, ownedStatus};
               
               accTModel.addRow(dataSql);
-                  
-              
-              
+                 
           }
       } 
       
@@ -444,7 +485,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
               String status = String.valueOf(itemT.getValueAt(selectedRowAccItem, 4)); 
 
               
-              new transactInfo(id, name, location, price, status, houseDescription, inheret, fname, lname, userId, userNum, userEmail, finalPreviewImage).setVisible(true);
+              new transactInfo(id, name, location, price, status, houseDescription, inheret, fname, lname, userId, userNum, userEmail, finalPreviewImageOwned).setVisible(true);
               dispose();
         }else{
                JOptionPane.showMessageDialog(null, "Please Select a row");

@@ -203,7 +203,6 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
                     pst.setString(2, userPassword);
                     rs = pst.executeQuery();
                      if(rs.next()){
-                         System.out.println(username);
                           JOptionPane.showMessageDialog(null, "Welcome "+username,"Login Successful",JOptionPane.PLAIN_MESSAGE);
                           dispose();
                           new ClientInterface(username).setVisible(true);

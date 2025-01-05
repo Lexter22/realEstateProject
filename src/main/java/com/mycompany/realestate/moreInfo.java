@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
@@ -140,9 +141,12 @@ public class moreInfo extends JFrame implements ActionListener{
            @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()== btnBuy){
-            
+            if(!statusBack.equals("Sold")){
             new purchasePage(idBack, nameBack, locationBack, priceBack, statusBack, descriptionBack, inheretBack, fname, lname, userId, userNum, userEmail, finalPicture).setVisible(true);
             dispose();
+            }else{
+                JOptionPane.showMessageDialog(null, "Already Sold");
+            }
         }else if(e.getSource()==btnBack){
             new ClientInterface(inheretBack).setVisible(true);
                dispose(); 

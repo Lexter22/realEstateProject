@@ -56,6 +56,8 @@ public class purchasePage extends JFrame implements ActionListener{
         
     purchasePage(String id, String name, String location, String price, String status, String description, String inheret, String fname, String lname, int userId, String userNum, String userEmail, ImageIcon picture){
         
+        Connect();
+        
         setTitle("Purchase Form");
         setSize(400, 600);
         setLayout(null);
@@ -172,16 +174,12 @@ public class purchasePage extends JFrame implements ActionListener{
         
     }
     public void storeDate(){
-          String url = "jdbc:mysql://localhost:3306/realestates";
-        String username = "root";
-        String password = "admin123";
         String charactersForID = "ABCDEFGHIJ0123456789";
         idFortransaction = transactId(charactersForID);
-        String store = "Insert INTO transaction (transactionId, clientId, propertyId, date) VALUES (?,?,?,?)";
+        String store = "Insert INTO transactions (transactionId, clientId, propertyId, date) VALUES (?,?,?,?)";
         
         dateString = date.toString();
         try {
-             con = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = con.prepareStatement(store);
              ps.setString(1, idFortransaction);
              ps.setString(2, userid);
@@ -213,11 +211,7 @@ public class purchasePage extends JFrame implements ActionListener{
         
         
         String dataOfUser = "Select firstname, lastname, password, id FROM clientsinfo WHERE username = ?";
-        String url = "jdbc:mysql://localhost:3306/realestates";
-        String username = "root";
-        String password = "admin123";
         try {
-            con = DriverManager.getConnection(url, username, password);
             PreparedStatement ps = con.prepareStatement(dataOfUser);
             ps.setString(1, userName);
             ResultSet rs = ps.executeQuery();
@@ -230,23 +224,12 @@ public class purchasePage extends JFrame implements ActionListener{
         } catch (SQLException ex) {
             Logger.getLogger(purchasePage.class.getName()).log(Level.SEVERE, null, ex);
         }
-             
-        
-       
-        
-        
-        
     }
     
     public void updateStatus(String propertyId){
         
         try {
-            
             String Idproperty = "UPDATE residentialrealestates SET status = 'Sold' WHERE id = ?";
-            String url = "jdbc:mysql://localhost:3306/realestates";
-            String username = "root";
-            String password = "admin123";
-            
             PreparedStatement ps = con.prepareStatement(Idproperty);
             ps.setString(1, propertyId);
             ps.executeUpdate();
@@ -263,7 +246,7 @@ public class purchasePage extends JFrame implements ActionListener{
     public void propertiesOwned(String ID) {
         
         String img = "SELECT img from residentialrealestates WHERE id = ?";
-        String inputimg = "INSERT into propertiesowned (userId, propertyId, propertyName, propertyLocation, propertyPrice, img) values (?,?,?,?,?,?)";
+        String inputimg = "INSERT into propertiesowned (usersId, propertyId, propertyName, propertyLocation, propertyPrice, img) values (?,?,?,?,?,?)";
         
         try {
             PreparedStatement ps = con.prepareStatement(img);
@@ -288,6 +271,18 @@ public class purchasePage extends JFrame implements ActionListener{
         } catch (SQLException ex) {
             Logger.getLogger(purchasePage.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    public void Connect(){
+        String url = "jdbc:mysql://localhost:3306/realestates";
+        String username = "root";
+        String password = "admin123";
+        
+        try {
+            con = DriverManager.getConnection(url, username, password);
+        } catch (SQLException ex) {
+            Logger.getLogger(purchasePage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     
     
