@@ -14,25 +14,29 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-
+import java.util.List;
+import java.util.ArrayList;
 public class adminPage extends JFrame implements ActionListener, MouseListener{
 
     private JPanel  panelUpdateLayout, panelHeader, panelUsers, panelADD, panelDelete, panelProfile, transactJPanel, homeJPanel,panelAddLayout,panelHome,panelTransaction,panelUsersPanel; 
     private JLabel lblUpdate, lblImageUpdate, lblRichField, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails,lblUsers, previewImg, lblLogo;
-    private JButton btnUpdateData,btnImageUpdate, btnHome, btnAdd, btnDel, btnTransact, btnUsers,btnDetails, btnProfile,btnImage,btnAddImage,btnChangePassword,btnSignOut,btnUserSearch,btnUpdate;
+    private JButton btnUpdateData,btnImageUpdate, btnHome, btnAdd, btnDel, btnTransact, btnUsers,btnDetails, btnProfile,btnImage,btnAddImage,btnChangePassword,btnSignOut,btnUserSearch,btnUpdate,btnClearUserSearch;
     private JTabbedPane jtab;
     private JTable tableEstate, tableUser,tableTransactions;
     private JScrollPane estates;
-    private JTextField txtPropertyName,txtLocation,txtPrice,txtUpdatePropertyName, txtUpdateLocation, txtUpdatePrice;
+    private JTextField txtPropertyName,txtLocation,txtPrice,txtUpdatePropertyName, txtUpdateLocation, txtUpdatePrice,txtClientSearch;
     private JTextArea txaDescription, txaUpdateDescription;
     private ImageIcon accountIc, homeIc, finalAccountIc, finalHomeIc, clientIc, finalClientIc, transIc, finalTransIc, previewImage, finalPreviewImage;
-    private DefaultTableModel tableEstateModel, tableUserModel, tableTransactionModel,tbModel;
+    private DefaultTableModel tableEstateModel, tableUserModel, tableTransactionModel,tbModel,searchedClient;
     private JFileChooser jfcImage = new JFileChooser();
     private Color cGreen = (Color.decode("#28A745"));
     private Color cBlue = (Color.decode("#004A8C")); 
@@ -47,7 +51,9 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
     private int selectedrows = -1;
     private String userID,firstName,lastName,username,contactNum,email,password;
     private JButton btnClientDetails;
-        
+    private Map<String,String[]> clientsMap = new HashMap(); // hashmap
+                       // since naka array yung mga clientsData kaya naka arra yan
+
     public adminPage() {
         Connect();
   
@@ -56,6 +62,9 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         
+        
+        clientsMap = new HashMap<>();
+        searchedClient = new DefaultTableModel();
         
         logoIc = new ImageIcon("logoRealEstates.png");
         finalLogoIc = new ImageIcon(logoIc.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
@@ -306,11 +315,11 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         lblUsers.setFont(new Font("Arial", Font.BOLD, 30));
         panelUsers.add(lblUsers);
         
-        JTextField txtUserSearch = new JTextField();
-        txtUserSearch.setBounds(880, 80, 220, 30);
-        panelUsers.add(txtUserSearch);
+        txtClientSearch = new JTextField(); // para sa clients
+        txtClientSearch.setBounds(880, 80, 220, 30);
+        panelUsers.add(txtClientSearch);
         
-        JButton btnUserSearch = new JButton("SEARCH");
+        btnUserSearch = new JButton("SEARCH");
         btnUserSearch.setBounds(880, 120, 100, 30);
         btnUserSearch.setBorder(null);
         btnUserSearch.setForeground(Color.white);
@@ -319,7 +328,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         btnUserSearch.setFont(new Font("Arial", Font.BOLD, 15));
         panelUsers.add(btnUserSearch);
         
-        JButton btnClearUserSearch = new JButton("CLEAR");
+        btnClearUserSearch = new JButton("CLEAR");
         btnClearUserSearch.setBounds(1000, 120, 100, 30);
         btnClearUserSearch.setBorder(null);
         btnClearUserSearch.setForeground(Color.white);
@@ -469,7 +478,8 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         btnDel.addActionListener(this);
         btnImageUpdate.addActionListener(this);
         btnClientDetails.addActionListener(this);
-        
+        btnUserSearch.addActionListener(this); // para sa search clients
+        btnClearUserSearch.addActionListener(this); // para sa lear and bumalik yung table
         setVisible(true);
     }
     
@@ -734,6 +744,19 @@ public void mouseClicked(MouseEvent e) {
                JOptionPane.showMessageDialog(null, "Pick a user","Error",JOptionPane.ERROR_MESSAGE);
            }
            
+       } else if(e.getSource()== btnUserSearch){ // para sa search clients hashmap
+           searchClients();
+       } else if(e.getSource()==btnClearUserSearch) { // para bumalik yung dating table and mag clear txtfield
+           String clientSearch = txtClientSearch.getText();
+           if(!clientSearch.isEmpty()) {
+               txtClientSearch.setText("");
+               searchedClient = (DefaultTableModel) tableUserModel;
+               searchedClient.setRowCount(0);
+                for(Map.Entry<String,String[]> entry :clientsMap.entrySet()) {
+                    String[] clientData = entry.getValue();
+                    searchedClient.addRow(clientData);
+                }
+           }
        }
     }
     public void Connect(){
@@ -747,8 +770,12 @@ public void mouseClicked(MouseEvent e) {
         }
     }
     public void showClients(){        
+        // dito ko ipapasok hashmap - reyes
+       
             String sql = "Select * from clientsinfo";
             PreparedStatement pst;
+            clientsMap.clear(); // Ito yung hasmap tinawag ko dito para laging mag reset
+         
         try {
             pst = con.prepareStatement(sql);
              rs = pst.executeQuery(sql);
@@ -763,17 +790,57 @@ public void mouseClicked(MouseEvent e) {
                 password = rs.getString("password");
                 
                 String clientsData[] = {userID,firstName,lastName,username,contactNum,email,password}; 
-                tableUserModel.addRow(clientsData);
+                // yung mga data ay need natin mastore sa hashmap
+                clientsMap.put(userID, clientsData);
+             
+                // store sa table
+                tableUserModel.addRow(clientsData);        
+               
             }
         } catch (SQLException ex) {
             Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public void searchClients(){
+        String clientSearch = txtClientSearch.getText().trim();
+//        searchedClient = (DefaultTableModel) tableUserModel;
+//        searchedClient.setRowCount(0);
+        if(!clientSearch.isEmpty()){
+//            if(clientsMap.containsKey(clientSearch) || clientsMap.containsValue(clientSearch)) {
+//                JOptionPane.showMessageDialog(null, "User found");
+//            }
+                boolean nahanapSiClient = false;
+               // ang process nito ang mag loop until mahanap client
+               for(Map.Entry<String,String[]> entry : clientsMap.entrySet()) {
+                   String userID = entry.getKey();
+                   String[] clientData = entry.getValue();
+                       if(!clientSearch.isEmpty() && userID.contains(clientSearch)){
+                           searchedClient = (DefaultTableModel) tableUserModel;    
+                           searchedClient.setRowCount(0); // nilipat ko dito kasi kapag sa taas, nagana ito
+                           searchedClient.addRow(clientData);
+                           nahanapSiClient = true;
+                           break;
+                       } 
+                   if(nahanapSiClient){
+                        // since true na yung nahanap na si client, kailangan na natin ito itigil
+                         break;
+                   }    
+               }
+               
+                  if(!nahanapSiClient){ // antok na ako puro if
+                        JOptionPane.showMessageDialog(null, "Client not found","Not found",JOptionPane.ERROR_MESSAGE);
+                   }   // now kailangan natin ibalik yung table
+        } else {
+              JOptionPane.showMessageDialog(null, "Enter something to search","Error",JOptionPane.ERROR_MESSAGE);
+
+        }
+    }
+    
     public void showTransactions(){        
             String sql = "Select * from transactions";
         try {
             PreparedStatement pstTransact = con.prepareStatement(sql);
-             ResultSet rsTransact = pstTransact.executeQuery(sql);
+            ResultSet rsTransact = pstTransact.executeQuery(sql);
             
             while(rsTransact.next()) {
                 String transactionId = rsTransact.getString("transactionId");
