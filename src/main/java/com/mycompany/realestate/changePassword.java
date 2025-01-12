@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -71,22 +72,35 @@ public class changePassword extends JFrame implements  ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // aayusin koi pa dito para macheck sa sql kung tama yung input
         if(e.getSource()==btnChangePassword) {
-        String enterPassword;
+        String enterPassword = txtTypePassword.getText();
         String enterNewPassword = txtTypeNewPassword.getText();
-              try {
-                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/realestate",  "root", "admin123");
-                
-                 PreparedStatement st = (PreparedStatement) con.prepareStatement("Update admindetails set password=? where username=?");
-                 st.setString(1, enterNewPassword);
-                 st.setString(2, "admin");
-                 st.executeUpdate();
-                 JOptionPane.showMessageDialog(this, "Password changed successfully");
-                
+           if(!enterNewPassword.isEmpty() && !enterPassword.isEmpty()) {
+               try {
+                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/realestates",  "root", "admin123");
+                 String query = "select password from admindetails where username = ?";
+                 PreparedStatement verifyPassword = con.prepareStatement(query);
+                 verifyPassword.setString(1, "AdminLex");
+                    try(ResultSet rs = verifyPassword.executeQuery()){
+                      if(rs.next() && rs.getString("password").equals(enterPassword)) {
+                      PreparedStatement st = (PreparedStatement) con.prepareStatement("Update admindetails set password=? where username=?");
+                      st.setString(1, enterNewPassword);
+                      st.setString(2, "AdminLex");
+                      st.executeUpdate();
+                      JOptionPane.showMessageDialog(this, "Password changed successfully");
+                     } else {
+                            JOptionPane.showMessageDialog(this, "Incorrect password","Error",JOptionPane.ERROR_MESSAGE);
+                      }
+                 } 
+                    
               } catch (SQLException ex) {
                             Logger.getLogger(changePassword.class.getName()).log(Level.SEVERE, null, ex);
               }
+           } else {
+               JOptionPane.showMessageDialog(null, "Enter password","Error",JOptionPane.ERROR_MESSAGE);
+           }
+           
+              
         }else if(e.getSource()==btnBack){
             new adminPage();
             dispose();
