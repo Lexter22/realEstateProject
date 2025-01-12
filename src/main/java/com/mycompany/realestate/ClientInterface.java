@@ -52,7 +52,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
   private Statement st;
   private PreparedStatement pst;
   private ResultSet rs;
-  private String houseId, housePrice, userId, inheret, username, fname, lname, userNum, userEmail, houseLocation, houseName, houseDescription, houseStatus, ownedLocation, ownedId, ownedPrice, ownedName;
+  private String newDescription, houseId, housePrice, userId, inheret, username, fname, lname, userNum, userEmail, houseLocation, houseName, houseDescription, houseStatus, ownedLocation, ownedId, ownedPrice, ownedName;
   private ArrayList<Object[]> arrayList;
   
   public ClientInterface(String username) {
@@ -73,14 +73,15 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
     logo.setBounds(10, 10, 80, 80);
     add(logo);
 
-    lblRichfields = new JLabel("RICHFIELD");
+    lblRichfields = new JLabel("RICHFIELD REAL ESTATES");
     lblRichfields.setBounds(120, 10, 350, 50);
     lblRichfields.setForeground(Color.white);
     lblRichfields.setFont(new Font("Arial", Font.BOLD, 25));
     add(lblRichfields);
 
-    lblRealEstates = new JLabel("REAL ESTATES");
-    lblRealEstates.setBounds(120, 40, 300, 50);
+    lblRealEstates = new JLabel("RESIDENTIALS");
+    lblRealEstates.setBounds(320, 50, 350, 50);
+    lblRealEstates.setHorizontalAlignment(SwingConstants.CENTER);
     lblRealEstates.setForeground(Color.white);
     lblRealEstates.setFont(new Font("Arial", Font.BOLD, 15));
     add(lblRealEstates);
@@ -143,7 +144,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
     jtab.add(panelItems);
     
     panelItemsPanel = new JPanel();
-    panelItemsPanel.setBounds(0, 0, 800, 560);
+    panelItemsPanel.setBounds(10, 10, 800, 530);
     panelItems.add(panelItemsPanel);
 
     String[] tablecolumn = {"ID","Property Name", "Location", "Price", "Status"};
@@ -190,11 +191,11 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
       }
         
         JScrollPane scrollPaneEstate = new JScrollPane(itemT);
-        scrollPaneEstate.setPreferredSize(new Dimension(800, 560));
+        scrollPaneEstate.setPreferredSize(new Dimension(800, 520));
         panelItemsPanel.add(scrollPaneEstate);
            
         lblpreviewImg = new JLabel("IMAGE PREVIEW");
-        lblpreviewImg.setBounds(800,50,390,50);
+        lblpreviewImg.setBounds(800,10,390,30);
         lblpreviewImg.setHorizontalAlignment(SwingConstants.CENTER);
         lblpreviewImg.setFont(new Font("Arial", Font.BOLD, 15));
         panelItems.add(lblpreviewImg);
@@ -206,7 +207,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         panelItems.add(btnView);
         
         imgPreviewImage = new JLabel();
-        imgPreviewImage.setBounds(815, 90, 350, 280);
+        imgPreviewImage.setBounds(820, 50, 350, 280);
         imgPreviewImage.setBorder(BorderFactory.createLineBorder(Color.black));
         panelItems.add(imgPreviewImage);
         
@@ -216,15 +217,9 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         jtab.add(panelAccount);
     
         panelAccountPanel = new JPanel();
-        panelAccountPanel.setBounds(0, 0, 800, 560);
+        panelAccountPanel.setBounds(10, 10, 790, 530);
         panelAccount.add(panelAccountPanel);
 
-        lblCDetails= new JLabel("Properties Owned");
-        lblCDetails.setHorizontalAlignment(SwingConstants.CENTER);
-        lblCDetails.setBounds(0,20,800,50);
-        lblCDetails.setFont(new Font("Arial", Font.BOLD, 25));
-        panelAccountPanel.add(lblCDetails);
-        
         accTModel = new DefaultTableModel(ownedHouses, columnNames);
         accTable = new JTable(accTModel);
         accTable.setDefaultEditor(Object.class, null);
@@ -232,7 +227,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         accTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
  
         JScrollPane sp2 = new JScrollPane(accTable);
-        sp2.setPreferredSize(new Dimension(800, 560));
+        sp2.setPreferredSize(new Dimension(780, 530));
         panelAccountPanel.add(sp2);
     
         propertiesOwned();
@@ -410,6 +405,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         }
     }
   
+//      public void newDescription
       
       public void propertiesOwned() {
           
@@ -448,10 +444,12 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         int currentIndex = jtab.getSelectedIndex();
         if (currentIndex == 0) {
           jtab.setSelectedIndex(1);
+          lblRealEstates.setText("PROPERTIES OWNED");
           btnAccHome.setIcon(finalHomeIc);
         } else {
           btnAccHome.setIcon(finalAccountIc);
           jtab.setSelectedIndex(0);
+          lblRealEstates.setText("RESIDENTIALS");
         }
       }else if(e.getSource()== btnReset){
           jcbLocation.setSelectedIndex(0);
@@ -485,7 +483,22 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
               String location = String.valueOf(itemT.getValueAt(selectedRowItem, 2));
               String price =String.valueOf(itemT.getValueAt(selectedRowItem, 3)); 
               String status = String.valueOf(itemT.getValueAt(selectedRowItem, 4)); 
-              new moreInfo(id, name, location, price, status, houseDescription, inheret, fname, lname, userId, userNum, userEmail, finalPreviewImage).setVisible(true);
+              
+              String descriptionSql = "Select description From residentialrealestates where id=? ";
+              
+             try {
+                 pst= con.prepareStatement(descriptionSql);
+                 pst.setString(1, id);
+                 rs = pst.executeQuery();
+                 while(rs.next()){
+                     newDescription = rs.getString("description");
+                 }
+                 
+             } catch (SQLException ex) {
+                 Logger.getLogger(ClientInterface.class.getName()).log(Level.SEVERE, null, ex);
+             }
+              
+              new moreInfo(id, name, location, price, status, newDescription, inheret, fname, lname, userId, userNum, userEmail, finalPreviewImage).setVisible(true);
 
               dispose();
         }else{
@@ -499,9 +512,22 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
               String location = String.valueOf(accTable.getValueAt(selectedRowAccItem, 2));
               String price =String.valueOf(accTable.getValueAt(selectedRowAccItem, 3)); 
               String status = String.valueOf(accTable.getValueAt(selectedRowAccItem, 4)); 
-
               
-              new transactInfo(id, name, location, price, status, houseDescription, inheret, fname, lname, userId, userNum, userEmail, finalPreviewImageOwned).setVisible(true);
+              String descriptionSql = "Select description From propertiesowned where id=? ";
+              
+             try {
+                 pst= con.prepareStatement(descriptionSql);
+                 pst.setString(1, id);
+                 rs = pst.executeQuery();
+                 while(rs.next()){
+                     newDescription = rs.getString("description");
+                 }
+                 
+             } catch (SQLException ex) {
+                 Logger.getLogger(ClientInterface.class.getName()).log(Level.SEVERE, null, ex);
+             }
+              
+              new transactInfo(id, name, location, price, status, newDescription, inheret, fname, lname, userId, userNum, userEmail, finalPreviewImageOwned).setVisible(true);
               dispose();
         }else{
                JOptionPane.showMessageDialog(null, "Please Select a row");
@@ -548,7 +574,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
             break; 
     }
 
-    boolean resultsFound = false;
+    boolean resultsNotFound = true;
 
     ArrayList<Integer> prices = new ArrayList<>();
     
@@ -572,11 +598,11 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
             
             if (index >= 0) { 
                 itemTModel.addRow(house);
-                resultsFound = true; 
+                resultsNotFound = false; 
             }
         }
     }
-    if (!resultsFound) {
+    if (resultsNotFound) {
         JOptionPane.showMessageDialog(null, "No residential available");
     }
 }
