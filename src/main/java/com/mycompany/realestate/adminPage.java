@@ -297,7 +297,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         
         
         String[][] data2 = {};
-        String[] tablecolumn2 = {"ID", "First Name", "Last Name", "Username", "Contact No.", "Email","Password"};
+        String[] tablecolumn2 = {"ID", "First Name", "Last Name", "Username"};
        
         tableUserModel = new DefaultTableModel(data2, tablecolumn2);
         showClients();
@@ -748,7 +748,7 @@ public void mouseClicked(MouseEvent e) {
            searchClients();
        } else if(e.getSource()==btnClearUserSearch) { // para bumalik yung dating table and mag clear txtfield
            String clientSearch = txtClientSearch.getText();
-           if(!clientSearch.isEmpty()) {
+           //if(clientSearch.isEmpty()) {
                txtClientSearch.setText("");
                searchedClient = (DefaultTableModel) tableUserModel;
                searchedClient.setRowCount(0);
@@ -756,7 +756,7 @@ public void mouseClicked(MouseEvent e) {
                     String[] clientData = entry.getValue();
                     searchedClient.addRow(clientData);
                 }
-           }
+     //      }
        }
     }
     public void Connect(){
@@ -785,11 +785,11 @@ public void mouseClicked(MouseEvent e) {
                 firstName = rs.getString("firstname");
                 lastName = rs.getString("lastname");
                 username = rs.getString("username");
-                contactNum = rs.getString("contactnum");
-                email = rs.getString("email");
-                password = rs.getString("password");
+//                contactNum = rs.getString("contactnum");
+//                email = rs.getString("email");
+//                password = rs.getString("password");
                 
-                String clientsData[] = {userID,firstName,lastName,username,contactNum,email,password}; 
+                String clientsData[] = {userID,firstName,lastName,username}; 
                 // yung mga data ay need natin mastore sa hashmap
                 clientsMap.put(userID, clientsData);
              
@@ -803,33 +803,37 @@ public void mouseClicked(MouseEvent e) {
     }
     public void searchClients(){
         String clientSearch = txtClientSearch.getText().trim();
-//        searchedClient = (DefaultTableModel) tableUserModel;
-//        searchedClient.setRowCount(0);
         if(!clientSearch.isEmpty()){
-//            if(clientsMap.containsKey(clientSearch) || clientsMap.containsValue(clientSearch)) {
-//                JOptionPane.showMessageDialog(null, "User found");
-//            }
                 boolean nahanapSiClient = false;
-               // ang process nito ang mag loop until mahanap client
+               // ang process nito ang mag loop until mahanap clientID or clientValue
                for(Map.Entry<String,String[]> entry : clientsMap.entrySet()) {
-                   String userID = entry.getKey();
+                   String clientID = entry.getKey();
                    String[] clientData = entry.getValue();
-                       if(!clientSearch.isEmpty() && userID.contains(clientSearch)){
+                   
+                       if(!clientSearch.isEmpty() && clientID.contains(clientSearch)){
                            searchedClient = (DefaultTableModel) tableUserModel;    
-                           searchedClient.setRowCount(0); // nilipat ko dito kasi kapag sa taas, nagana ito
+                           searchedClient.setRowCount(0); // nilipat ko dito kasi kapag sa taas di nagana, nagana ito
                            searchedClient.addRow(clientData);
                            nahanapSiClient = true;
                            break;
-                       } 
+                       }
+                       for(String clientValue: clientData){ // loop incase yung isearch ay clientValue
+                           if(clientValue.contains(clientSearch)) {
+                               searchedClient = (DefaultTableModel) tableUserModel;    
+                               searchedClient.setRowCount(0); 
+                               searchedClient.addRow(clientData);
+                               nahanapSiClient = true;
+                               break;
+                           }
+                       }
                    if(nahanapSiClient){
                         // since true na yung nahanap na si client, kailangan na natin ito itigil
                          break;
                    }    
                }
-               
-                  if(!nahanapSiClient){ // antok na ako puro if
+                  if(!nahanapSiClient){ // if hindi nahanap
                         JOptionPane.showMessageDialog(null, "Client not found","Not found",JOptionPane.ERROR_MESSAGE);
-                   }   // now kailangan natin ibalik yung table
+                   } 
         } else {
               JOptionPane.showMessageDialog(null, "Enter something to search","Error",JOptionPane.ERROR_MESSAGE);
 
