@@ -778,21 +778,19 @@ public void mouseClicked(MouseEvent e) {
          
         try {
             pst = con.prepareStatement(sql);
-             rs = pst.executeQuery(sql);
+            rs = pst.executeQuery(sql);
             
+            tableUserModel.setRowCount(0);
             while(rs.next()) {
                 userID = rs.getString("id");
                 firstName = rs.getString("firstname");
                 lastName = rs.getString("lastname");
                 username = rs.getString("username");
-//                contactNum = rs.getString("contactnum");
-//                email = rs.getString("email");
-//                password = rs.getString("password");
-                
+           
                 String clientsData[] = {userID,firstName,lastName,username}; 
                 // yung mga data ay need natin mastore sa hashmap
                 clientsMap.put(userID, clientsData);
-             
+                
                 // store sa table
                 tableUserModel.addRow(clientsData);        
                
@@ -804,23 +802,23 @@ public void mouseClicked(MouseEvent e) {
     public void searchClients(){
         String clientSearch = txtClientSearch.getText().trim();
         if(!clientSearch.isEmpty()){
+     
                 boolean nahanapSiClient = false;
+                 searchedClient = (DefaultTableModel) tableUserModel;    
+                 searchedClient.setRowCount(0);
                // ang process nito ang mag loop until mahanap clientID or clientValue
+               
                for(Map.Entry<String,String[]> entry : clientsMap.entrySet()) {
                    String clientID = entry.getKey();
                    String[] clientData = entry.getValue();
                    
-                       if(!clientSearch.isEmpty() && clientID.contains(clientSearch)){
-                           searchedClient = (DefaultTableModel) tableUserModel;    
-                           searchedClient.setRowCount(0); // nilipat ko dito kasi kapag sa taas di nagana, nagana ito
+                       if( clientID.contains(clientSearch)){
                            searchedClient.addRow(clientData);
                            nahanapSiClient = true;
                            break;
                        }
-                       for(String clientValue: clientData){ // loop incase yung isearch ay clientValue
-                           if(clientValue.contains(clientSearch)) {
-                               searchedClient = (DefaultTableModel) tableUserModel;    
-                               searchedClient.setRowCount(0); 
+                       for(String clientValue: clientData){ // loop incase yung isearch ay first name
+                           if(clientValue.contains(clientSearch.toLowerCase())) {
                                searchedClient.addRow(clientData);
                                nahanapSiClient = true;
                                break;
