@@ -25,7 +25,7 @@ public class receiptPage extends JFrame implements ActionListener{
     
     private JLabel lblRichfield, lblRichfield2, lblName, lblUserName, lblDate, lblLocation, lblProductName, lblProductID, lblPrice, lblTransactionID, lblPurchasedEstate, lblOfficial, lblThankYou, lblLogo;
     private JButton btnBackToHome;
-    private ImageIcon logoIc, finalLogoIc;
+    private ImageIcon icLogo, icFinalLogo;
     private String user;
     
     
@@ -53,10 +53,10 @@ public class receiptPage extends JFrame implements ActionListener{
         add(lblRichfield2);
         
         
-        logoIc = new ImageIcon("logoRealEstates.png");
-        finalLogoIc = new ImageIcon(logoIc.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
+        icLogo = new ImageIcon("logoRealEstates.png");
+        icFinalLogo = new ImageIcon(icLogo.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
 
-        lblLogo = new JLabel(finalLogoIc);
+        lblLogo = new JLabel(icFinalLogo);
         lblLogo.setBounds(10, 10, 80, 80);
         add(lblLogo);
         
@@ -153,10 +153,13 @@ public class receiptPage extends JFrame implements ActionListener{
         setVisible(true);
         user = userName;
         
+        
     }
 
+    
     @Override
     public void actionPerformed(ActionEvent e) {
+        
         
         if (e.getSource() == btnBackToHome) {
             
@@ -164,8 +167,8 @@ public class receiptPage extends JFrame implements ActionListener{
             new ClientInterface(user).setVisible(true);
             dispose();
             
-            
         }
+        
     }
     
 }
