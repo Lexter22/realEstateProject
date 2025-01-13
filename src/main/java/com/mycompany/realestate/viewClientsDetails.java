@@ -181,8 +181,8 @@ public class viewClientsDetails extends JFrame implements ActionListener{
     }
     
     public void propertyData(String clientsId){
-        String getHouseId = "Select * from transactions where clientid=?";
-        
+        String getHouseId = "Select * from transactions where clientid =?";
+         
         try{
         pst = con.prepareStatement(getHouseId);
         pst.setString(1, clientsId);
@@ -192,34 +192,21 @@ public class viewClientsDetails extends JFrame implements ActionListener{
 
                 propertyId = rs.getString("propertyId");
                 transactionId = rs.getString("transactionId");
+                String transactionLocation = rs.getString("propertyLocation");
                 transactionDate = rs.getString("date");
-
-            }
-            location(clientsId, propertyId, transactionId, transactionDate);
-        }catch (SQLException ex) {
-          Logger.getLogger(viewClientsDetails.class.getName()).log(Level.SEVERE, null, ex);
-      }
-    }
-    
-    public void location(String clientsId, String propertyIds, String transactionIds, String transactionDates){
-        String getLocation = "Select * from propertiesowned where usersId=?";
-        try{
-            pst = con.prepareStatement(getLocation);
-            pst.setString(1, clientsId);
-            rs = pst.executeQuery();
-            
-            while(rs.next()){
-                propertyLocation = rs.getString("propertyLocation");
                 
-                Object [] dataSql={propertyIds, transactionIds, propertyLocation, transactionDates};
+                 
+                Object [] dataSql={propertyId, transactionId, transactionLocation, transactionDate};
                 
                 ownedProperties.addRow(dataSql);
+           
             }
             
-            
+           
         }catch (SQLException ex) {
           Logger.getLogger(viewClientsDetails.class.getName()).log(Level.SEVERE, null, ex);
       }
     }
+
     
 }
