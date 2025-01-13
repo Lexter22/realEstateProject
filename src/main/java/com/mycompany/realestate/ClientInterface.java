@@ -459,8 +459,8 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
             Object jcbPriceValue = jcbPrice.getSelectedItem();
             
             //Reset Image Preview
-    ImageIcon none = new ImageIcon("");
-    imgPreviewImage.setIcon(none);
+            ImageIcon none = new ImageIcon("");
+            imgPreviewImage.setIcon(none);
     
           String[] arrs = new String[arrayList.size()];
           itemTModel.setRowCount(0);
@@ -574,7 +574,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
             break; 
     }
 
-    boolean resultsNotFound = true;
+    boolean resultFound = false;
 
     ArrayList<Integer> prices = new ArrayList<>();
     
@@ -598,11 +598,11 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
             
             if (index >= 0) { 
                 itemTModel.addRow(house);
-                resultsNotFound = false; 
+                resultFound = true; 
             }
         }
     }
-    if (resultsNotFound) {
+    if (!resultFound) {
         JOptionPane.showMessageDialog(null, "No residential available");
     }
 }
