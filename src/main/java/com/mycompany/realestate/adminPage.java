@@ -28,8 +28,8 @@ import java.util.ArrayList;
 public class adminPage extends JFrame implements ActionListener, MouseListener{
 
     private JPanel  panelUpdateLayout, panelHeader, panelUsers, panelADD, panelDelete, panelProfile, transactJPanel, homeJPanel,panelAddLayout,panelHome,panelTransaction,panelUsersPanel; 
-    private JLabel lblUpdate, lblImageUpdate, lblRichField, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails,lblUsers, previewImg, lblLogo;
-    private JButton btnUpdateData,btnImageUpdate, btnHome, btnAdd, btnDel, btnTransact, btnUsers,btnDetails, btnProfile,btnImage,btnAddImage,btnChangePassword,btnSignOut,btnUserSearch,btnUpdate,btnClearUserSearch;
+    private JLabel lblUpdate, lblImageUpdate, lblRichField, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails,lblUsers, previewImg, lblLogo,lblTotalSalesContents,lblPropertiesSoldContents,lblDailySalesContents;
+    private JButton btnUpdateData,btnImageUpdate, btnHome, btnAdd, btnDel, btnTransact, btnUsers,btnDetails, btnProfile,btnImage,btnAddImage,btnChangePassword,btnSignOut,btnUserSearch,btnUpdate,btnClearUserSearch,btnOverall,btnBinan,btnSantaRosa,btnSanPedro;
     private JTabbedPane jtab;
     private JTable tableMarket, tableEstate, tableUser,tableTransactions;
     private JScrollPane estates;
@@ -401,7 +401,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         lblTotalSales.setBounds(60, 430, 100, 30);
         panelProfile.add(lblTotalSales);
         
-        JLabel lblTotalSalesContents = new JLabel("a");
+        lblTotalSalesContents = new JLabel("a");
         lblTotalSalesContents.setBounds(200, 430, 100, 30);
         panelProfile.add(lblTotalSalesContents);
         
@@ -409,7 +409,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         lblPropertiesSold.setBounds(60, 460, 100, 30);
         panelProfile.add(lblPropertiesSold);
         
-        JLabel lblPropertiesSoldContents = new JLabel("a");
+        lblPropertiesSoldContents = new JLabel("a");
         lblPropertiesSoldContents.setBounds(200, 460, 100, 30);
         panelProfile.add(lblPropertiesSoldContents);
         
@@ -417,7 +417,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         lblDailySales.setBounds(60, 490, 100, 30);
         panelProfile.add(lblDailySales);
         
-        JLabel lblDailySalesContents = new JLabel("a");
+        lblDailySalesContents = new JLabel("a");
         lblDailySalesContents.setBounds(200, 490, 100, 30);
         panelProfile.add(lblDailySalesContents);
         
@@ -431,15 +431,15 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         scrollPaneMarket.setBounds(600,60,450,420);
         panelProfile.add(scrollPaneMarket);
         
-        JButton btnOverall = new JButton("Overall");
+        btnOverall = new JButton("Overall");
         btnOverall.setBounds(600,490,100,30);
         panelProfile.add(btnOverall);
         
-        JButton btnBinan = new JButton("Binan");
+        btnBinan = new JButton("Binan");
         btnBinan.setBounds(715,490,100,30);
         panelProfile.add(btnBinan);
         
-        JButton btnSantaRosa = new JButton("Santa Rosa");
+        btnSantaRosa = new JButton("Santa Rosa");
         btnSantaRosa.setBounds(835,490,100,30);
         panelProfile.add(btnSantaRosa);
         
@@ -542,6 +542,8 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         btnClientDetails.addActionListener(this);
         btnUserSearch.addActionListener(this); // para sa search clients
         btnClearUserSearch.addActionListener(this); // para sa lear and bumalik yung table
+        btnOverall.addActionListener(this);// sa market analysis
+        btnSantaRosa.addActionListener(this); // sta rosa
         setVisible(true);
     } 
     public void tableData(){
@@ -841,6 +843,10 @@ public void mouseClicked(MouseEvent e) {
                     searchedClient.addRow(clientData);
                 }
      //      }
+       } else if(e.getSource()== btnOverall){
+           marketOverallProcess();
+       } else if(e.getSource()==btnSantaRosa){
+           santaRosaMarketProcess();
        }
     }
     public void Connect(){
@@ -943,9 +949,107 @@ public void mouseClicked(MouseEvent e) {
     }
     public void marketOverallProcess(){
         // yung mga data to be specific need istore sa array tsaka mag merge sort
+         
+            String query = "SELECT transactions.clientId, transactions.propertyId, transactions.transactionId,residentialrealestates.price\n" +
+                      "FROM transactions\n" +
+                      "JOIN residentialrealestates ON transactions.propertyId = residentialrealestates.id";
+          
+          // yung table
+        
+          tableModelMarket.setRowCount(0);
+          List<Object[]> dataList = new ArrayList<>();
+          
+        try {
+            while(rs.next()){
+                int clientIdForMarket = rs.getInt("clientId");
+                String transactIdForMarket = rs.getString("transactionId");
+                String priceForMarket = rs.getString("price");
+                
+                tableModelMarket.addRow(new Object[]{clientIdForMarket,transactIdForMarket,priceForMarket});
+                dataList.add(new Object[]{clientIdForMarket,transactIdForMarket,priceForMarket});    
+            }
+              dataList = mergeSort(dataList); // call naten yung method na nasa baba
+             JOptionPane.showMessageDialog(null, "This is Overall");
+        } catch (SQLException ex) {
+            Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void santaRosaMarketProcess(){ // santa rosa btn
+       String query = "SELECT transactions.clientId, transactions.propertyId, transactions.transactionId,residentialrealestates.price\n" +
+                      "FROM transactions\n" +
+                      "JOIN residentialrealestates ON transactions.propertyId = residentialrealestates.id\n" +
+                      "WHERE residentialrealestates.location = 'Santa Rosa';";
+       tableModelMarket.setRowCount(0);
+       List<Object[]> dataList = new ArrayList<>();
+       
+        try {
+            Statement st = con.createStatement();
+            rs = st.executeQuery(query);
+            
+            while(rs.next()){
+                int clientIdForMarket = rs.getInt("clientId");
+                String transactIdForMarket = rs.getString("transactionId");
+                String priceForMarket = rs.getString("price");
+                
+                tableModelMarket.addRow(new Object[]{clientIdForMarket,transactIdForMarket,priceForMarket});
+                dataList.add(new Object[]{clientIdForMarket,transactIdForMarket,priceForMarket});    
+            }
+            // merge sort
+            dataList = mergeSort(dataList); // call naten yung method na nasa baba
+            JOptionPane.showMessageDialog(null, "This is Santa Rosa");
+        } catch (SQLException ex) {
+            Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void binanMarketProcess(){ // Binan btn
         
     }
+    public void sanPedroMarketProcess(){ // san pedro btn
+        
+    }
+    private List<Object[]> mergeSort(List<Object[]> dataList) {
+        
+        if(dataList.size()<= 1){
+            return dataList;
+        }
+        int mid =  dataList.size() / 2;
+        List<Object[]> leftHalf = new ArrayList<>(dataList.subList(0, mid));
+        List<Object[]> rightHalf = new ArrayList<>(dataList.subList(mid, dataList.size()));
+
+        leftHalf = mergeSort(leftHalf);
+        rightHalf = mergeSort(rightHalf);
+        
+        return merge(leftHalf,rightHalf);
+    }
+    private List<Object[]> merge(List<Object[]> left, List<Object[]> right){
+        List<Object[]> mergedList = new ArrayList<>();
+        int leftIndex = 0;
+        int rightIndex = 0;
+        
+        while(leftIndex < left.size()&&rightIndex < right.size()){
+            String leftPrice = (String) left.get(leftIndex)[2];
+            String rightPrice = (String) right.get(rightIndex)[2];
+            if(leftPrice.compareTo(rightPrice) <= 0){
+                mergedList.add(left.get(leftIndex));
+                leftIndex++;
+            } else {
+                mergedList.add(right.get(rightIndex));
+                rightIndex++;
+            }
+        }
+        while(leftIndex < left.size()){
+            mergedList.add(left.get(leftIndex));
+            leftIndex++;
+        }
+         while(rightIndex < right.size()){
+            mergedList.add(right.get(rightIndex));
+            rightIndex++;
+        }
+            return mergedList;
+        }
+    
     public static void main(String[] args) {
         new adminPage().setVisible(true);
     }
+
 }
