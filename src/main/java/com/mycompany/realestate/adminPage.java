@@ -374,14 +374,14 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         scrollPaneTransaction.setBounds(0,0,780,530);
         panelTransaction.add(scrollPaneTransaction);
         
-        JButton btnMarketAnalysis = new JButton("Generate Market Analysis");
-        btnMarketAnalysis.setBounds(900, 40, 200, 30);
-        transactJPanel.add(btnMarketAnalysis);
-        
-        JButton btnSalesReport = new JButton("Sales Report");
-        btnSalesReport.setBounds(900, 80, 200, 30);
-        transactJPanel.add(btnSalesReport);
-        
+//        JButton btnMarketAnalysis = new JButton("Generate Market Analysis");
+//        btnMarketAnalysis.setBounds(900, 40, 200, 30);
+//        transactJPanel.add(btnMarketAnalysis);
+//        
+//        JButton btnSalesReport = new JButton("Sales Report");
+//        btnSalesReport.setBounds(900, 80, 200, 30);
+//        transactJPanel.add(btnSalesReport);
+//        
         panelProfile= new JPanel();
         panelProfile.setBounds(0,0,1200,560);
         panelProfile.setLayout(null);
@@ -397,20 +397,31 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         bargraphPanel.setBounds(60,60, 450, 350);
         panelProfile.add(bargraphPanel);
         
-        JLabel lblTotalSales = new JLabel("Total Sales");
+        JLabel lblTotalSales = new JLabel("Total Sales: ");
         lblTotalSales.setBounds(60, 430, 100, 30);
         panelProfile.add(lblTotalSales);
+        
+        JLabel lblTotalSalesContents = new JLabel("a");
+        lblTotalSalesContents.setBounds(200, 430, 100, 30);
+        panelProfile.add(lblTotalSalesContents);
         
         JLabel lblPropertiesSold = new JLabel("Properties Sold");
         lblPropertiesSold.setBounds(60, 460, 100, 30);
         panelProfile.add(lblPropertiesSold);
         
+        JLabel lblPropertiesSoldContents = new JLabel("a");
+        lblPropertiesSoldContents.setBounds(200, 460, 100, 30);
+        panelProfile.add(lblPropertiesSoldContents);
+        
         JLabel lblDailySales = new JLabel("Daily Sales");
         lblDailySales.setBounds(60, 490, 100, 30);
         panelProfile.add(lblDailySales);
         
+        JLabel lblDailySalesContents = new JLabel("a");
+        lblDailySalesContents.setBounds(200, 490, 100, 30);
+        panelProfile.add(lblDailySalesContents);
         
-        
+        // market analysis 
         String [] marketColumns = {"Client ID","Transaction ID","Price"};
         String [][] marketRows = {};
         tableModelMarket = new DefaultTableModel(marketRows,marketColumns);
@@ -929,6 +940,10 @@ public void mouseClicked(MouseEvent e) {
         } catch (SQLException ex) {
             Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    public void marketOverallProcess(){
+        // yung mga data to be specific need istore sa array tsaka mag merge sort
+        
     }
     public static void main(String[] args) {
         new adminPage().setVisible(true);
