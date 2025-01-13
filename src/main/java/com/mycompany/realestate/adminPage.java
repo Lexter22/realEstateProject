@@ -205,6 +205,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         tbModel = new DefaultTableModel();
         String[] tablecolumn = {"ID","Property Name", "Location", "Price", "Status"};
         tableEstateModel = new DefaultTableModel(data, tablecolumn);
+        
         tableEstate = new JTable(tableEstateModel);
         tableEstate.setDefaultEditor(Object.class, null);
         tableEstate.setRowHeight(30);
