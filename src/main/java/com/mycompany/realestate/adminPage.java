@@ -960,16 +960,21 @@ public void mouseClicked(MouseEvent e) {
           List<Object[]> dataList = new ArrayList<>();
           
         try {
+            Statement st = con.createStatement();
+            rs = st.executeQuery(query);
             while(rs.next()){
                 int clientIdForMarket = rs.getInt("clientId");
                 String transactIdForMarket = rs.getString("transactionId");
                 String priceForMarket = rs.getString("price");
                 
-                tableModelMarket.addRow(new Object[]{clientIdForMarket,transactIdForMarket,priceForMarket});
+             //   tableModelMarket.addRow(new Object[]{clientIdForMarket,transactIdForMarket,priceForMarket});
                 dataList.add(new Object[]{clientIdForMarket,transactIdForMarket,priceForMarket});    
             }
               dataList = mergeSort(dataList); // call naten yung method na nasa baba
-             JOptionPane.showMessageDialog(null, "This is Overall");
+             for(Object[]data:  dataList){
+                 tableModelMarket.addRow(data);
+             }
+              JOptionPane.showMessageDialog(null, "This is Overall");
         } catch (SQLException ex) {
             Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
         }
