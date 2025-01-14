@@ -464,14 +464,22 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         panelProfile.add(lblAdminDetails);
         
         btnChangePassword = new JButton("Change Password");
-        btnChangePassword.setBounds(480, 20000, 200, 30);
+        btnChangePassword.setBounds(880, 450, 220, 30);
+        btnChangePassword.setBorder(null);
+        btnChangePassword.setForeground(Color.white);
+        btnChangePassword.setBackground(cGreen);
+        btnChangePassword.setFocusable(false);
         btnChangePassword.setFont(new Font("Arial", Font.BOLD, 15));
-        panelProfile.add(btnChangePassword);
+        panelUsers.add(btnChangePassword);
         
         btnSignOut = new JButton("Sign Out");
-        btnSignOut.setBounds(480, 2000, 200, 30);
+        btnSignOut.setBounds(880, 500, 220, 30);
+        btnSignOut.setBorder(null);
+        btnSignOut.setForeground(Color.white);
+        btnSignOut.setBackground(cGreen);
+        btnSignOut.setFocusable(false);
         btnSignOut.setFont(new Font("Arial", Font.BOLD, 15));
-        panelProfile.add(btnSignOut);
+        panelUsers.add(btnSignOut);
         
         panelUpdateLayout = new JPanel();
         panelUpdateLayout.setLayout(null);
