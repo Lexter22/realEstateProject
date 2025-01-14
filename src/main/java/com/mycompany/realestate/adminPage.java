@@ -402,7 +402,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         panelProfile.add(lblTotalSales);
         
         lblTotalSalesContents = new JLabel("a");
-        lblTotalSalesContents.setBounds(200, 430, 100, 30);
+        lblTotalSalesContents.setBounds(200, 430, 200, 30);
         panelProfile.add(lblTotalSalesContents);
         
         JLabel lblPropertiesSold = new JLabel("Properties Sold");
@@ -443,7 +443,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         btnSantaRosa.setBounds(835,490,100,30);
         panelProfile.add(btnSantaRosa);
         
-        JButton btnSanPedro = new JButton("San Pedro");
+        btnSanPedro = new JButton("San Pedro");
         btnSanPedro.setBounds(950,490,100,30);
         panelProfile.add(btnSanPedro);
         
@@ -544,6 +544,8 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         btnClearUserSearch.addActionListener(this); // para sa lear and bumalik yung table
         btnOverall.addActionListener(this);// sa market analysis
         btnSantaRosa.addActionListener(this); // sta rosa
+        btnBinan.addActionListener(this); // binan
+        btnSanPedro.addActionListener(this);// san pedro
         setVisible(true);
     } 
     public void tableData(){
@@ -843,10 +845,14 @@ public void mouseClicked(MouseEvent e) {
                     searchedClient.addRow(clientData);
                 }
      //      }
-       } else if(e.getSource()== btnOverall){
+       } else if(e.getSource()== btnOverall){ // ito yung mga locations and then dito ko ginamit yung mergeSort, nasa method sa baba
            marketOverallProcess();
        } else if(e.getSource()==btnSantaRosa){
            santaRosaMarketProcess();
+       } else if(e.getSource()==btnBinan){
+           binanMarketProcess();
+       } else if(e.getSource()==btnSanPedro){
+           sanPedroMarketProcess();
        }
     }
     public void Connect(){
@@ -962,18 +968,19 @@ public void mouseClicked(MouseEvent e) {
         try {
             Statement st = con.createStatement();
             rs = st.executeQuery(query);
+         
             while(rs.next()){
                 int clientIdForMarket = rs.getInt("clientId");
                 String transactIdForMarket = rs.getString("transactionId");
                 String priceForMarket = rs.getString("price");
-                
-             //   tableModelMarket.addRow(new Object[]{clientIdForMarket,transactIdForMarket,priceForMarket});
+               
+                tableModelMarket.addRow(new Object[]{clientIdForMarket,transactIdForMarket,priceForMarket});
                 dataList.add(new Object[]{clientIdForMarket,transactIdForMarket,priceForMarket});    
             }
               dataList = mergeSort(dataList); // call naten yung method na nasa baba
-             for(Object[]data:  dataList){
-                 tableModelMarket.addRow(data);
-             }
+              int propertieSold = tableModelMarket.getRowCount();
+              lblPropertiesSoldContents.setText(String.valueOf(propertieSold));
+             // lblTotalSalesContents.setText(String.format("%.2f", total));
               JOptionPane.showMessageDialog(null, "This is Overall");
         } catch (SQLException ex) {
             Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
@@ -983,7 +990,70 @@ public void mouseClicked(MouseEvent e) {
        String query = "SELECT transactions.clientId, transactions.propertyId, transactions.transactionId,residentialrealestates.price\n" +
                       "FROM transactions\n" +
                       "JOIN residentialrealestates ON transactions.propertyId = residentialrealestates.id\n" +
-                      "WHERE residentialrealestates.location = 'Santa Rosa';";
+                      "WHERE residentialrealestates.location = 'Santa Rosa';"; // iibahin kada location
+       tableModelMarket.setRowCount(0);
+       List<Object[]> dataList = new ArrayList<>();
+       
+        try {
+            Statement st = con.createStatement();
+            rs = st.executeQuery(query);
+            double total = 0;
+            while(rs.next()){
+                int clientIdForMarket = rs.getInt("clientId");
+                String transactIdForMarket = rs.getString("transactionId");
+                String priceForMarket = rs.getString("price");
+                
+                double price = Double.parseDouble(priceForMarket);
+                total += price;
+                
+                tableModelMarket.addRow(new Object[]{clientIdForMarket,transactIdForMarket,priceForMarket});
+                dataList.add(new Object[]{clientIdForMarket,transactIdForMarket,priceForMarket});    
+            }
+            // merge sort
+            dataList = mergeSort(dataList); // call naten yung method na nasa baba
+            int propertieSold = tableModelMarket.getRowCount();
+            lblPropertiesSoldContents.setText(String.valueOf(propertieSold));
+            JOptionPane.showMessageDialog(null, "This is Santa Rosa");
+        } catch (SQLException ex) {
+            Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void binanMarketProcess(){ // Binan btn
+          String query = "SELECT transactions.clientId, transactions.propertyId, transactions.transactionId,residentialrealestates.price\n" +
+                      "FROM transactions\n" +
+                      "JOIN residentialrealestates ON transactions.propertyId = residentialrealestates.id\n" +
+                      "WHERE residentialrealestates.location = 'Binan';";
+       tableModelMarket.setRowCount(0);
+       List<Object[]> dataList = new ArrayList<>();
+       
+        try {
+            Statement st = con.createStatement();
+            rs = st.executeQuery(query);
+         
+            while(rs.next()){
+                int clientIdForMarket = rs.getInt("clientId");
+                String transactIdForMarket = rs.getString("transactionId");
+                String priceForMarket = rs.getString("price");
+                
+             
+                
+                tableModelMarket.addRow(new Object[]{clientIdForMarket,transactIdForMarket,priceForMarket});
+                dataList.add(new Object[]{clientIdForMarket,transactIdForMarket,priceForMarket});    
+            }
+            // merge sort
+            dataList = mergeSort(dataList); // call naten yung method na nasa baba
+            int propertieSold = tableModelMarket.getRowCount();
+            lblPropertiesSoldContents.setText(String.valueOf(propertieSold));
+            JOptionPane.showMessageDialog(null, "This is Binan");
+        } catch (SQLException ex) {
+            Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void sanPedroMarketProcess(){ // san pedro btn
+          String query = "SELECT transactions.clientId, transactions.propertyId, transactions.transactionId,residentialrealestates.price\n" +
+                      "FROM transactions\n" +
+                      "JOIN residentialrealestates ON transactions.propertyId = residentialrealestates.id\n" +
+                      "WHERE residentialrealestates.location = 'San Pedro';";
        tableModelMarket.setRowCount(0);
        List<Object[]> dataList = new ArrayList<>();
        
@@ -1001,16 +1071,12 @@ public void mouseClicked(MouseEvent e) {
             }
             // merge sort
             dataList = mergeSort(dataList); // call naten yung method na nasa baba
-            JOptionPane.showMessageDialog(null, "This is Santa Rosa");
+            int propertieSold = tableModelMarket.getRowCount();
+            lblPropertiesSoldContents.setText(String.valueOf(propertieSold));
+            JOptionPane.showMessageDialog(null, "This is San Pedro");
         } catch (SQLException ex) {
             Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    public void binanMarketProcess(){ // Binan btn
-        
-    }
-    public void sanPedroMarketProcess(){ // san pedro btn
-        
     }
     private List<Object[]> mergeSort(List<Object[]> dataList) {
         
