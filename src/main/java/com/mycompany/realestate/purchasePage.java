@@ -176,7 +176,7 @@ public class purchasePage extends JFrame implements ActionListener{
     public void storeDate(){
         String charactersForID = "ABCDEFGHIJ0123456789";
         idFortransaction = transactId(charactersForID);
-        String store = "Insert INTO transactions (transactionId, clientId, propertyId, date) VALUES (?,?,?,?)";
+        String store = "Insert INTO transactions (transactionId, clientId, propertyId, date,propertyLocation) VALUES (?,?,?,?,?)";
         
         dateString = date.toString();
         try {
@@ -185,6 +185,7 @@ public class purchasePage extends JFrame implements ActionListener{
              ps.setString(2, userid);
              ps.setString(3, idBack);
              ps.setString(4, dateString);
+             ps.setString(5, locationBack);
              ps.executeUpdate();
              
         } catch (SQLException ex) {
