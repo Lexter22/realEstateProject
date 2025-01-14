@@ -354,24 +354,25 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         jtab.add(transactJPanel);
         
         panelTransaction = new JPanel();
-        panelTransaction.setBounds(20, 20, 780, 530);
+        panelTransaction.setBounds(20, 20, 1125, 530);
         panelTransaction.setLayout(null);
         transactJPanel.add(panelTransaction);
         
-        String[][] transactions = {};
+        
         String[] transactionsColumns = {"Transaction ID", "Property ID", "Client ID", "Date"};
+        String[][] transactions = {};
         tableTransactionModel = new DefaultTableModel(transactions, transactionsColumns);
         showTransactions();
         tableTransactions = new JTable(tableTransactionModel);
         tableTransactions.setDefaultEditor(Object.class, null);
         tableTransactions.setRowHeight(30);
         tableTransactions.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tableTransactions.setBounds(0,0,800,560);
+        tableTransactions.setBounds(0,0,1125,560);
         
         panelTransaction.add(tableTransactions);
 
         JScrollPane scrollPaneTransaction = new JScrollPane(tableTransactions);
-        scrollPaneTransaction.setBounds(0,0,780,530);
+        scrollPaneTransaction.setBounds(0,0,1125,530);
         panelTransaction.add(scrollPaneTransaction);
         
 //        JButton btnMarketAnalysis = new JButton("Generate Market Analysis");
@@ -1094,4 +1095,6 @@ public void mouseClicked(MouseEvent e) {
         new adminPage().setVisible(true);
     }
 
+
+    
 }
