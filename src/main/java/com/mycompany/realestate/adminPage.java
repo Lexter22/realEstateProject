@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.ArrayList;
 public class adminPage extends JFrame implements ActionListener, MouseListener{
 
-    private JPanel  panelUpdateLayout, panelHeader, panelUsers, panelADD, panelDelete, panelProfile, transactJPanel, homeJPanel,panelAddLayout,panelHome,panelTransaction,panelUsersPanel; 
+    private JPanel bargraphPanel, barGraphPanel, panelUpdateLayout, panelHeader, panelUsers, panelADD, panelDelete, panelProfile, transactJPanel, homeJPanel,panelAddLayout,panelHome,panelTransaction,panelUsersPanel; 
     private JLabel lblUpdate, lblImageUpdate, lblRichField, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails,lblUsers, previewImg, lblLogo,lblTotalSalesContents,lblPropertiesSoldContents,lblDailySalesContents;
     private JButton btnUpdateData,btnImageUpdate, btnHome, btnAdd, btnDel, btnTransact, btnUsers,btnDetails, btnProfile,btnImage,btnAddImage,btnChangePassword,btnSignOut,btnUserSearch,btnUpdate,btnClearUserSearch,btnOverall,btnBinan,btnSantaRosa,btnSanPedro;
     private JTabbedPane jtab;
@@ -392,10 +392,18 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         lblDashboard.setFont(new Font("Arial", Font.BOLD,25));
         panelProfile.add(lblDashboard);
         
-        JPanel bargraphPanel = new JPanel();
+        bargraphPanel = new JPanel();
         bargraphPanel.setBackground(Color.gray);
         bargraphPanel.setBounds(60,60, 450, 350);
+        bargraphPanel.setLayout(null);
         panelProfile.add(bargraphPanel);
+        
+        int[] values = {70,50,220};
+        
+        barGraphPanel = new JPanel();
+        barGraphPanel.setLayout(new GridLayout(1, values.length, 1, 1));
+        barGraphPanel.setBounds(0,0, 450, 350);
+        barGraph(values);
         
         JLabel lblTotalSales = new JLabel("Total Sales: ");
         lblTotalSales.setBounds(60, 430, 100, 30);
@@ -422,29 +430,31 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         panelProfile.add(lblDailySalesContents);
         
         // market analysis 
-        String [] marketColumns = {"Client ID","Transaction ID","Price"};
+        String [] marketColumns = {"Client ID","Property ID","Price"};
         String [][] marketRows = {};
         tableModelMarket = new DefaultTableModel(marketRows,marketColumns);
         tableMarket = new JTable(tableModelMarket);
+        
         tableData();
+        
         JScrollPane scrollPaneMarket = new JScrollPane(tableMarket);
-        scrollPaneMarket.setBounds(600,60,450,420);
+        scrollPaneMarket.setBounds(600,60,450,350);
         panelProfile.add(scrollPaneMarket);
         
         btnOverall = new JButton("Overall");
-        btnOverall.setBounds(600,490,100,30);
+        btnOverall.setBounds(600,450,100,30);
         panelProfile.add(btnOverall);
         
         btnBinan = new JButton("Binan");
-        btnBinan.setBounds(715,490,100,30);
+        btnBinan.setBounds(715,450,100,30);
         panelProfile.add(btnBinan);
         
         btnSantaRosa = new JButton("Santa Rosa");
-        btnSantaRosa.setBounds(835,490,100,30);
+        btnSantaRosa.setBounds(835,450,100,30);
         panelProfile.add(btnSantaRosa);
         
         btnSanPedro = new JButton("San Pedro");
-        btnSanPedro.setBounds(950,490,100,30);
+        btnSanPedro.setBounds(950,450,100,30);
         panelProfile.add(btnSanPedro);
         
         
@@ -548,6 +558,33 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         btnSanPedro.addActionListener(this);// san pedro
         setVisible(true);
     } 
+    
+    private void barGraph(int[] values) {
+        
+        for (int i = 0; i < values.length; i++) {
+            JPanel barPanel = new JPanel();
+            barPanel.setLayout(new BorderLayout());
+
+            JPanel bar = new JPanel();
+            bar.setBackground(Color.RED);
+            int barHeight = ((int) values[i] * 2); 
+            bar.setPreferredSize(new Dimension(50, barHeight));
+            barPanel.add(bar, BorderLayout.SOUTH);
+            
+            JPanel spacer = new JPanel();
+            int spacerHeight = 10 - barHeight - 20;
+            spacer.setPreferredSize(new Dimension(50, spacerHeight)); 
+            barPanel.add(spacer, BorderLayout.CENTER); 
+
+            barGraphPanel.add(barPanel);
+        }
+        
+        bargraphPanel.add(barGraphPanel);
+        bargraphPanel.revalidate();
+        bargraphPanel.repaint();
+
+    }
+    
     public void tableData(){
         
         tableModelMarket.setRowCount(0);
@@ -956,9 +993,9 @@ public void mouseClicked(MouseEvent e) {
     public void marketOverallProcess(){
         // yung mga data to be specific need istore sa array tsaka mag merge sort
          
-            String query = "SELECT transactions.clientId, transactions.propertyId, transactions.transactionId,residentialrealestates.price\n" +
+            String query = "SELECT transactions.clientId, transactions.propertyId, transactions.transactionId, propertiesowned.propertyPrice\n" +
                       "FROM transactions\n" +
-                      "JOIN residentialrealestates ON transactions.propertyId = residentialrealestates.id";
+                      "JOIN propertiesowned ON transactions.propertyId = propertiesowned.propertyPrice";
           
           // yung table
         
@@ -972,7 +1009,7 @@ public void mouseClicked(MouseEvent e) {
             while(rs.next()){
                 int clientIdForMarket = rs.getInt("clientId");
                 String transactIdForMarket = rs.getString("transactionId");
-                String priceForMarket = rs.getString("price");
+                String priceForMarket = rs.getString("propertyPrice");
                
                 tableModelMarket.addRow(new Object[]{clientIdForMarket,transactIdForMarket,priceForMarket});
                 dataList.add(new Object[]{clientIdForMarket,transactIdForMarket,priceForMarket});    
