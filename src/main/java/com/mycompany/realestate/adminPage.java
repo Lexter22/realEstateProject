@@ -409,7 +409,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         lblTotalSales.setBounds(60, 430, 100, 30);
         panelProfile.add(lblTotalSales);
         
-        lblTotalSalesContents = new JLabel("a");
+        lblTotalSalesContents = new JLabel("");
         lblTotalSalesContents.setBounds(200, 430, 200, 30);
         panelProfile.add(lblTotalSalesContents);
         
@@ -417,17 +417,17 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         lblPropertiesSold.setBounds(60, 460, 100, 30);
         panelProfile.add(lblPropertiesSold);
         
-        lblPropertiesSoldContents = new JLabel("a");
+        lblPropertiesSoldContents = new JLabel("");
         lblPropertiesSoldContents.setBounds(200, 460, 100, 30);
         panelProfile.add(lblPropertiesSoldContents);
         
-        JLabel lblDailySales = new JLabel("Daily Sales");
-        lblDailySales.setBounds(60, 490, 100, 30);
-        panelProfile.add(lblDailySales);
-        
-        lblDailySalesContents = new JLabel("a");
-        lblDailySalesContents.setBounds(200, 490, 100, 30);
-        panelProfile.add(lblDailySalesContents);
+//        JLabel lblDailySales = new JLabel("Daily Sales");
+//        lblDailySales.setBounds(60, 490, 100, 30);
+//        panelProfile.add(lblDailySales);
+//        
+//        lblDailySalesContents = new JLabel("");
+//        lblDailySalesContents.setBounds(200, 490, 100, 30);
+//        panelProfile.add(lblDailySalesContents);
         
         // market analysis 
         String [] marketColumns = {"Client ID","Property ID","Price"};
@@ -990,26 +990,30 @@ public void mouseClicked(MouseEvent e) {
             Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void marketOverallProcess(){
+    public void marketOverallProcess(){ //overall btn
        String query = "Select usersID, propertyId, propertyPrice From propertiesowned";     
        marketMethod(query);
+       JOptionPane.showMessageDialog(null, "This is Overall");
     }
     public void santaRosaMarketProcess(){ // santa rosa btn
        String query = "Select usersID, propertyId, propertyPrice From propertiesowned where propertyLocation = 'Santa Rosa'";
        marketMethod(query);
+       JOptionPane.showMessageDialog(null, "This is Santa Rosa");
     }
     public void binanMarketProcess(){ // Binan btn
        String query = "Select usersID, propertyId, propertyPrice From propertiesowned where propertyLocation = 'Binan'";
        marketMethod(query);
+       JOptionPane.showMessageDialog(null, "This is Binan");
     }
     public void sanPedroMarketProcess(){ // san pedro btn
        String query = "Select usersID, propertyId, propertyPrice From propertiesowned where propertyLocation = 'San Pedro'";
        marketMethod(query);
+       JOptionPane.showMessageDialog(null, "This is San Pedro");
     }
      public void marketMethod(String query){
          tableModelMarket.setRowCount(0);
-          List<Object[]> dataList = new ArrayList<>();
-          
+         List<Object[]> dataList = new ArrayList<>();
+         double totalPrice = 0.0;
         try {
             Statement st = con.createStatement();
             rs = st.executeQuery(query);
@@ -1020,13 +1024,19 @@ public void mouseClicked(MouseEvent e) {
                 String propertyPrice = rs.getString("propertyPrice");
                             
                 tableModelMarket.addRow(new Object[]{usersID,propertyId,propertyPrice});
-                dataList.add(new Object[]{usersID,propertyId,propertyPrice});    
+                dataList.add(new Object[]{usersID,propertyId,propertyPrice});
+                
+                try {
+                    Double price = Double.valueOf(propertyPrice);
+                    totalPrice += price;
+                } catch (Exception e) {
+                     Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, e);
+                }
             }
               dataList = mergeSort(dataList);
               int propertieSold = tableModelMarket.getRowCount();
               lblPropertiesSoldContents.setText(String.valueOf(propertieSold));
-             
-              JOptionPane.showMessageDialog(null, "This is Overall");
+              lblTotalSalesContents.setText(String.valueOf(String.format("%.2f", totalPrice)));
         } catch (SQLException ex) {
             Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
         }
