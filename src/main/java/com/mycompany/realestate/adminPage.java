@@ -977,74 +977,72 @@ public class adminPage extends JFrame implements ActionListener, MouseListener {
         }
     }
 
-    public void showClients() {
+    public void showClients(){        
         // dito ko ipapasok hashmap - reyes
-        if(clientsMap == null){
-            clientsMap = new HashMap<>();
-        }
-        String sql = "Select * from clientsinfo";
-        PreparedStatement pst;
-        clientsMap.clear(); // Ito yung hasmap tinawag ko dito para laging mag reset
-
+                if(clientsMap == null){
+                clientsMap = new HashMap<>();
+            }
+            String sql = "Select * from clientsinfo";
+            clientsMap.clear(); // Ito yung hasmap tinawag ko dito para laging mag reset
+         
         try {
             pst = con.prepareStatement(sql);
             rs = pst.executeQuery(sql);
-
+            
             tableUserModel.setRowCount(0);
-            while (rs.next()) {
+            while(rs.next()) {
                 userID = rs.getString("id");
                 firstName = rs.getString("firstname");
                 lastName = rs.getString("lastname");
                 username = rs.getString("username");
-
-                String clientsData[] = {userID, firstName, lastName, username};
+           
+                String clientsData[] = {userID,firstName,lastName,username}; 
                 // yung mga data ay need natin mastore sa hashmap
                 clientsMap.put(userID, clientsData);
-
+                
                 // store sa table
-                tableUserModel.addRow(clientsData);
-
+                tableUserModel.addRow(clientsData);        
+               
             }
         } catch (SQLException ex) {
             Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public void searchClients() {
+    public void searchClients(){
         String clientSearch = txtClientSearch.getText().trim();
-        if (!clientSearch.isEmpty()) {
-
-            boolean nahanapSiClient = false;
-            searchedClient = (DefaultTableModel) tableUserModel;
-            searchedClient.setRowCount(0);
-            // ang process nito ang mag loop until mahanap clientID or clientValue
-
-            for (Map.Entry<String, String[]> entry : clientsMap.entrySet()) {
-                String clientID = entry.getKey();
-                String[] clientData = entry.getValue();
-
-                if (clientID.contains(clientSearch)) {
-                    searchedClient.addRow(clientData);
-                    nahanapSiClient = true;
-                    break;
-                }
-                for (String clientValue : clientData) { // loop incase yung isearch ay first name
-                    if (clientValue.contains(clientSearch.toLowerCase())) {
-                        searchedClient.addRow(clientData);
-                        nahanapSiClient = true;
-                        break;
-                    }
-                }
-                if (nahanapSiClient) {
-                    // since true na yung nahanap na si client, kailangan na natin ito itigil
-                    break;
-                }
-            }
-            if (!nahanapSiClient) { // if hindi nahanap
-                JOptionPane.showMessageDialog(null, "Client not found", "Not found", JOptionPane.ERROR_MESSAGE);
-            }
+        if(!clientSearch.isEmpty()){
+     
+                boolean nahanapSiClient = false;
+                 searchedClient = (DefaultTableModel) tableUserModel;    
+                 searchedClient.setRowCount(0);
+               // ang process nito ang mag loop until mahanap clientID or clientValue
+               
+                for(Map.Entry<String,String[]> entry : clientsMap.entrySet()) {
+                   String clientID = entry.getKey();
+                   String[] clientData = entry.getValue();
+                   
+                       if( clientID.contains(clientSearch)){
+                           searchedClient.addRow(clientData);
+                           nahanapSiClient = true;
+                           break;
+                       }
+                       for(String clientValue: clientData){ // loop incase yung isearch ay first name
+                           if(clientValue.contains(clientSearch.toLowerCase())) {
+                               searchedClient.addRow(clientData);
+                               nahanapSiClient = true;
+                               break;
+                           }
+                       }
+                   if(nahanapSiClient){
+                        // since true na yung nahanap na si client, kailangan na natin ito itigil
+                         break;
+                   }    
+               }
+                  if(!nahanapSiClient){ // if hindi nahanap
+                        JOptionPane.showMessageDialog(null, "Client not found","Not found",JOptionPane.ERROR_MESSAGE);
+                   } 
         } else {
-            JOptionPane.showMessageDialog(null, "Enter something to search", "Error", JOptionPane.ERROR_MESSAGE);
+              JOptionPane.showMessageDialog(null, "Enter something to search","Error",JOptionPane.ERROR_MESSAGE);
 
         }
     }
