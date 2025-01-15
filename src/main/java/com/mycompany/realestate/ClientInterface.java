@@ -58,6 +58,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
      
     Connect();
     
+    //use for binarySearch
     arrayList = new ArrayList<>();
     
     setSize(1200, 700);
@@ -138,6 +139,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
     jtab.setLayout(null);
     add(jtab);
 
+    //Residentials Panel where you can see the avaible and sold Item
     panelItems = new JPanel();
     panelItems.setBounds(0, 0, 1200, 560);
     panelItems.setLayout(null);
@@ -156,7 +158,9 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
     itemT.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     itemT.setBounds(0,0,800,560);
     
+         //Getting the Users Data
           String UsersInfo = "Select firstname, lastname, id, contactnum, email From clientsinfo where username=? ";
+          //Inserting data to residential Jtable
           String HousesData = "Select * from residentialrealestates";
       try {
           
@@ -172,10 +176,13 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
                  houseStatus = rsHouses.getString("status");
                  
                  String[] dataSql={houseId, houseName, houseLocation, housePrice, houseStatus};
+                 //will used for binarySearch
                  arrayList.add(dataSql);
+                 //Listing
                  itemTModel.addRow(dataSql);
                  
             }
+            //userData 
             pst = con.prepareStatement(UsersInfo);
             pst.setString(1, username);
             rs = pst.executeQuery();
@@ -211,6 +218,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         imgPreviewImage.setBorder(BorderFactory.createLineBorder(Color.black));
         panelItems.add(imgPreviewImage);
         
+        //Panel Accout or userAccount where you can see UsersData and his/her property owned
         panelAccount = new JPanel();
         panelAccount.setBounds(0, 0, 1200, 560);
         panelAccount.setLayout(null);
@@ -230,6 +238,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         sp2.setPreferredSize(new Dimension(780, 530));
         panelAccountPanel.add(sp2);
     
+        //getting Bought items or residentials
         propertiesOwned();
         
         lblCDetails = new JLabel("Your information");

@@ -1,3 +1,4 @@
+
 package com.mycompany.realestate;
 
 import java.awt.*;
@@ -25,6 +26,7 @@ import javax.swing.table.DefaultTableModel;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
+
 
 public class adminPage extends JFrame implements ActionListener, MouseListener {
 
@@ -765,58 +767,60 @@ public class adminPage extends JFrame implements ActionListener, MouseListener {
                 lblImageUpdate.setIcon(imageIcon);
             }
         } else if (e.getSource() == btnAddImage) {
-            String values = "insert into residentialrealestates (name,location,price,description,status,img) values (?,?,?,?,?,?)";
-            String name = txtPropertyName.getText();
-            //String location = txtLocation.getText();
-            String jcbAddLocationValue = jcbAddLocation.getSelectedItem().toString();
-            String price = txtPrice.getText();
+    String values = "insert into residentialrealestates (name,location,price,description,status,img) values (?,?,?,?,?,?)";
+    String name = txtPropertyName.getText();
+    String jcbAddLocationValue = jcbAddLocation.getSelectedItem().toString();
+    String price = txtPrice.getText();
+    String description = txaDescription.getText();
+
+    if (!name.isEmpty() && (jcbAddLocationValue.equals("San Pedro") || jcbAddLocationValue.equals("Binan City") || jcbAddLocationValue.equals("Santa Rosa"))
+            && !price.isEmpty() && !description.isEmpty()) {
+        
+        try {
             int priceInteger = Integer.parseInt(price);
-            String description = txaDescription.getText();
+            if (priceInteger >= 100000000) {
+                try {
+                    pst = con.prepareStatement(values);
 
-            if (!name.isEmpty() && jcbAddLocationValue.equals("San Pedro") || jcbAddLocationValue.equals("Binan City") || jcbAddLocationValue.equals("Santa Rosa")
-                    && !description.isEmpty()) {
-                if (priceInteger >= 100000000) {
-                    try {
-                        pst = con.prepareStatement(values);
+                    String status = "Available";
 
-                        String status = "Available";
-
-                        pst.setString(1, txtPropertyName.getText());
-                        pst.setString(2, jcbAddLocationValue);
-                        pst.setString(3, txtPrice.getText());
-                        pst.setString(4, txaDescription.getText());
-                        pst.setString(5, status);
-                        if (imagePath != null) {
-                            InputStream imagefinalpt5 = new FileInputStream(new File(imagePath));
-                            pst.setBlob(6, imagefinalpt5);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Please insert an Image", "ERROR", JOptionPane.ERROR_MESSAGE);
-                        }
-
-                        pst.executeUpdate();
-                        lblImage.setIcon(null);
-                        txtPropertyName.setText("");
-                        txtPrice.setText("");
-                        txaDescription.setText("");
-
-                        dispose();
-                        JOptionPane.showMessageDialog(null, "House Added", "ADD SUCCESS", JOptionPane.INFORMATION_MESSAGE);
-                        new adminPage();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
-
-                    } catch (FileNotFoundException ex) {
-                        Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
+                    pst.setString(1, name);
+                    pst.setString(2, jcbAddLocationValue);
+                    pst.setString(3, price);
+                    pst.setString(4, description);
+                    pst.setString(5, status);
+                    if (imagePath != null) {
+                        InputStream imagefinalpt5 = new FileInputStream(new File(imagePath));
+                        pst.setBlob(6, imagefinalpt5);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Please insert an Image", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        return; 
                     }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Price must be Greater than 100m", "ERROR", JOptionPane.ERROR_MESSAGE);
+
+                    pst.executeUpdate();
+                    lblImage.setIcon(null);
+                    txtPropertyName.setText("");
+                    txtPrice.setText("");
+                    txaDescription.setText("");
+
+                    dispose();
+                    JOptionPane.showMessageDialog(null, "House Added", "ADD SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+                    new adminPage();
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Please fill all the field", "ERROR", JOptionPane.ERROR_MESSAGE);
-
+                JOptionPane.showMessageDialog(null, "Price must be Greater than 100m", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
-
-        } else if (e.getSource() == btnSignOut) {
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Price must be a valid number", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Please fill all the fields", "ERROR", JOptionPane.ERROR_MESSAGE);
+    }
+} else if (e.getSource() == btnSignOut) {
             int response = JOptionPane.showConfirmDialog(this, "You are signing out\nClick ok to proceed", "Sign out", JOptionPane.OK_CANCEL_OPTION);
             if (response == JOptionPane.OK_OPTION) {
                 JOptionPane.showMessageDialog(null, "Signed Out");
@@ -884,10 +888,20 @@ public class adminPage extends JFrame implements ActionListener, MouseListener {
             } else {
                 JOptionPane.showMessageDialog(null, "Select a row from the table", "Error", JOptionPane.WARNING_MESSAGE);
             }
-        } else if (e.getSource() == btnUpdateData) {
+        } else if (e.getSource() == btnUpdateData) {// Update Data
             int index = Integer.parseInt(houseId);
 
             if (index != -1) {
+                String UpdatePropertyName = txtUpdatePropertyName.getText().trim();
+                String jcbUpdateAddLocationValue = jcbUpdateAddLocation.getSelectedItem().toString();
+                String UpdatePropertyPrice = txtUpdatePrice.getText().trim();
+                String UpdatePropertyDescription = txaUpdateDescription.getText().trim();
+                if (!UpdatePropertyName.isEmpty() && (jcbUpdateAddLocationValue.equals("San Pedro") || jcbUpdateAddLocationValue.equals("Binan City") || jcbUpdateAddLocationValue.equals("Santa Rosa"))
+            && !UpdatePropertyPrice.isEmpty() && !UpdatePropertyDescription.isEmpty()) {
+        
+        try {
+            int priceInteger = Integer.parseInt(UpdatePropertyPrice);
+            if (priceInteger >= 100000000) {
                 try {
                     String query = "UPDATE residentialrealestates SET name=?, location=?, price=?, description=?, img=? where id = ?";
                     PreparedStatement pst = con.prepareStatement(query);
@@ -902,20 +916,28 @@ public class adminPage extends JFrame implements ActionListener, MouseListener {
                     } else {
                         JOptionPane.showMessageDialog(null, "Please insert an Image", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
-
                     pst.executeUpdate();
 
                     dispose();
                     JOptionPane.showMessageDialog(null, "Resident Updated");
                     new adminPage();
                 } catch (Exception ex) {
-                    Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
-            } else {
+            }else {
+                JOptionPane.showMessageDialog(null, "Price must be Greater than 100m", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        }catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Price must be a valid number", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+                        }else {
+                JOptionPane.showMessageDialog(null, "Please fill all the fields", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        }else {
                 JOptionPane.showMessageDialog(null, "Select a row from the table", "Error", JOptionPane.WARNING_MESSAGE);
             }
-        } else if (e.getSource() == btnClientDetails) { // pupunta sa viewClientDetails class
+        }
+        else if (e.getSource() == btnClientDetails) { // pupunta sa viewClientDetails class
             int index = tableUser.getSelectedRow();
             if (index != -1) {
                 clientId = String.valueOf(tableUserModel.getValueAt(index, 0));
