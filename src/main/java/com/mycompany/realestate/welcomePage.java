@@ -3,7 +3,6 @@
  */
 
 package com.mycompany.realestate;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -26,7 +25,7 @@ public class welcomePage extends JFrame implements  ActionListener{
     private ImageIcon logoIc, finalLogoIc;
     private Color cGreen = (Color.decode("#28A745"));
     private Color cGray = (Color.decode("#E0E0E0"));
-    private Color cBlue = (Color.decode("#004A8C"));
+    private Color cBlue = (Color.decode("#004A8C"));        // this is welcome page, there are choices Login or Sign Up
     
     public welcomePage() {
         setTitle("Homepage");
@@ -41,7 +40,7 @@ public class welcomePage extends JFrame implements  ActionListener{
         welcomeBg.setLayout(null);
         welcomeBg.setBounds(0,0,400,600);
         add(welcomeBg);
-        
+       
         lblWelcome = new JLabel("WELCOME");
         lblWelcome.setBounds(0,40,400,50);
         lblWelcome.setHorizontalAlignment(JLabel.CENTER);
@@ -97,9 +96,7 @@ public class welcomePage extends JFrame implements  ActionListener{
         btnSignUp.setForeground(Color.BLACK);
         btnSignUp.setFont(new Font("Arial", Font.BOLD, 15));
         welcomeBg.add(btnSignUp);
-        
-        
-        
+              
         btnLogin.addActionListener(this);
         btnSignUp.addActionListener(this);
         
@@ -108,12 +105,10 @@ public class welcomePage extends JFrame implements  ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==btnLogin){
-            new loginPage();
-            dispose();
-           
-            
+            new loginPage(); // pupunta sa login
+            dispose();         
         } else if(e.getSource() == btnSignUp) {
-            new SignUp();
+            new SignUp(); // pupunta sa user registration
             dispose();
         }
     }

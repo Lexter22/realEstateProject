@@ -25,7 +25,6 @@ import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 
-
 public class loginPage extends JFrame implements ActionListener, MouseListener{
     private JLabel hdrLogin,lblUserName,lblPassword,lblProfile,lblsignup;
     private JPanel pnlLogin;
@@ -43,6 +42,7 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
         setSize(400, 600);
         setTitle("Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
         setLayout(null);
         setLocationRelativeTo(null);
         
@@ -130,12 +130,9 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
         
         lblsignup.addMouseListener(this);
         lblsignup.setCursor(new Cursor(HAND_CURSOR));
-        
-        
+      
         setVisible(true);
-        
     }
-    
         @Override
     public void mouseClicked(MouseEvent e) {
      if(e.getSource()==lblsignup){
@@ -143,7 +140,6 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
          dispose();
      }
     }
-
     @Override
     public void mousePressed(MouseEvent e) {
     }
@@ -159,17 +155,13 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        
-        
-        if(e.getSource()==btnBack){
-            
+
+        if(e.getSource()==btnBack){           
             new welcomePage().setVisible(true);
             dispose();
-            
         }
         
         else if(e.getSource()==btnLogin){
-            
             PreparedStatement pst;
             ResultSet rs;
             String username = txtUsername.getText();
@@ -177,7 +169,6 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
             
             String admin = "Select * from admindetails where username=? and password=? ";
             String clients = "Select * from clientsinfo where username=? and password=? ";
-            
             
             try{
                 if (username.isEmpty()|| userPassword.isEmpty()){
@@ -196,7 +187,6 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
                         JOptionPane.showMessageDialog(null, "Incorrect details\nTry again","Error",JOptionPane.WARNING_MESSAGE);
                     }
                 }
-                
                 else {
                     pst = con.prepareStatement(clients);
                     pst.setString(1, username);
@@ -210,15 +200,12 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
                          JOptionPane.showMessageDialog(null, "Incorrect details\nTry again","Error",JOptionPane.WARNING_MESSAGE);
 
                      }
+                  }  
                 }
-                    
-                }
-            catch (SQLException ex) {
+             catch (SQLException ex) {
                 Logger.getLogger(loginPage.class.getName()).log(Level.SEVERE, null, ex);
-            }     
+                }     
             }
-            
- 
 }
     public void Connect(){
         String url = "jdbc:mysql://localhost:3306/realestates";
@@ -230,10 +217,6 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
         } catch (SQLException ex) {
             Logger.getLogger(loginPage.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
-
-
-     
 }
       
