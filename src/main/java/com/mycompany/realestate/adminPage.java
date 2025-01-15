@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.ArrayList;
 public class adminPage extends JFrame implements ActionListener, MouseListener{
 
-    private JPanel bargraphPanel, barGraphPanel, panelUpdateLayout, panelHeader, panelUsers, panelADD, panelDelete, panelProfile, transactJPanel, homeJPanel,panelAddLayout,panelHome,panelTransaction,panelUsersPanel; 
+    private JPanel bargraphPanel, barGraphPanel, panelUpdateLayout, panelHeader, panelUsers, panelADD, panelDelete, panelDashBoard, transactJPanel, homeJPanel,panelAddLayout,panelHome,panelTransaction,panelUsersPanel; 
     private JLabel lblUpdate, lblImageUpdate, lblRichField, lblRealEstates,lblPropertyName,lblLocation,lblPrice,lblDescription,lblImage,lblAdminDetails,lblUsers, previewImg, lblLogo,lblTotalSalesContents,lblPropertiesSoldContents,lblDailySalesContents;
     private JButton btnUpdateData,btnImageUpdate, btnHome, btnAdd, btnDel, btnTransact, btnUsers,btnDetails, btnProfile,btnImage,btnAddImage,btnChangePassword,btnSignOut,btnUserSearch,btnUpdate,btnClearUserSearch,btnOverall,btnBinan,btnSantaRosa,btnSanPedro;
     private JTabbedPane jtab;
@@ -101,7 +101,191 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         btnHome.setFont(new Font("Arial", Font.BOLD, 15));
         add(btnHome);
         
-        panelAddLayout = new JPanel();
+        jtab = new JTabbedPane();
+        jtab.setBounds(0,95,1200,560);
+        jtab.setLayout(null);
+        jtab.setBackground(Color.PINK);
+        add(jtab);
+        
+       panelDashBoard= new JPanel();
+        panelDashBoard.setBounds(0,0,1200,560);
+        panelDashBoard.setLayout(null);
+        jtab.add(panelDashBoard); // 0
+        
+        JLabel lblDashboard = new JLabel("Market Analysis");
+        lblDashboard.setBounds(60, 20, 500, 30);
+        lblDashboard.setFont(new Font("Arial", Font.BOLD,25));
+        panelDashBoard.add(lblDashboard);
+        
+        bargraphPanel = new JPanel();
+        bargraphPanel.setBackground(Color.gray);
+        bargraphPanel.setBounds(60,60, 450, 350);
+        bargraphPanel.setLayout(null);
+        panelDashBoard.add(bargraphPanel);
+        
+        int[] values = {70,50,220};
+        
+        barGraphPanel = new JPanel();
+        barGraphPanel.setLayout(new GridLayout(1, values.length, 1, 1));
+        barGraphPanel.setBounds(0,0, 450, 350);
+        barGraph(values);
+        
+        JLabel lblTotalSales = new JLabel("Total Sales: ");
+        lblTotalSales.setBounds(60, 430, 100, 30);
+        panelDashBoard.add(lblTotalSales);
+        
+        lblTotalSalesContents = new JLabel("");
+        lblTotalSalesContents.setBounds(200, 430, 200, 30);
+        panelDashBoard.add(lblTotalSalesContents);
+        
+        JLabel lblPropertiesSold = new JLabel("Properties Sold");
+        lblPropertiesSold.setBounds(60, 460, 100, 30);
+        panelDashBoard.add(lblPropertiesSold);
+        
+        lblPropertiesSoldContents = new JLabel("");
+        lblPropertiesSoldContents.setBounds(200, 460, 100, 30);
+        panelDashBoard.add(lblPropertiesSoldContents);
+        
+//        JLabel lblDailySales = new JLabel("Daily Sales");
+//        lblDailySales.setBounds(60, 490, 100, 30);
+//        panelDashBoard.add(lblDailySales);
+//        
+//        lblDailySalesContents = new JLabel("");
+//        lblDailySalesContents.setBounds(200, 490, 100, 30);
+//        panelDashBoard.add(lblDailySalesContents);
+        
+        // market analysis 
+        String [] marketColumns = {"Client ID","Property ID","Price"};
+        String [][] marketRows = {};
+        tableModelMarket = new DefaultTableModel(marketRows,marketColumns);
+        tableMarket = new JTable(tableModelMarket);
+        
+        tableData();
+        
+        JScrollPane scrollPaneMarket = new JScrollPane(tableMarket);
+        scrollPaneMarket.setBounds(600,60,450,350);
+        panelDashBoard.add(scrollPaneMarket);
+        
+        btnOverall = new JButton("Overall");
+        btnOverall.setBounds(600,450,100,30);
+        panelDashBoard.add(btnOverall);
+        
+        btnBinan = new JButton("Binan");
+        btnBinan.setBounds(715,450,100,30);
+        panelDashBoard.add(btnBinan);
+        
+        btnSantaRosa = new JButton("Santa Rosa");
+        btnSantaRosa.setBounds(835,450,100,30);
+        panelDashBoard.add(btnSantaRosa);
+        
+        btnSanPedro = new JButton("San Pedro");
+        btnSanPedro.setBounds(950,450,100,30);
+        panelDashBoard.add(btnSanPedro);
+        
+        
+        lblAdminDetails = new JLabel("Admin");
+        lblAdminDetails.setBounds(530,20000, 500, 30);
+        lblAdminDetails.setFont(new Font("Arial", Font.BOLD, 30));
+        panelDashBoard.add(lblAdminDetails);
+        
+        panelUsers= new JPanel();
+        panelUsers.setBounds(0,0,1200,560);
+        panelUsers.setLayout(null);
+        jtab.add(panelUsers);  // 2    
+        
+        panelUsersPanel = new JPanel();
+        panelUsersPanel.setBounds(20, 20, 780, 530);
+        panelUsersPanel.setLayout(null);
+        panelUsers.add(panelUsersPanel);
+        
+        
+        String[][] data2 = {};
+        String[] tablecolumn2 = {"ID", "First Name", "Last Name", "Username"};
+       
+        tableUserModel = new DefaultTableModel(data2, tablecolumn2);
+        showClients();
+        tableUser = new JTable(tableUserModel);
+        tableUser.setDefaultEditor(Object.class, null);
+        tableUser.setRowHeight(30);
+        tableUser.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        JScrollPane sp2 = new JScrollPane(tableUser);
+        sp2.setBounds(0,0,780,530);
+        panelUsersPanel.add(sp2);
+
+        lblUsers = new JLabel("Clients");
+        lblUsers.setBounds(940, 40, 200, 30);
+        lblUsers.setFont(new Font("Arial", Font.BOLD, 30));
+        panelUsers.add(lblUsers);
+        
+        txtClientSearch = new JTextField(); // para sa clients
+        txtClientSearch.setBounds(880, 80, 220, 30);
+        panelUsers.add(txtClientSearch);
+        
+        btnUserSearch = new JButton("SEARCH");
+        btnUserSearch.setBounds(880, 120, 100, 30);
+        btnUserSearch.setBorder(null);
+        btnUserSearch.setForeground(Color.white);
+        btnUserSearch.setBackground(cGreen);
+        btnUserSearch.setFocusable(false);
+        btnUserSearch.setFont(new Font("Arial", Font.BOLD, 15));
+        panelUsers.add(btnUserSearch);
+        
+        btnClearUserSearch = new JButton("CLEAR");
+        btnClearUserSearch.setBounds(1000, 120, 100, 30);
+        btnClearUserSearch.setBorder(null);
+        btnClearUserSearch.setForeground(Color.white);
+        btnClearUserSearch.setBackground(cGreen);
+        btnClearUserSearch.setFocusable(false);
+        btnClearUserSearch.setFont(new Font("Arial", Font.BOLD, 15));
+        panelUsers.add(btnClearUserSearch);
+        
+        btnClientDetails = new JButton("VIEW DETAILS");
+        btnClientDetails.setBounds(880,160,220,30);
+        btnClientDetails.setBorder(null);
+        btnClientDetails.setForeground(Color.white);
+        btnClientDetails.setBackground(cGreen);
+        btnClientDetails.setFocusable(false);
+        btnClientDetails.setFont(new Font("Arial", Font.BOLD, 15));
+        panelUsers.add(btnClientDetails);
+        
+        transactJPanel= new JPanel();
+        transactJPanel.setBounds(0,0,1200,560);
+        transactJPanel.setLayout(null);
+      
+        jtab.add(transactJPanel); // 3
+        
+        panelTransaction = new JPanel();
+        panelTransaction.setBounds(20, 20, 1125, 530);
+        panelTransaction.setLayout(null);
+        transactJPanel.add(panelTransaction);
+        
+        
+        String[] transactionsColumns = {"Transaction ID", "Property ID", "Client ID", "Date"};
+        String[][] transactions = {};
+        tableTransactionModel = new DefaultTableModel(transactions, transactionsColumns);
+        showTransactions();
+        tableTransactions = new JTable(tableTransactionModel);
+        tableTransactions.setDefaultEditor(Object.class, null);
+        tableTransactions.setRowHeight(30);
+        tableTransactions.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tableTransactions.setBounds(0,0,1125,560);
+        
+        panelTransaction.add(tableTransactions);
+
+        JScrollPane scrollPaneTransaction = new JScrollPane(tableTransactions);
+        scrollPaneTransaction.setBounds(0,0,1125,530);
+        panelTransaction.add(scrollPaneTransaction);
+        
+//        JButton btnMarketAnalysis = new JButton("Generate Market Analysis");
+//        btnMarketAnalysis.setBounds(900, 40, 200, 30);
+//        transactJPanel.add(btnMarketAnalysis);
+//        
+//        JButton btnSalesReport = new JButton("Sales Report");
+//        btnSalesReport.setBounds(900, 80, 200, 30);
+//        transactJPanel.add(btnSalesReport);
+//        
+                panelAddLayout = new JPanel();
         panelAddLayout.setLayout(null);
         panelAddLayout.setBounds(0, 0, 1200, 560);
         add(panelAddLayout);
@@ -186,16 +370,12 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         panelHeader.setBackground(cBlue);
         add(panelHeader);
         
-        jtab = new JTabbedPane();
-        jtab.setBounds(0,95,1200,560);
-        jtab.setLayout(null);
-        jtab.setBackground(Color.PINK);
-        add(jtab);
+        
         
         homeJPanel= new JPanel();
         homeJPanel.setBounds(0,0,1200,560);
         homeJPanel.setLayout(null);
-        jtab.add(homeJPanel);
+        jtab.add(homeJPanel); // 4
         
         panelHome = new JPanel();
         panelHome.setBounds(20, 20, 780, 530);
@@ -264,7 +444,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         panelADD= new JPanel();
         panelADD.setBounds(0,0,1200,560);
         panelADD.setBackground(Color.green);
-        jtab.add(panelAddLayout);
+        jtab.add(panelAddLayout); // 1
         
         try {
           String HousesData = "Select * from residentialrealestates";
@@ -284,185 +464,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
             }
            } catch (SQLException ex) {
              Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
-           }   
-        
-        panelUsers= new JPanel();
-        panelUsers.setBounds(0,0,1200,560);
-        panelUsers.setLayout(null);
-        jtab.add(panelUsers);      
-        
-        panelUsersPanel = new JPanel();
-        panelUsersPanel.setBounds(20, 20, 780, 530);
-        panelUsersPanel.setLayout(null);
-        panelUsers.add(panelUsersPanel);
-        
-        
-        String[][] data2 = {};
-        String[] tablecolumn2 = {"ID", "First Name", "Last Name", "Username"};
-       
-        tableUserModel = new DefaultTableModel(data2, tablecolumn2);
-        showClients();
-        tableUser = new JTable(tableUserModel);
-        tableUser.setDefaultEditor(Object.class, null);
-        tableUser.setRowHeight(30);
-        tableUser.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
-        JScrollPane sp2 = new JScrollPane(tableUser);
-        sp2.setBounds(0,0,780,530);
-        panelUsersPanel.add(sp2);
-
-        lblUsers = new JLabel("Clients");
-        lblUsers.setBounds(940, 40, 200, 30);
-        lblUsers.setFont(new Font("Arial", Font.BOLD, 30));
-        panelUsers.add(lblUsers);
-        
-        txtClientSearch = new JTextField(); // para sa clients
-        txtClientSearch.setBounds(880, 80, 220, 30);
-        panelUsers.add(txtClientSearch);
-        
-        btnUserSearch = new JButton("SEARCH");
-        btnUserSearch.setBounds(880, 120, 100, 30);
-        btnUserSearch.setBorder(null);
-        btnUserSearch.setForeground(Color.white);
-        btnUserSearch.setBackground(cGreen);
-        btnUserSearch.setFocusable(false);
-        btnUserSearch.setFont(new Font("Arial", Font.BOLD, 15));
-        panelUsers.add(btnUserSearch);
-        
-        btnClearUserSearch = new JButton("CLEAR");
-        btnClearUserSearch.setBounds(1000, 120, 100, 30);
-        btnClearUserSearch.setBorder(null);
-        btnClearUserSearch.setForeground(Color.white);
-        btnClearUserSearch.setBackground(cGreen);
-        btnClearUserSearch.setFocusable(false);
-        btnClearUserSearch.setFont(new Font("Arial", Font.BOLD, 15));
-        panelUsers.add(btnClearUserSearch);
-        
-        btnClientDetails = new JButton("VIEW DETAILS");
-        btnClientDetails.setBounds(880,160,220,30);
-        btnClientDetails.setBorder(null);
-        btnClientDetails.setForeground(Color.white);
-        btnClientDetails.setBackground(cGreen);
-        btnClientDetails.setFocusable(false);
-        btnClientDetails.setFont(new Font("Arial", Font.BOLD, 15));
-        panelUsers.add(btnClientDetails);
-        
-        transactJPanel= new JPanel();
-        transactJPanel.setBounds(0,0,1200,560);
-        transactJPanel.setLayout(null);
-      
-        jtab.add(transactJPanel);
-        
-        panelTransaction = new JPanel();
-        panelTransaction.setBounds(20, 20, 1125, 530);
-        panelTransaction.setLayout(null);
-        transactJPanel.add(panelTransaction);
-        
-        
-        String[] transactionsColumns = {"Transaction ID", "Property ID", "Client ID", "Date"};
-        String[][] transactions = {};
-        tableTransactionModel = new DefaultTableModel(transactions, transactionsColumns);
-        showTransactions();
-        tableTransactions = new JTable(tableTransactionModel);
-        tableTransactions.setDefaultEditor(Object.class, null);
-        tableTransactions.setRowHeight(30);
-        tableTransactions.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tableTransactions.setBounds(0,0,1125,560);
-        
-        panelTransaction.add(tableTransactions);
-
-        JScrollPane scrollPaneTransaction = new JScrollPane(tableTransactions);
-        scrollPaneTransaction.setBounds(0,0,1125,530);
-        panelTransaction.add(scrollPaneTransaction);
-        
-//        JButton btnMarketAnalysis = new JButton("Generate Market Analysis");
-//        btnMarketAnalysis.setBounds(900, 40, 200, 30);
-//        transactJPanel.add(btnMarketAnalysis);
-//        
-//        JButton btnSalesReport = new JButton("Sales Report");
-//        btnSalesReport.setBounds(900, 80, 200, 30);
-//        transactJPanel.add(btnSalesReport);
-//        
-        panelProfile= new JPanel();
-        panelProfile.setBounds(0,0,1200,560);
-        panelProfile.setLayout(null);
-        jtab.add(panelProfile);
-        
-        JLabel lblDashboard = new JLabel("Market Analysis");
-        lblDashboard.setBounds(60, 20, 500, 30);
-        lblDashboard.setFont(new Font("Arial", Font.BOLD,25));
-        panelProfile.add(lblDashboard);
-        
-        bargraphPanel = new JPanel();
-        bargraphPanel.setBackground(Color.gray);
-        bargraphPanel.setBounds(60,60, 450, 350);
-        bargraphPanel.setLayout(null);
-        panelProfile.add(bargraphPanel);
-        
-        int[] values = {70,50,220};
-        
-        barGraphPanel = new JPanel();
-        barGraphPanel.setLayout(new GridLayout(1, values.length, 1, 1));
-        barGraphPanel.setBounds(0,0, 450, 350);
-        barGraph(values);
-        
-        JLabel lblTotalSales = new JLabel("Total Sales: ");
-        lblTotalSales.setBounds(60, 430, 100, 30);
-        panelProfile.add(lblTotalSales);
-        
-        lblTotalSalesContents = new JLabel("");
-        lblTotalSalesContents.setBounds(200, 430, 200, 30);
-        panelProfile.add(lblTotalSalesContents);
-        
-        JLabel lblPropertiesSold = new JLabel("Properties Sold");
-        lblPropertiesSold.setBounds(60, 460, 100, 30);
-        panelProfile.add(lblPropertiesSold);
-        
-        lblPropertiesSoldContents = new JLabel("");
-        lblPropertiesSoldContents.setBounds(200, 460, 100, 30);
-        panelProfile.add(lblPropertiesSoldContents);
-        
-//        JLabel lblDailySales = new JLabel("Daily Sales");
-//        lblDailySales.setBounds(60, 490, 100, 30);
-//        panelProfile.add(lblDailySales);
-//        
-//        lblDailySalesContents = new JLabel("");
-//        lblDailySalesContents.setBounds(200, 490, 100, 30);
-//        panelProfile.add(lblDailySalesContents);
-        
-        // market analysis 
-        String [] marketColumns = {"Client ID","Property ID","Price"};
-        String [][] marketRows = {};
-        tableModelMarket = new DefaultTableModel(marketRows,marketColumns);
-        tableMarket = new JTable(tableModelMarket);
-        
-        tableData();
-        
-        JScrollPane scrollPaneMarket = new JScrollPane(tableMarket);
-        scrollPaneMarket.setBounds(600,60,450,350);
-        panelProfile.add(scrollPaneMarket);
-        
-        btnOverall = new JButton("Overall");
-        btnOverall.setBounds(600,450,100,30);
-        panelProfile.add(btnOverall);
-        
-        btnBinan = new JButton("Binan");
-        btnBinan.setBounds(715,450,100,30);
-        panelProfile.add(btnBinan);
-        
-        btnSantaRosa = new JButton("Santa Rosa");
-        btnSantaRosa.setBounds(835,450,100,30);
-        panelProfile.add(btnSantaRosa);
-        
-        btnSanPedro = new JButton("San Pedro");
-        btnSanPedro.setBounds(950,450,100,30);
-        panelProfile.add(btnSanPedro);
-        
-        
-        lblAdminDetails = new JLabel("Admin");
-        lblAdminDetails.setBounds(530,20000, 500, 30);
-        lblAdminDetails.setFont(new Font("Arial", Font.BOLD, 30));
-        panelProfile.add(lblAdminDetails);
+           }
         
         btnChangePassword = new JButton("Change Password");
         btnChangePassword.setBounds(880, 450, 220, 30);
@@ -485,7 +487,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener{
         panelUpdateLayout = new JPanel();
         panelUpdateLayout.setLayout(null);
         panelUpdateLayout.setBounds(0, 0, 1200, 560);
-        jtab.add(panelUpdateLayout);
+        jtab.add(panelUpdateLayout); // 5
         
         lblUpdate = new JLabel("You are Updating : ");
         lblUpdate.setBounds(0, 0, 1195, 25);
@@ -673,7 +675,7 @@ public void mouseClicked(MouseEvent e) {
         if(e.getSource()==btnHome){
             int currentIndex = jtab.getSelectedIndex();
             if (currentIndex == 0) {
-              jtab.setSelectedIndex(4);
+              jtab.setSelectedIndex(5);
               btnHome.setIcon(finalHomeIc);
             }else  {
               btnHome.setIcon(finalAccountIc);
