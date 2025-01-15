@@ -3,7 +3,6 @@
  */
 
 package com.mycompany.realestate;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -97,9 +96,7 @@ public class welcomePage extends JFrame implements  ActionListener{
         btnSignUp.setForeground(Color.BLACK);
         btnSignUp.setFont(new Font("Arial", Font.BOLD, 15));
         welcomeBg.add(btnSignUp);
-        
-        
-        
+              
         btnLogin.addActionListener(this);
         btnSignUp.addActionListener(this);
         
@@ -108,12 +105,10 @@ public class welcomePage extends JFrame implements  ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==btnLogin){
-            new loginPage();
-            dispose();
-           
-            
+            new loginPage(); // pupunta sa login
+            dispose();         
         } else if(e.getSource() == btnSignUp) {
-            new SignUp();
+            new SignUp(); // pupunta sa user registration
             dispose();
         }
     }

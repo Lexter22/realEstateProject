@@ -71,7 +71,7 @@ public class changePassword extends JFrame implements  ActionListener{
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) { // change password btn
         if(e.getSource()==btnChangePassword) {
         String enterPassword = txtTypePassword.getText();
         String enterNewPassword = txtTypeNewPassword.getText();
@@ -92,7 +92,6 @@ public class changePassword extends JFrame implements  ActionListener{
                             JOptionPane.showMessageDialog(this, "Incorrect password","Error",JOptionPane.ERROR_MESSAGE);
                       }
                  } 
-                    
               } catch (SQLException ex) {
                             Logger.getLogger(changePassword.class.getName()).log(Level.SEVERE, null, ex);
               }
@@ -102,10 +101,9 @@ public class changePassword extends JFrame implements  ActionListener{
            
               
         }else if(e.getSource()==btnBack){
-            new adminPage();
+            new adminPage(); // babalik sa adminPage
             dispose();
         }else {
-         //   new adminPage();
             dispose();
         }
     }

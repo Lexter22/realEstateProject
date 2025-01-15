@@ -1031,18 +1031,19 @@ public void mouseClicked(MouseEvent e) {
                 String usersID = rs.getString("usersID");
                 String propertyId = rs.getString("propertyId");
                 String propertyPrice = rs.getString("propertyPrice");
-                            
+            
                 tableModelMarket.addRow(new Object[]{usersID,propertyId,propertyPrice});
                 dataList.add(new Object[]{usersID,propertyId,propertyPrice});
                 
                 try {
-                    Double price = Double.valueOf(propertyPrice);
-                    totalPrice += price;
+                    Double priceMarket = Double.valueOf(propertyPrice);
+                    totalPrice += priceMarket;
                 } catch (Exception e) {
                      Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
-              dataList = mergeSort(dataList);
+              dataList = mergeSort(dataList); // call yung method ng mergeSort
+             
               int propertieSold = tableModelMarket.getRowCount();
               lblPropertiesSoldContents.setText(String.valueOf(propertieSold));
               lblTotalSalesContents.setText(String.valueOf(String.format("%.2f", totalPrice)));
@@ -1051,7 +1052,7 @@ public void mouseClicked(MouseEvent e) {
         }
     
     }
-    private List<Object[]> mergeSort(List<Object[]> dataList) {
+    private List<Object[]> mergeSort(List<Object[]> dataList) { // ito yung method, nilagay natin sa parameter yung dataList kasi dun nakastore lahat
         
         if(dataList.size()<= 1){
             return dataList;
@@ -1067,30 +1068,31 @@ public void mouseClicked(MouseEvent e) {
     }
     private List<Object[]> merge(List<Object[]> left, List<Object[]> right){
         List<Object[]> mergedList = new ArrayList<>();
-        int leftIndex = 0;
-        int rightIndex = 0;
+        int indexLeft = 0;
+        int indexRight = 0;
         
-        while(leftIndex < left.size()&&rightIndex < right.size()){
-            String leftPrice = (String) left.get(leftIndex)[2];
-            String rightPrice = (String) right.get(rightIndex)[2];
+        while(indexLeft < left.size()&&indexRight < right.size()){
+            String leftPrice = (String) left.get(indexLeft)[2];
+            String rightPrice = (String) right.get(indexRight)[2];
             if(leftPrice.compareTo(rightPrice) <= 0){
-                mergedList.add(left.get(leftIndex));
-                leftIndex++;
+                mergedList.add(left.get(indexLeft));
+                indexLeft++;
             } else {
-                mergedList.add(right.get(rightIndex));
-                rightIndex++;
+                mergedList.add(right.get(indexRight));
+                indexRight++;
             }
         }
-        while(leftIndex < left.size()){
-            mergedList.add(left.get(leftIndex));
-            leftIndex++;
+        while(indexLeft < left.size()){
+            mergedList.add(left.get(indexLeft));
+            indexLeft++;
         }
-         while(rightIndex < right.size()){
-            mergedList.add(right.get(rightIndex));
-            rightIndex++;
+        while(indexRight < right.size()){
+            mergedList.add(right.get(indexRight));
+            indexRight++;
         }
             return mergedList;
         }
+    
     public static void main(String[] args) {
         new adminPage().setVisible(true);
     }

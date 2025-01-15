@@ -1,5 +1,4 @@
 package com.mycompany.realestate;
-
 import java.awt.Color;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,9 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
-
-
-        
 public class transactInfo extends JFrame implements ActionListener{
 
     private JLabel lblNameId, lblID, lblPrice, lblLocation,lblStatus, lblRichField, lblRealEstates, lblLogo,lblInfo,pnPic;
@@ -127,17 +123,15 @@ public class transactInfo extends JFrame implements ActionListener{
         admin = inheret;
         btnBack.addActionListener(this);
     }
-
- 
            @Override
     public void actionPerformed(ActionEvent e) {
-            if(e.getSource()==btnBack){
-           if(admin.equals("Admin")){
-            new adminPage().setVisible(true);
-            dispose();
+           if(e.getSource()==btnBack){
+            if(admin.equals("Admin")){
+                new adminPage().setVisible(true);
+                dispose();
             }else{
-               new ClientInterface(inheretBack).setVisible(true);
-               dispose(); 
+                new ClientInterface(inheretBack).setVisible(true);
+                dispose(); 
 
             }
         }

@@ -30,7 +30,6 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 /**
@@ -58,7 +57,7 @@ public class purchasePage extends JFrame implements ActionListener{
         
         Connect();
         
-        setTitle("Purchase Form");
+        setTitle("Purchase Form");                                  // dito yung process ng pagbili
         setSize(400, 600);
         setLayout(null);
         setLocationRelativeTo(null);
@@ -78,7 +77,6 @@ public class purchasePage extends JFrame implements ActionListener{
         lblLogo.setBounds(145, 10, 110, 110);
         purchasePagePanel.add(lblLogo);
         
-        
         lbPurchaseForm = new JLabel("PURCHASE FORM");
         lbPurchaseForm.setHorizontalAlignment(SwingConstants.CENTER);
         lbPurchaseForm.setBounds(120, 140, 150, 30);
@@ -91,17 +89,11 @@ public class purchasePage extends JFrame implements ActionListener{
         lblId.setForeground(Color.white);
         purchasePagePanel.add(lblId);
      
-        
         lblLocation = new JLabel("Location : " + location);
         lblLocation.setBounds(30, 220, 335, 30);
         lblLocation.setForeground(Color.white);
         purchasePagePanel.add(lblLocation);
    
-        
-        
-        
-        
-        
         lblDate = new JLabel("Date: " + date);
         lblDate.setBounds(30, 260, 335, 30);
         lblDate.setForeground(Color.white);
@@ -141,7 +133,6 @@ public class purchasePage extends JFrame implements ActionListener{
         lblrepass.setForeground(Color.white);
         purchasePagePanel.add(lblrepass);
         
-      
         btnBack = new JButton("Back");
         btnBack.setBounds(95, 500, 90, 35);
         btnBack.setHorizontalAlignment(JLabel.CENTER);
@@ -158,7 +149,6 @@ public class purchasePage extends JFrame implements ActionListener{
         btnContinue.setFont(new Font("Arial", Font.BOLD, 12));
         purchasePagePanel.add(btnContinue);
         
-        
         btnBack.addActionListener(this);
         btnContinue.addActionListener(this);
         locationBack = location;
@@ -170,14 +160,12 @@ public class purchasePage extends JFrame implements ActionListener{
         finalPicture = picture;
         inheretBack = inheret;
         userData(inheret);
-        
-        
+
     }
     public void storeDate(){
         String charactersForID = "ABCDEFGHIJ0123456789";
         idFortransaction = transactId(charactersForID);
         String store = "Insert INTO transactions (transactionId, clientId, propertyId, date,propertyLocation) VALUES (?,?,?,?,?)";
-        
         dateString = date.toString();
         try {
              PreparedStatement ps = con.prepareStatement(store);
@@ -187,30 +175,19 @@ public class purchasePage extends JFrame implements ActionListener{
              ps.setString(4, dateString);
              ps.setString(5, locationBack);
              ps.executeUpdate();
-             
         } catch (SQLException ex) {
             Logger.getLogger(purchasePage.class.getName()).log(Level.SEVERE, null, ex);
-            
         } 
-        
     }
-    
     public String transactId(String randomTransactId){
-
         Random randomizer = new Random();
-
         String randomString = "";
-
         for(int i=0; i<10; i++){
             randomString += randomTransactId.charAt(randomizer.nextInt(randomTransactId.length()));
         }
-        
         return randomString;
     }
-    
     public void userData(String userName){
-        
-        
         String dataOfUser = "Select firstname, lastname, password, id FROM clientsinfo WHERE username = ?";
         try {
             PreparedStatement ps = con.prepareStatement(dataOfUser);
@@ -225,23 +202,17 @@ public class purchasePage extends JFrame implements ActionListener{
         } catch (SQLException ex) {
             Logger.getLogger(purchasePage.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
-    public void updateStatus(String propertyId){
-        
+    }  
+    public void updateStatus(String propertyId){ 
         try {
             String Idproperty = "UPDATE residentialrealestates SET status = 'Sold' WHERE id = ?";
             PreparedStatement ps = con.prepareStatement(Idproperty);
             ps.setString(1, propertyId);
             ps.executeUpdate();
         } 
-        
-        
         catch (SQLException ex) {
             Logger.getLogger(purchasePage.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
+        } 
     }
     
     public void propertiesOwned(String ID) {
@@ -273,7 +244,7 @@ public class purchasePage extends JFrame implements ActionListener{
             Logger.getLogger(purchasePage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void Connect(){
+    public void Connect(){ // sql database
         String url = "jdbc:mysql://localhost:3306/realestates";
         String username = "root";
         String password = "admin123";
@@ -298,36 +269,25 @@ public class purchasePage extends JFrame implements ActionListener{
             
                 JOptionPane.showMessageDialog(null, "Field is empty");
             }
-            else if (passWord.equals(userPassword) && retypePassword.equals(userPassword)){
-                
-                
+            else if (passWord.equals(userPassword) && retypePassword.equals(userPassword)){ // gagana lamang kapag same yung password
                 storeDate();
                 updateStatus(idBack);
                 propertiesOwned(idBack);
                 new receiptPage(firstName, lastName, inheretBack, idBack, nameBack, locationBack, dateString, priceBack, idFortransaction).setVisible(true);
                 dispose();
-                
             }
-            
             else if (!passWord.equals(retypePassword)) {
                 
                 JOptionPane.showMessageDialog(null, "Password does not match");
                 
             }
-            
-            else if (!passWord.equals(userPassword)){
-                
+            else if (!passWord.equals(userPassword)){ 
                 JOptionPane.showMessageDialog(null, "Password is incorrect");
                 
             }
-            
-            
         } else if(e.getSource()==btnBack){
                 new moreInfo(idBack, nameBack, locationBack, priceBack, statusBack, descriptionBack, inheretBack, fname, lname, userId, userNum, userEmail, finalPicture);
             dispose();
-        }
-        
-    }
-
-    
+        }  
+    }  
 }

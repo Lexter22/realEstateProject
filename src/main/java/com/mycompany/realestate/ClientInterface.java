@@ -25,7 +25,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -310,9 +309,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         } catch (SQLException ex) {
             Logger.getLogger(ClientInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    }
-  
+    }  
     @Override
       public void mouseClicked(MouseEvent e) {
       if(e.getSource()==itemT){
@@ -324,11 +321,11 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         }
       }else if(e.getSource()==accTable){
           int selectedrowss = accTable.getSelectedRow();
-        if(selectedrowss != -1){
-            String id = String.valueOf(accTModel.getValueAt(selectedrowss, 0));
-            displayImageOwned(id);
+            if(selectedrowss != -1){
+                String id = String.valueOf(accTModel.getValueAt(selectedrowss, 0));
+                displayImageOwned(id);
+            }
         }
-      }
       }
 
       @Override
@@ -374,8 +371,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         }
     }
       
-      public void displayImageOwned(String id){
-          
+      public void displayImageOwned(String id){  
         try {
             String image = "select img from propertiesowned where propertyID = ?";
             
@@ -403,38 +399,29 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
             JOptionPane.showMessageDialog(null, "Please Wait for the Preview Image");
             Logger.getLogger(ClientInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-  
-//      public void newDescription
-      
+    }     
       public void propertiesOwned() {
-          
           String owned = "SELECT * FROM propertiesowned WHERE usersId = ?";
-      try {
-          
-          PreparedStatement ps = con.prepareStatement(owned);
-          ps.setString(1, userId);
-          rs = ps.executeQuery();
-          while (rs.next()) {
+          try {
+              PreparedStatement ps = con.prepareStatement(owned);
+              ps.setString(1, userId);
+              rs = ps.executeQuery();
+                while (rs.next()) {
+                     ownedId = rs.getString("propertyid");
+                     ownedName = rs.getString("propertyName");
+                     ownedLocation = rs.getString("propertyLocation");
+                     ownedPrice = rs .getString("propertyprice");
+                    
+                     String ownedStatus = "Owned";
+                     Object [] dataSql = {ownedId, ownedName, ownedLocation, ownedPrice, ownedStatus};
               
-              ownedId = rs.getString("propertyid");
-              ownedName = rs.getString("propertyName");
-              ownedLocation = rs.getString("propertyLocation");
-              ownedPrice = rs .getString("propertyprice");
-              
-              String ownedStatus = "Owned";
-              
-              Object [] dataSql = {ownedId, ownedName, ownedLocation, ownedPrice, ownedStatus};
-              
-              accTModel.addRow(dataSql);
-                 
-          }
-      } 
+                     accTModel.addRow(dataSql);
+                }
+        } 
       
-      catch (SQLException ex) {
-          Logger.getLogger(ClientInterface.class.getName()).log(Level.SEVERE, null, ex);
-      }
-          
+        catch (SQLException ex) {
+                Logger.getLogger(ClientInterface.class.getName()).log(Level.SEVERE, null, ex);
+         }
       }
   
     @Override
@@ -455,12 +442,12 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
           jcbLocation.setSelectedIndex(0);
           jcbPrice.setSelectedIndex(0);
           
-            String jcbLocValue = jcbLocation.getSelectedItem().toString();
-            Object jcbPriceValue = jcbPrice.getSelectedItem();
+           String jcbLocValue = jcbLocation.getSelectedItem().toString();
+           Object jcbPriceValue = jcbPrice.getSelectedItem();
             
             //Reset Image Preview
-    ImageIcon none = new ImageIcon("");
-    imgPreviewImage.setIcon(none);
+           ImageIcon none = new ImageIcon("");
+           imgPreviewImage.setIcon(none);
     
           String[] arrs = new String[arrayList.size()];
           itemTModel.setRowCount(0);
@@ -534,45 +521,45 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
            }
       }
       //For Binary Search
- else if (e.getSource() == btnSearch) {
+        else if (e.getSource() == btnSearch) {
     
-    String jcbLocValue = (String) jcbLocation.getSelectedItem();
-    int jcbPriceValue = jcbPrice.getSelectedIndex();
+         String jcbLocValue = (String) jcbLocation.getSelectedItem();
+         int jcbPriceValue = jcbPrice.getSelectedIndex();
     
-    //Reset All Elements in the table
-    itemTModel.setRowCount(0);
+        //Reset All Elements in the table
+        itemTModel.setRowCount(0);
     
-    //Reset Image Preview
-    ImageIcon none = new ImageIcon("");
-    imgPreviewImage.setIcon(none);
+        //Reset Image Preview
+        ImageIcon none = new ImageIcon("");
+        imgPreviewImage.setIcon(none);
     
-    int minPrice = 0;
-    int maxPrice = Integer.MAX_VALUE;
+        int minPrice = 0;
+        int maxPrice = Integer.MAX_VALUE;
 
-    switch (jcbPriceValue) {
-        case 1:
-            minPrice = 100000000;
-            maxPrice = 200000000;
-            break;
-        case 2:
-            minPrice = 200000001;
-            maxPrice = 400000000;
-            break;
-        case 3:
-            minPrice = 400000001;
-            maxPrice = 600000000;
-            break;
-        case 4:
-            minPrice = 600000001;
-            maxPrice = 800000000;
-            break;
-        case 5:
-            minPrice = 800000001;
-            maxPrice = Integer.MAX_VALUE;
-            break;
-        default:
-            break; 
-    }
+        switch (jcbPriceValue) {
+             case 1:
+                minPrice = 100000000;
+                maxPrice = 200000000;
+                break;
+            case 2:
+                minPrice = 200000001;
+                maxPrice = 400000000;
+                break;
+            case 3:
+                minPrice = 400000001;
+                maxPrice = 600000000;
+                break;
+            case 4:
+                minPrice = 600000001;
+                maxPrice = 800000000;
+                break;
+            case 5:
+                minPrice = 800000001;
+                maxPrice = Integer.MAX_VALUE;
+                break;
+            default:
+                break; 
+        }
 
     boolean resultsNotFound = true;
 
@@ -588,24 +575,22 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
 
     for (Object[] house : arrayList) {
         int itemPrice = Integer.parseInt(((String) house[3]).replaceAll("[^0-9]", ""));
-        String itemLocation = (String) house[2]; 
-        
+        String itemLocation = (String) house[2];       
         boolean locationMatches = jcbLocValue.equals("Location") || itemLocation.equals(jcbLocValue);
         boolean priceMatches = (itemPrice >= minPrice && itemPrice <= maxPrice);
         
         if (locationMatches && priceMatches) {
             int index = Arrays.binarySearch(pricesArray, itemPrice);
-            
             if (index >= 0) { 
                 itemTModel.addRow(house);
                 resultsNotFound = false; 
             }
         }
     }
-    if (resultsNotFound) {
+        if (resultsNotFound) {
         JOptionPane.showMessageDialog(null, "No residential available");
+        }
     }
-}
       else if(e.getSource()==btnLogout){
           
           int response = JOptionPane.showConfirmDialog(null, "You are signing out \nClick OK to proceed","Sign Out",JOptionPane.OK_CANCEL_OPTION);

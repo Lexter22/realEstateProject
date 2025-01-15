@@ -1,5 +1,4 @@
 package com.mycompany.realestate;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,11 +22,11 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
     private Color cGreen = (Color.decode("#28A745"));
     private Color cGray = (Color.decode("#E0E0E0"));
     private Color cBlue = (Color.decode("#004A8C"));
-    private Connection con;
+    private Connection con;                                            // this is the User Registration
     private Statement st;
     
     public SignUp() {
-        Connect();
+        Connect();  // sql
         
         setSize(400,600);
         setTitle("Sign up");
@@ -48,7 +47,6 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
         pnlSignUp.setBounds(80, 100, 240, 430);
         pnlSignUp.setLayout(null);
         add(pnlSignUp);
-        
         
         lblFName=new JLabel("FIRST");
         lblFName.setBounds(10,10,100,30);
@@ -170,11 +168,11 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
     
         @Override
     public void mouseClicked(MouseEvent e) {
-    if(e.getSource()==lbllogin){
+        if(e.getSource()==lbllogin){
      
         new loginPage();
         dispose();
-    }
+        }
     }
 
     @Override
@@ -188,7 +186,7 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
 
     @Override
     public void mouseExited(MouseEvent e) {
-     }
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -206,10 +204,12 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
             
             String values = "insert into clientsinfo (firstname, lastname, username, contactnum, email, password) "
                     + "values ('"+firstValue+"', '"+lastValue+"', '"+userNameValue+"', '"+contactNumValue+"', '"+emailValue+"', '"+passwordValue+"')";
-           
+           /*
+              to summarize if hindi empty lahat ng textfields then gagana dapat yung code
+              then if may kahit isang blank, error 
+            */
             if (!firstValue.isEmpty() && !lastValue.isEmpty() && !userNameValue.isEmpty() && !contactNumValue.isEmpty() && !emailValue.isEmpty() && !passwordValue.isEmpty() && emailValue.contains("@gmail.com")){
-                
-                
+                   
                     try {
                         st = con.createStatement();
                         st.executeUpdate(values);
@@ -220,10 +220,8 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
                         txtContact.setText("");
                         txtEmail.setText("");
                         jpfPassword.setText("");
-                        
+                        // here is nakapag create kana ng account
                         JOptionPane.showMessageDialog(null, "SignUp Successful", "Registration Success", JOptionPane.INFORMATION_MESSAGE);
-            
-                
             } catch (SQLException ex) {
                 Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
                  }
@@ -234,7 +232,6 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
             
         }
     }
-    
     public void Connect(){
         String url = "jdbc:mysql://localhost:3306/realestates";
         String username = "root";
@@ -245,11 +242,9 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
         } catch (SQLException ex) {
             Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
 
  public static void main (String[] args){
         new SignUp();
-
     }
 }

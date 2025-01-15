@@ -12,9 +12,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
-
-
-
         
 public class moreInfo extends JFrame implements ActionListener{
 
@@ -30,7 +27,7 @@ public class moreInfo extends JFrame implements ActionListener{
     
    public moreInfo(String id, String name, String location, String price, String status, String description, String inheret, String fname, String lname, String userId, String userNum, String userEmail, ImageIcon picture){
   
-        setSize(1200, 700);
+        setSize(1200, 700);             // this moreInfo pages goes to the more details of the property
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
@@ -54,7 +51,6 @@ public class moreInfo extends JFrame implements ActionListener{
         lblRealEstates.setFont(new Font("Arial", Font.BOLD, 15));
         add(lblRealEstates);
         
-
         panelAddLayout = new JPanel();
         panelAddLayout.setLayout(null);
         panelAddLayout.setBounds(0, 95, 1200, 560);
@@ -142,14 +138,14 @@ public class moreInfo extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()== btnBuy){
             if(!statusBack.equals("Sold")){
-            new purchasePage(idBack, nameBack, locationBack, priceBack, statusBack, descriptionBack, inheretBack, fname, lname, userId, userNum, userEmail, finalPicture).setVisible(true);
-            dispose();
+                new purchasePage(idBack, nameBack, locationBack, priceBack, statusBack, descriptionBack, inheretBack, fname, lname, userId, userNum, userEmail, finalPicture).setVisible(true);
+                dispose();
             }else{
                 JOptionPane.showMessageDialog(null, "Already Sold");
             }
         }else if(e.getSource()==btnBack){
             new ClientInterface(inheretBack).setVisible(true);
-               dispose(); 
+            dispose(); 
         }
     }
 }
