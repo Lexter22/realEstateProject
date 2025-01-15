@@ -25,7 +25,6 @@ import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 
-
 public class loginPage extends JFrame implements ActionListener, MouseListener{
     private JLabel hdrLogin,lblUserName,lblPassword,lblProfile,lblsignup;
     private JPanel pnlLogin;
@@ -218,7 +217,6 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
         } catch (SQLException ex) {
             Logger.getLogger(loginPage.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
 }
       

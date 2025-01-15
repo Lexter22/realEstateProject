@@ -25,7 +25,7 @@ public class welcomePage extends JFrame implements  ActionListener{
     private ImageIcon logoIc, finalLogoIc;
     private Color cGreen = (Color.decode("#28A745"));
     private Color cGray = (Color.decode("#E0E0E0"));
-    private Color cBlue = (Color.decode("#004A8C"));
+    private Color cBlue = (Color.decode("#004A8C"));        // this is welcome page, there are choices Login or Sign Up
     
     public welcomePage() {
         setTitle("Homepage");
@@ -40,7 +40,7 @@ public class welcomePage extends JFrame implements  ActionListener{
         welcomeBg.setLayout(null);
         welcomeBg.setBounds(0,0,400,600);
         add(welcomeBg);
-        
+       
         lblWelcome = new JLabel("WELCOME");
         lblWelcome.setBounds(0,40,400,50);
         lblWelcome.setHorizontalAlignment(JLabel.CENTER);

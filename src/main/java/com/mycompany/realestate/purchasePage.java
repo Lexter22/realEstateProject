@@ -239,7 +239,6 @@ public class purchasePage extends JFrame implements ActionListener{
                 sp.executeUpdate();
                 
             }
-            
         } catch (SQLException ex) {
             Logger.getLogger(purchasePage.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -253,17 +252,13 @@ public class purchasePage extends JFrame implements ActionListener{
             con = DriverManager.getConnection(url, username, password);
         } catch (SQLException ex) {
             Logger.getLogger(purchasePage.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }
-    
-    
+        } 
+    }      
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnContinue){
             String passWord = txtpass.getText();
             String retypePassword = txtrepass.getText();
-            
             
             if (passWord.isEmpty() || retypePassword.isEmpty()) {
             
@@ -286,7 +281,7 @@ public class purchasePage extends JFrame implements ActionListener{
                 
             }
         } else if(e.getSource()==btnBack){
-                new moreInfo(idBack, nameBack, locationBack, priceBack, statusBack, descriptionBack, inheretBack, fname, lname, userId, userNum, userEmail, finalPicture);
+            new moreInfo(idBack, nameBack, locationBack, priceBack, statusBack, descriptionBack, inheretBack, fname, lname, userId, userNum, userEmail, finalPicture);
             dispose();
         }  
     }  

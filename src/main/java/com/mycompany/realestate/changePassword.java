@@ -20,7 +20,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-
 /**
  *
  * @author johnl
@@ -29,7 +28,7 @@ public class changePassword extends JFrame implements  ActionListener{
     private JLabel hdrChangePassword,lblEnterPassword,lblNewPassword;
     private JTextField txtTypePassword,txtTypeNewPassword;
     private JButton btnChangePassword,btnBack;
-    public changePassword()  {
+    public changePassword()  { //change password page
         setSize(600,400);
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -82,7 +81,7 @@ public class changePassword extends JFrame implements  ActionListener{
                  PreparedStatement verifyPassword = con.prepareStatement(query);
                  verifyPassword.setString(1, "AdminLex");
                     try(ResultSet rs = verifyPassword.executeQuery()){
-                      if(rs.next() && rs.getString("password").equals(enterPassword)) {
+                      if(rs.next() && rs.getString("password").equals(enterPassword)) { // if tama password from db, then change password 
                       PreparedStatement st = (PreparedStatement) con.prepareStatement("Update admindetails set password=? where username=?");
                       st.setString(1, enterNewPassword);
                       st.setString(2, "AdminLex");

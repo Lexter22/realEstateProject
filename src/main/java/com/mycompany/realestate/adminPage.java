@@ -60,7 +60,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener {
     private String[] jcbLoc = {"Binan City", "Santa Rosa", "San Pedro"};
     private JComboBox jcbUpdateAddLocation, jcbAddLocation;
 
-    public adminPage() {
+    public adminPage() {                // Adminpage   NOTE: Admin username must contain Admin
         Connect();
 
         setSize(1200, 700);
@@ -864,7 +864,7 @@ public class adminPage extends JFrame implements ActionListener, MouseListener {
                 JOptionPane.showMessageDialog(null, "Select a row from the table", "Error", JOptionPane.WARNING_MESSAGE);
             }
 
-        } else if (e.getSource() == btnDel) {
+        } else if (e.getSource() == btnDel) { // delete residentalrealestates
             int index = tableEstate.getSelectedRow();
             if (index != -1) {
                 try {
@@ -979,7 +979,9 @@ public class adminPage extends JFrame implements ActionListener, MouseListener {
 
     public void showClients() {
         // dito ko ipapasok hashmap - reyes
-
+        if(clientsMap == null){
+            clientsMap = new HashMap<>();
+        }
         String sql = "Select * from clientsinfo";
         PreparedStatement pst;
         clientsMap.clear(); // Ito yung hasmap tinawag ko dito para laging mag reset

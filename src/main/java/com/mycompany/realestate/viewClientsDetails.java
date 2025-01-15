@@ -131,9 +131,7 @@ public class viewClientsDetails extends JFrame implements ActionListener{
         add(btnBack);
         
         btnBack.addActionListener(this);
-        
-        
-       
+              
         propertyData(clientsId);
         setVisible(true);
     }
@@ -157,7 +155,7 @@ public class viewClientsDetails extends JFrame implements ActionListener{
         }
     }
     
-    public void userData(String clientsId){
+    public void userData(String clientsId){ // details ng clients
         String getUserData = "Select * from clientsinfo where id=?";
         
         try{
@@ -179,7 +177,7 @@ public class viewClientsDetails extends JFrame implements ActionListener{
       }
     }
     
-    public void propertyData(String clientsId){
+    public void propertyData(String clientsId){ // mga details ng property
         String getHouseId = "Select * from transactions where clientid =?";
          
         try{
@@ -193,19 +191,14 @@ public class viewClientsDetails extends JFrame implements ActionListener{
                 transactionId = rs.getString("transactionId");
                 String transactionLocation = rs.getString("propertyLocation");
                 transactionDate = rs.getString("date");
-                
-                 
+                  
                 Object [] dataSql={propertyId, transactionId, transactionLocation, transactionDate};
                 
                 ownedProperties.addRow(dataSql);
-           
+        
             }
-            
-           
         }catch (SQLException ex) {
           Logger.getLogger(viewClientsDetails.class.getName()).log(Level.SEVERE, null, ex);
       }
     }
-
-    
 }

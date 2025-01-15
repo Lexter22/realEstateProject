@@ -33,7 +33,7 @@ public class moreInfo extends JFrame implements ActionListener{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         
-        logoIc = new ImageIcon("logoRealEstates.png");
+        logoIc = new ImageIcon("logoRealEstates.png"); // pic ng logo
         finalLogoIc = new ImageIcon(logoIc.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
 
         lblLogo = new JLabel(finalLogoIc);

@@ -133,7 +133,6 @@ public class transactInfo extends JFrame implements ActionListener{
             }else{
                 new ClientInterface(inheretBack).setVisible(true);
                 dispose(); 
-
             }
         }
     }

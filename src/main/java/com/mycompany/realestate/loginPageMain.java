@@ -12,9 +12,7 @@ package com.mycompany.realestate;
  */
 public class loginPageMain {
     
-    public static void main(String[] args) {
-        
+    public static void main(String[] args) {       
        new loginPage();
-        
     }
 }

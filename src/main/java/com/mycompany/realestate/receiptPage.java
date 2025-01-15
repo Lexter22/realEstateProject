@@ -19,17 +19,15 @@ import javax.swing.JPanel;
  * @author user
  */
 public class receiptPage extends JFrame implements ActionListener{
-    
-    
+     
     private JLabel lblRichfield, lblRichfield2, lblName, lblUserName, lblDate, lblLocation, lblProductName, lblProductID, lblPrice, lblTransactionID, lblPurchasedEstate, lblOfficial, lblThankYou, lblLogo;
     private JButton btnBackToHome;
     private ImageIcon logoIc, finalLogoIc;
     private String user;
     
-    
     public receiptPage (String firstName, String surname, String userName, String propertyId, String propertyName, String propertyLocation, String datePurchased, String pricePaid, String transactionId) {
        
-        
+        // receipt page
         setSize(400, 600);
         setLayout(null);
         setLocationRelativeTo(null);
@@ -137,7 +135,7 @@ public class receiptPage extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         
-        if (e.getSource() == btnBackToHome) {
+        if (e.getSource() == btnBackToHome) { // babalik sa home
             new ClientInterface(user).setVisible(true);
             dispose(); 
         }

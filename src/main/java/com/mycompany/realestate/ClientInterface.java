@@ -54,7 +54,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
   private String newDescription, houseId, housePrice, userId, inheret, username, fname, lname, userNum, userEmail, houseLocation, houseName, houseDescription, houseStatus, ownedLocation, ownedId, ownedPrice, ownedName;
   private ArrayList<Object[]> arrayList;
   
-  public ClientInterface(String username) {
+  public ClientInterface(String username) {              // Client Interface
      
     Connect();
     
@@ -424,12 +424,16 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
           lblRealEstates.setText("PROPERTIES OWNED");
           jcbLocation.setVisible(false);
           jcbPrice.setVisible(false);
+          btnSearch.setVisible(false);
+          btnReset.setVisible(false);
           btnAccHome.setIcon(finalHomeIc);
         } else {
           btnAccHome.setIcon(finalAccountIc);
           jtab.setSelectedIndex(0);
           jcbLocation.setVisible(true);
           jcbPrice.setVisible(true);
+          btnSearch.setVisible(true);
+          btnReset.setVisible(true);
           lblRealEstates.setText("RESIDENTIALS");
         }
       }else if(e.getSource()== btnReset){
