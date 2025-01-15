@@ -29,6 +29,7 @@ public class moreInfo extends JFrame implements ActionListener{
   
         setSize(1200, 700);             // this moreInfo pages goes to the more details of the property
         setLocationRelativeTo(null);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         

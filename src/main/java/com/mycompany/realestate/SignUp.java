@@ -32,6 +32,7 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
         setTitle("Sign up");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
+        setResizable(false);
         setLocationRelativeTo(null);
         
         ImageIcon mainBg = new ImageIcon("mainBg.png");

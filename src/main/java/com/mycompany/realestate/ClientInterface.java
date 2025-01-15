@@ -41,7 +41,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
   private Object[][] houses = {} , ownedHouses = {};
   private ImageIcon finalPreviewImageOwned, searchIc, resetIc, accountIc, homeIc, moreInfoIc, finalSearchIc, finalResetIc, finalAccountIc, finalHomeIc, finalMoreInfoIc, logoIC, finalLogoIC, previewImage, finalPreviewImage;
   private String[] columnNames = { "ID","Name","Location", "Price", "Status" };
-  private String Location[] = {"Location", "San Pedro", "Santa Rosa", "Binan" };
+  private String Location[] = {"Location", "San Pedro", "Santa Rosa", "Binan City" };
   private String Price[] = { "Price Range", "₱100M - ₱200M", "₱201M - ₱400M","₱401M - ₱600M", "₱601M - ₱800M", "₱801M - ₱1B" };
   private DefaultTableModel itemTModel, accTModel;
   private JTable itemT;
@@ -63,6 +63,7 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
     setSize(1200, 700);
     setLocationRelativeTo(null);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
+      setResizable(false);
     setLayout(null);
     
     logoIC = new ImageIcon("logoRealEstates.png");
@@ -359,14 +360,8 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
                 imgPreviewImage.setIcon(finalPreviewImage);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Remove The Code Below this JOption Para di makita SQLEXCEPTION");
-            JOptionPane.showMessageDialog(null, "DAPAT ITO LANG LALABAS HAHAHA");
-            JOptionPane.showMessageDialog(null, "Please Wait for the Preview Image");
             Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Remove The Code Below this JOption Para di makita IOEXCEPTION");
-            JOptionPane.showMessageDialog(null, "DAPAT ITO LANG LALABAS HAHAHA");
-            JOptionPane.showMessageDialog(null, "Please Wait for the Preview Image");
             Logger.getLogger(adminPage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -389,14 +384,9 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
                 lblUserImage.setIcon(finalPreviewImageOwned);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Remove The Code Below this JOption Para di makita SQLEXCEPTION");
-            JOptionPane.showMessageDialog(null, "DAPAT ITO LANG LALABAS HAHAHA");
-            JOptionPane.showMessageDialog(null, "Please Wait for the Preview Image");
+            
             Logger.getLogger(ClientInterface.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Remove The Code Below this JOption Para di makita IOEXCEPTION");
-            JOptionPane.showMessageDialog(null, "DAPAT ITO LANG LALABAS HAHAHA");
-            JOptionPane.showMessageDialog(null, "Please Wait for the Preview Image");
             Logger.getLogger(ClientInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
     }     
@@ -432,10 +422,14 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
         if (currentIndex == 0) {
           jtab.setSelectedIndex(1);
           lblRealEstates.setText("PROPERTIES OWNED");
+          jcbLocation.setVisible(false);
+          jcbPrice.setVisible(false);
           btnAccHome.setIcon(finalHomeIc);
         } else {
           btnAccHome.setIcon(finalAccountIc);
           jtab.setSelectedIndex(0);
+          jcbLocation.setVisible(true);
+          jcbPrice.setVisible(true);
           lblRealEstates.setText("RESIDENTIALS");
         }
       }else if(e.getSource()== btnReset){
@@ -601,9 +595,5 @@ public class ClientInterface extends JFrame implements ActionListener, MouseList
               new welcomePage().setVisible(true);
           }
       }
-    }
-    public static void main(String[] args) {
-        String username = "jhommm";
-        new ClientInterface(username);
     }
 }

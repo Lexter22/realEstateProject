@@ -28,6 +28,7 @@ public class transactInfo extends JFrame implements ActionListener{
       setSize(1200, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
         setLayout(null);
         
         logoIc = new ImageIcon("logoRealEstates.png");

@@ -43,6 +43,7 @@ public class loginPage extends JFrame implements ActionListener, MouseListener{
         setSize(400, 600);
         setTitle("Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
         setLayout(null);
         setLocationRelativeTo(null);
         
